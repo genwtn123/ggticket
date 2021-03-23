@@ -15,7 +15,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     volumes:
-      - ./client:/server
+      - ./client:/client
     ports:
       - 8080:8080
     command:
