@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const registerController = require('../controllers/register')
+const registerAdminController = require('../controllers/register')
 
-router.post('/', registerController.register)
+
+router.post('/admin', registerAdminController.registerAdmin)
+router.post('/customer', registerAdminController.registerCustomer)
 
 
 module.exports = router
