@@ -1,24 +1,26 @@
 <template>
-  <div class="home">
+  <div>
     <v-container>
+      <Mainbar/>
       <v-app>
-        <Mainbar/>
         <div class="pt-12">
-        <b style="color:red">Home</b>
+          <span style="font-size: 20px"><b>HOME</b></span>
         </div>
       </v-app>
     </v-container>
   </div>
 </template>
 
+
+
 <script>
 // @ is an alias to /src
 
-import Mainbar from '../components/navbar/Mainbar'
+import Mainbar from "../components/navbar/Mainbar.vue";
 export default {
   name: "Home",
   components: {
-    Mainbar
+    Mainbar,
   },
   data: () => ({}),
 };

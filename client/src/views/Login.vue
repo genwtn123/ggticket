@@ -1,9 +1,12 @@
 <template>
-  <div class="register">
+  <div>
     <v-container>
+      
       <v-app>
-        <Mainbar />
-        <Login />
+        <Mainbar/>
+        <div class="">
+          <Login />
+        </div>
       </v-app>
     </v-container>
   </div>
@@ -11,14 +14,13 @@
 
 <script>
 // @ is an alias to /src
-import Login from "../components/Login";
-import Mainbar from "../components/navbar/Mainbar";
+import Login from "../components/Login.vue";
+import Mainbar from "../components/navbar/Mainbar.vue";
 
 export default {
-  name: "Home",
   components: {
     Login,
-    Mainbar,
+    Mainbar
   },
   data: () => ({}),
 };

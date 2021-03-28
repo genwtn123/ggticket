@@ -20,7 +20,7 @@ const routes = [
         component: Register
     },
     {
-        path: '/home',
+        path: '/',
         name: 'Home',
         component: Home
     }

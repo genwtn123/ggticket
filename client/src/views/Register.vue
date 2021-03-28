@@ -1,17 +1,24 @@
 <template>
   <div class="register">
-    <Register/>
+    <v-container>
+      <Mainbar/>
+      <v-app>
+        <Register />
+      </v-app>
+    </v-container>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Register from '@/components/Register.vue'
+import Register from "@/components/Register.vue";
+import Mainbar from "../components/navbar/Mainbar.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    Register
-  }
-}
+    Register,
+    Mainbar
+  },
+};
 </script>

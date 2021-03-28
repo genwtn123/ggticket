@@ -1,10 +1,16 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-const PORT = 12000
-const sql = require('./sql')
+const pool = require('./sql')
+const morgan = require('morgan')
+const config = require('./src/config/config')
 const testRouter = require('./routes/testRoutes')
+const registerRouter = require('./routes/register')
+const loginRouter = require('./routes/login')
 
+app.use(morgan('combined'))
+app.use(bodyParser.json())
 app.use(cors())
 
 app.use((req, res, next) => {
@@ -13,19 +19,18 @@ app.use((req, res, next) => {
 })
 
 app.use('/test', testRouter)
+app.use('/register', registerRouter)
+app.use('/login', loginRouter)
 
-app.get('/', (req, res) => {
-    sql.query('SELECT username,password FROM mydatabase.USER;', function (err, recordset) {
-            
-        if (err) console.log(err)
+app.get('/',async (req, res) => {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
 
-        // send records as a response
-        // res.send(recordset);
-        console.log(recordset)
-        
-    });
+    let test = await conn.query('SELECT username,password FROM mydatabase.USER;')
+    await conn.commit()
+    console.log(test[0])
 })
 
-app.listen(PORT, () => {
-    console.log(`server started at port ${PORT}`)
+app.listen(config.port, () => {
+    console.log(`server started at port ${config.port}`)
 })

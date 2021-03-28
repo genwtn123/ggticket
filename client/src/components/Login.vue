@@ -1,34 +1,56 @@
 <template >
+  <v-container>
+    <v-app>
+      
       <form>
-        <Mainbar/>
         <!-- Sizes your content based upon application components -->
         <v-main>
+          
           <!-- Provides the application the proper gutter -->
           <div>
             <span style="font-size: 20px"><b>LOGIN</b></span>
             <v-text-field
               label="Username"
-              name="username"
               hide-details="auto"
+              v-model="username"
               required
             ></v-text-field>
-            <v-text-field label="Password" required></v-text-field>
+            <v-text-field v-model="password" label="Password" required></v-text-field>
           </div>
           <!-- If using vue-router -->
-          <button class="button is-info" type="submit">Submit</button>
+          <button class="button is-info" type="submit" @click="login">Submit</button>
         </v-main>
 
         <v-footer app> </v-footer>
       </form>
+    </v-app>
+  </v-container>
 </template>
 
 <script>
-import Mainbar from '../components/navbar/Mainbar'
+
 export default {
-  name: "Login",
+  name: "LOGIN",
   components:{
-    Mainbar
+
   },
-  data: () => ({}),
+  data: () => ({
+    username:"",
+    password:"",
+    error: null
+  }),
+  methods:{
+    async login(){
+      // try{
+      //   await AuthenticationService.register({
+      //     username:this.username,
+      //     password:this.password
+      //   })
+      // }catch(error){
+      //   this.error = error.response.data.error
+      // }
+
+    }
+  }
 };
 </script>

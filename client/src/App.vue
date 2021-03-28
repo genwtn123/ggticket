@@ -1,31 +1,23 @@
 <template>
   <div id="app">
     <v-app>
-    <Mainbar/>
-    <v-container>
-    <!-- <Login/> -->
-    <!-- <div id="nav">
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/login">login</router-link> |
-      <router-link to="/hello">hello</router-link>
-    </div> -->
-    <router-view/>
-    </v-container>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-app>
   </div>
 </template>
 <script>
 
-import Mainbar from '@/components/navbar/Mainbar'
 // import Login from '../src/components/Login'
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    Mainbar,
+
     // Login
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
@@ -37,16 +29,13 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
+

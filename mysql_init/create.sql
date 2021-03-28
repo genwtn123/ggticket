@@ -2,12 +2,12 @@ use mydatabase;
 
 create table USER(
     `user_id` int(10) primary key auto_increment,
-    `username` varchar(255),
+    `username` varchar(255) unique,
     `password` varchar(255),
     `user_fname` varchar(255),
     `user_lname` varchar(255),
     `user_tel` char(10),
-    `user_email` varchar(255),
+    `user_email` varchar(255) unique,
     `type` ENUM('CUSTOMER', 'ADMIN') not null
 );
 

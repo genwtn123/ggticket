@@ -1,10 +1,11 @@
 <template >
   <v-container>
     <v-app>
+      
       <form>
-        <Mainbar/>
         <!-- Sizes your content based upon application components -->
         <v-main>
+          
           <!-- Provides the application the proper gutter -->
           <div>
             <span style="font-size: 20px"><b>REGISTER</b></span>
@@ -26,11 +27,11 @@
 </template>
 
 <script>
-import Mainbar from '../components/navbar/Mainbar'
+
 export default {
   name: "Register",
   components:{
-    Mainbar
+
   },
   data: () => ({}),
 };
