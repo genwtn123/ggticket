@@ -22,7 +22,7 @@ class Customer extends User{
             return Promise.reject(err)
         } finally {
             console.log("finally");
-            conn.release
+            conn.release()
         }
     }
 }
