@@ -42,6 +42,7 @@ create table MOVIE(
     `viewer` int(10),
     `movie_length` int(10),
     `movie_image` varchar(255),
+    `movie_status` boolean,
     primary key(`movie_id`)
 );
 
@@ -60,8 +61,6 @@ create table TICKET(
 create table THEATER(
     `theater_id` int(10) auto_increment,
     `price` float(8,2),
-    `time_start` datetime default now(),
-    `time_finish` datetime default now(),
     primary key(`theater_id`)
 );
 
@@ -76,6 +75,7 @@ create table MOVIE_THEATER(
 create table SEAT(
     `seat_id` int(10) auto_increment,
     `type_of_seat` ENUM('honeymoon', 'normal'),
+    `seat_status` boolean,
     primary key(`seat_id`),
     `theater_id` int(10) not null,
     foreign key(`theater_id`) references THEATER(`theater_id`)
@@ -90,3 +90,12 @@ create table PAYMENT(
     primary key(`pay_id`),
     foreign key(`ticket_id`) references TICKET(`ticket_id`)
 );
+
+create table SHOWTIME(
+    `showtime_no` int(10) auto_increment,
+    `time_start` datetime default now(),
+    `time_finish` datetime default now(),
+    `movie_id` int(10),
+    primary key(`showtime_no`, `movie_id`),
+    foreign key(`movie_id`) references MOVIE(`movie_id`)
+)

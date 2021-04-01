@@ -14,7 +14,10 @@ const testRouter = require('./routes/testRoutes')
 const registerRouter = require('./routes/register')
 const loginRouter = require('./routes/login')
 const { MemoryStore } = require('express-session')
-const createadRouter = require('./routes/createad')
+const adRouter = require('./routes/ad')
+const ticketRouter = require('./routes/ticket')
+const movieRouter = require('./routes/movie')
+const theaterRoute = require('./routes/theater')
 
 app.use(express.static('static'))
 app.use(upload.array())
@@ -23,7 +26,7 @@ app.use(express.json())
 app.use(cors())
 app.use(session({
     store: new MemoryStore(),
-    secret: 'nigma',
+    secret: 'testtest123',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -42,7 +45,10 @@ app.use((req, res, next) => {
 app.use('/test', testRouter)
 app.use('/register', registerRouter)
 app.use('/login', loginRouter)
-app.use('/ad', createadRouter)
+app.use('/ad', adRouter)
+app.use('/ticket', ticketRouter)
+app.use('/movie', movieRouter)
+app.use('/theater', theaterRoute)
 
 app.get('/',async (req, res) => {
     const conn = await pool.getConnection()

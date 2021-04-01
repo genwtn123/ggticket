@@ -16,6 +16,17 @@ exports.checkSession = async (req, res, next) => {
     if(req.session.userdata){
         res.send(req.session.userdata)
     }else{
-        res.sendStatus(404)
+        res.send("No Session")
+    }
+}
+
+exports.logout = function(req, res){
+    var store = req.sessionStore;
+    if (store.sessions){
+        for (var sid in store.sessions){
+            store.destroy(sid, function(){
+                res.send("Logout");
+            });
+        }
     }
 }
