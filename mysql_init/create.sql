@@ -43,18 +43,18 @@ create table MOVIE(
     `movie_length` int(10),
     `movie_image` varchar(255),
     `movie_status` boolean,
-    primary key(`movie_id`)
+    `admin_id` int(10) not null,
+    primary key(`movie_id`),
+    foreign key(`admin_id`) references `ADMIN`(`admin_id`)
 );
 
 create table TICKET(
     `ticket_id` int(10) auto_increment,
     `price` float(8,2),
     `cus_id` int(10) not null,
-    `admin_id` int(10) not null,
     `movie_id` int(10) not null,
     primary key(`ticket_id`),
     foreign key(`cus_id`) references CUSTOMER(`cus_id`),
-    foreign key(`admin_id`) references `ADMIN`(`admin_id`),
     foreign key(`movie_id`) references MOVIE(`movie_id`)
 );
 
