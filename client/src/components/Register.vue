@@ -7,7 +7,7 @@
         <v-main>
           
           <!-- Provides the application the proper gutter -->
-          <div :key="keys"> 
+          <div>
             <span style="font-size: 20px"><b>REGISTER</b></span>
             <v-text-field
               v-model = "username"
@@ -20,7 +20,7 @@
             <v-text-field label="lastname" v-model='user_lname' required></v-text-field>
             <v-text-field label="Tel" v-model='user_tel' required></v-text-field>
             <v-text-field label="Email" v-model='user_email' required></v-text-field>
-            <v-select @click="change_status" v-model="type"
+            <v-select v-model="type" @click="change_status"
             :items="item"
             label="Type"
             solo
@@ -52,8 +52,7 @@ export default {
       type:"",
       item:['Staff', 'Audience'],
       admin_code: '',
-      admin_status: false,
-      keys: 0
+      admin_status: false
     }
   },
   props:['msg'],
@@ -99,11 +98,9 @@ export default {
     },
     change_status:function(){
       if(this.type == 'Staff'){
-        this.keys+=1
         this.admin_status = true
       }
       else{
-        this.keys+=1
         this.admin_status = false
       }
     }
