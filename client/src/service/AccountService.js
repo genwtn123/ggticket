@@ -11,7 +11,7 @@ class AccountService {
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
         console.log("json", json.type);
-        if (json.type === "Audience") {
+        if (json.type === "Customer") {
             return axios.post(registerCustomer, json).then(response => {
                 console.log(response);
                 return response;
@@ -19,7 +19,7 @@ class AccountService {
                 console.log(error.response);
                 return error.response;
             })
-        } else if(json.type === "Staff" && json.admin_code === "a13579"){
+        } else if(json.type === "Admin"){
             return axios.post(registerAdmin, json).then(response => {
                 console.log(response);
                 return response;

@@ -20,12 +20,11 @@
             <v-text-field label="lastname" v-model='user_lname' required></v-text-field>
             <v-text-field label="Tel" v-model='user_tel' required></v-text-field>
             <v-text-field label="Email" v-model='user_email' required></v-text-field>
-            <v-select v-model="type" @click="change_status"
+            <v-select v-model="type"
             :items="item"
             label="Type"
             solo
             ></v-select>
-            <v-text-field label="Code" v-model='admin_code' v-show="admin_status" required></v-text-field>
           </div>
           <!-- If using vue-router -->
           <button class="button is-info" type="submit" >Submit</button>
@@ -50,9 +49,8 @@ export default {
       user_email:'',
       user_tel:'',
       type:"",
-      item:['Admin', 'Audience'],
-      admin_code: '',
-      admin_status: false
+      item:['Admin', 'Customer'],
+
     }
   },
   props:['msg'],
@@ -66,7 +64,6 @@ export default {
       form.append('user_tel', this.user_tel);
       form.append('user_email', this.user_email);
       form.append('type', this.type)
-      form.append('admin_code', this.admin_code)
       
       return form
     },
@@ -89,18 +86,8 @@ export default {
       this.user_lname='',
       this.user_email='',
       this.user_tel='',
-      this.type='',
-      this.admin_code='',
-      this.admin_status = false
+      this.type=''
     },
-    change_status:function(){
-      if(this.type == 'Admin'){
-        this.admin_status = true
-      }
-      else{
-        this.admin_status = false
-      }
-    }
   },
 }
 </script>
