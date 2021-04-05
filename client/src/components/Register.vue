@@ -66,10 +66,11 @@ export default {
       form.append('user_tel', this.user_tel);
       form.append('user_email', this.user_email);
       form.append('type', this.type)
+      form.append('admin_code', this.admin_code)
+      
       return form
     },
     async createAccount(e){
-      if(this.admin_code == 'a13579' || this.type == 'Audience'){
       e.preventDefault();
       var result = await AccountService.createAccount(this.createForm());
       console.log("res", result.status)
@@ -78,10 +79,6 @@ export default {
         this.clearForm();
       }else{
         alert("err")
-      }
-      }
-      else{
-        alert("code incorrect please try again")
       }
     },
     clearForm:function(){

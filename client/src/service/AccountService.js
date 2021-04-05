@@ -19,7 +19,7 @@ class AccountService {
                 console.log(error.response);
                 return error.response;
             })
-        } else {
+        } else if(json.type === "Staff" && json.admin_code === "a13579"){
             return axios.post(registerAdmin, json).then(response => {
                 console.log(response);
                 return response;
