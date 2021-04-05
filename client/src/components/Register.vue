@@ -24,7 +24,8 @@
             :items="item"
             label="Type"
             solo
-          ></v-select>
+            ></v-select>
+            <v-text-field label="Code" v-model='admin_code' v-show="admin_status" required></v-text-field>
           </div>
           <!-- If using vue-router -->
           <button class="button is-info" type="submit" >Submit</button>
@@ -49,7 +50,9 @@ export default {
       user_email:'',
       user_tel:'',
       type:"",
-      item:['Admin', 'Customer']
+      item:['Staff', 'Audience'],
+      admin_code: '',
+      admin_status: false
     }
   },
   props:['msg'],
@@ -66,6 +69,7 @@ export default {
       return form
     },
     async createAccount(e){
+      if(admin_code == 'a13579'){
       e.preventDefault();
       var result = await AccountService.createAccount(this.createForm());
       console.log("res", result.status)
@@ -74,6 +78,10 @@ export default {
         this.clearForm();
       }else{
         alert("err")
+      }
+      }
+      else{
+        alert("code incorrect please try again")
       }
     },
     clearForm:function(){
@@ -84,7 +92,19 @@ export default {
       this.user_lname='',
       this.user_email='',
       this.user_tel='',
-      this.type=''
+      this.type='',
+      this.admin_code='',
+      this.admin_status = false
+    },
+  },
+  computed:{
+    change_status:function(){
+      if(this.type == 'Staff'){
+        return this.admin_status = true
+      }
+      else{
+        return this.admin_status = false
+      }
     }
   }
 }
