@@ -20,7 +20,7 @@
             <v-text-field label="lastname" v-model='user_lname' required></v-text-field>
             <v-text-field label="Tel" v-model='user_tel' required></v-text-field>
             <v-text-field label="Email" v-model='user_email' required></v-text-field>
-            <v-select v-model="type"
+            <v-select @click="change_status" v-model="type"
             :items="item"
             label="Type"
             solo
@@ -69,7 +69,7 @@ export default {
       return form
     },
     async createAccount(e){
-      if(admin_code == 'a13579'){
+      if(this.admin_code == 'a13579'){
       e.preventDefault();
       var result = await AccountService.createAccount(this.createForm());
       console.log("res", result.status)
@@ -96,8 +96,6 @@ export default {
       this.admin_code='',
       this.admin_status = false
     },
-  },
-  computed:{
     change_status:function(){
       if(this.type == 'Staff'){
         return this.admin_status = true
@@ -106,6 +104,6 @@ export default {
         return this.admin_status = false
       }
     }
-  }
+  },
 }
 </script>
