@@ -50,7 +50,7 @@ export default {
       user_email:'',
       user_tel:'',
       type:"",
-      item:['Staff', 'Audience'],
+      item:['Admin', 'Audience'],
       admin_code: '',
       admin_status: false
     }
@@ -94,7 +94,7 @@ export default {
       this.admin_status = false
     },
     change_status:function(){
-      if(this.type == 'Staff'){
+      if(this.type == 'Admin'){
         this.admin_status = true
       }
       else{
