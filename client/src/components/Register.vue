@@ -7,7 +7,7 @@
         <v-main>
           
           <!-- Provides the application the proper gutter -->
-          <div>
+          <div :key="keys"> 
             <span style="font-size: 20px"><b>REGISTER</b></span>
             <v-text-field
               v-model = "username"
@@ -52,7 +52,8 @@ export default {
       type:"",
       item:['Staff', 'Audience'],
       admin_code: '',
-      admin_status: false
+      admin_status: false,
+      keys: 0
     }
   },
   props:['msg'],
@@ -69,7 +70,7 @@ export default {
       return form
     },
     async createAccount(e){
-      if(this.admin_code == 'a13579'){
+      if(this.admin_code == 'a13579' || this.type == 'Audience'){
       e.preventDefault();
       var result = await AccountService.createAccount(this.createForm());
       console.log("res", result.status)
@@ -98,10 +99,12 @@ export default {
     },
     change_status:function(){
       if(this.type == 'Staff'){
-        return this.admin_status = true
+        this.keys+=1
+        this.admin_status = true
       }
       else{
-        return this.admin_status = false
+        this.keys+=1
+        this.admin_status = false
       }
     }
   },
