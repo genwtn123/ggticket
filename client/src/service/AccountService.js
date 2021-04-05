@@ -10,7 +10,7 @@ class AccountService {
         form.forEach((value, key) => object[key] = value);
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
-        console.log("json", json);
+        console.log("json", json.type);
         if (json.type === "Audience") {
             return axios.post(registerCustomer, json).then(response => {
                 console.log(response);
