@@ -25,7 +25,7 @@
             label="Type"
             solo
             ></v-select>
-            <v-text-field label="Code" v-model='admin_code' required></v-text-field>
+            <v-text-field label="Code" v-model='admin_code'></v-text-field>
           </div>
           <!-- If using vue-router -->
           <button class="button is-info" type="submit" >Submit</button>
@@ -69,7 +69,7 @@ export default {
       return form
     },
     async createAccount(e){
-      if(this.admin_code == 'a13579'){
+      if(this.admin_code == 'a13579' || this.type == 'Customer'){
       e.preventDefault();
       var result = await AccountService.createAccount(this.createForm());
       console.log("res", result.status)
@@ -79,7 +79,10 @@ export default {
       }else{
         alert("err")
       }
-    }},
+      }else{
+        alert("try again")
+      }
+    },
     clearForm:function(){
       alert("REGISTER SUCCESS")
       this.username = '',
