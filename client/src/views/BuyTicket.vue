@@ -1,26 +1,29 @@
 <template>
   <div>
     <v-container>
-      
       <v-app>
-        <Loginbar/>
-        <div class="">
-          <Login />
+        <div>
+          <BuyTicket/>
         </div>
       </v-app>
     </v-container>
   </div>
 </template>
 
+
+
 <script>
 // @ is an alias to /src
-import Login from "../components/Login.vue";
-import Loginbar from "../components/navbar/Loginbar.vue";
+
+// import Mainbar from "../components/navbar/Mainbar.vue";
+import BuyTicket from "../components/BuyTicketInfo";
 
 export default {
+  name: "Buyticket",
+  
   components: {
-    Login,
-    Loginbar
+    // Mainbar,
+    BuyTicket
   },
   data: () => ({}),
 };

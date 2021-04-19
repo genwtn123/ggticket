@@ -73,11 +73,11 @@ create table MOVIE_THEATER(
 );
 
 create table SEAT(
-    `seat_id` int(10) auto_increment,
+    `seat_no` int(10) auto_increment,
     `type_of_seat` ENUM('honeymoon', 'normal'),
     `seat_status` boolean,
-    primary key(`seat_id`),
     `theater_id` int(10) not null,
+    primary key(`seat_no`),
     foreign key(`theater_id`) references THEATER(`theater_id`)
 );
 

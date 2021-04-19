@@ -12,7 +12,7 @@
           style=" height: 400px; background-color: #ddd"
         >
           <img v-bind:src="image" style="width: 300px; height: 370px" />
-          <t
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -20,9 +20,8 @@
               top: 120px;
               color: #000080;
             "
-            >Movie</t
-          >
-          <t
+            >Movie</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -31,9 +30,8 @@
               left: 850px;
               color: #000080;
             "
-            >THE SPONGEBOB MOVIE SPONGE ON THE RUN</t
-          >
-          <t
+            >THE SPONGEBOB MOVIE SPONGE ON THE RUN</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -41,9 +39,8 @@
               top: 230px;
               color: #000080;
             "
-            >Movie category</t
-          >
-          <t
+            >Movie category</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -52,9 +49,8 @@
               left: 850px;
               color: #000080;
             "
-            >CARTOON</t
-          >
-          <t
+            >CARTOON</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -62,9 +58,8 @@
               top: 340px;
               color: #000080;
             "
-            >Director</t
-          >
-          <t
+            >Director</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 25px;
@@ -73,37 +68,33 @@
               left: 850px;
               color: #000080;
             "
-            >John Son, Alice, Jame</t
-          >
+            >John Son, Alice, Jame</p>
           
 
 
         </div>
         <div style=" height: 50px; background-color: #6495ED">
-          <t
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
             "
-            >Date 1-Apr-2021</t
-          >
-          <t
+            >Date 1-Apr-2021</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
               margin-left:20%;
               
             "
-            >Date 2-Apr-2021</t
-          >
-          <t
+            >Date 2-Apr-2021</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
               margin-left:20%;
             "
-            >Date 3-Apr-2021</t
-          >
+            >Date 3-Apr-2021</p>
         </div>
 
 
@@ -117,7 +108,7 @@
           style=" height: 150px; background-color: #bbb"
         >
         <img v-bind:src="image" style="width: 150px; height: 125px" />
-        <t
+        <p
             style="
               margin-left: 100px;
               font-size: 30px;
@@ -125,10 +116,9 @@
               top: 550px;
               color: #000080;
             "
-            >Theater</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">1</t>
-          <t
+            >Theater</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">1</p>
+          <p
             style="
               margin-left: 150px;
               font-size: 30px;
@@ -136,10 +126,9 @@
               top: 550px;
               color: #000080;
             "
-            >Movie</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</t>
-          <t
+            >Movie</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -147,10 +136,9 @@
               top: 550px;
               color: #000080;
             "
-            >Times</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">9.00-11.00</t>
-          <t
+            >Times</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">9.00-11.00</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -158,9 +146,8 @@
               top: 550px;
               color: #000080;
             "
-            >Languge</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">ไทย</t>
+            >Languge</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">ไทย</p>
           </div>
         </div>
         
@@ -174,7 +161,7 @@
           style=" height: 150px; background-color: #bbb"
         >
         <img v-bind:src="image" style="width: 150px; height: 125px" />
-        <t
+        <p
             style="
               margin-left: 100px;
               font-size: 30px;
@@ -182,10 +169,9 @@
               top: 730px;
               color: #000080;
             "
-            >Theater</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">2</t>
-          <t
+            >Theater</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">2</p>
+          <p
             style="
               margin-left: 150px;
               font-size: 30px;
@@ -193,10 +179,9 @@
               top: 730px;
               color: #000080;
             "
-            >Movie</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</t>
-          <t
+            >Movie</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -204,10 +189,9 @@
               top: 730px;
               color: #000080;
             "
-            >Times</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">9.00-11.00</t>
-          <t
+            >Times</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">9.00-11.00</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -215,9 +199,8 @@
               top: 730px;
               color: #000080;
             "
-            >Languge</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">ไทย</t>
+            >Languge</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">ไทย</p>
           </div>
         </div>
         <div
@@ -229,7 +212,7 @@
           style=" height: 150px; background-color: #bbb"
         >
         <img v-bind:src="image" style="width: 150px; height: 125px" />
-        <t
+        <p
             style="
               margin-left: 100px;
               font-size: 30px;
@@ -237,10 +220,9 @@
               top: 910px;
               color: #000080;
             "
-            >Theater</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">3</t>
-          <t
+            >Theater</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">3</p>
+          <p
             style="
               margin-left: 150px;
               font-size: 30px;
@@ -248,10 +230,9 @@
               top: 910px;
               color: #000080;
             "
-            >Movie</t
-          >
-          <t style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</t>
-          <t
+            >Movie</p>
+          <p style="margin-left: 150px; color: #000080; font-size: 30px">spongbob movie</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -259,10 +240,9 @@
               top: 910px;
               color: #000080;
             "
-            >Times</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">11.00-13.00</t>
-          <t
+            >Times</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">11.00-13.00</p>
+          <p
             style="
               margin-left: 50px;
               font-size: 30px;
@@ -270,9 +250,8 @@
               top: 910px;
               color: #000080;
             "
-            >Languge</t
-          >
-          <t style="margin-left: 50px; color: #000080; font-size: 30px">English</t>
+            >Languge</p>
+          <p style="margin-left: 50px; color: #000080; font-size: 30px">English</p>
           </div>
         </div>
     </div>
@@ -280,7 +259,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   data() {

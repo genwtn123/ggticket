@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const pool = require('./sql')
-const morgan = require('morgan')
 const config = require('./src/config/config')
 const session = require('express-session')
 const path = require("path")
@@ -22,22 +21,24 @@ const showtimeRoute = require('./routes/showtime')
 const paymentRoute = require('./routes/payment')
 const seatRoute = require('./routes/seat')
 
-app.use(express.static('static'))
-app.use(upload.array())
-app.use(morgan('combined'))
-app.use(express.json())
-app.use(cors())
-app.use(session({
+const sess = {
     store: new MemoryStore(),
     secret: 'testtest123',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false,
-        httpOnly: false,
-        maxAge: 1000*60
-    }
+        maxAge: 1000*60*60
+    },
+}
+app.use(session(sess));
+app.use(express.static('static'))
+app.use(upload.array())
+app.use(express.json())
+app.use(cors({
+    origin:true,
+    credentials:true
 }))
+
 
 app.use((req, res, next) => {
     console.log(`request at ${req.url} method ${req.method}`)

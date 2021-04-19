@@ -7,74 +7,60 @@
 
       <div class="column mt-5" style="margin-left: 200px">
         <img v-bind:src="image_movie" style="width: 300px; height: 370px" />
-        <t
+        <p
           style="
             margin-left: 50px;
             font-size: 25px;
-            position: absolute;
             top: 120px;
             color: #000080;
           "
-          >THE SPONGEBOB MOVIE SPONGE ON THE RUN</t
-        >
-        <t
+          >THE SPONGEBOB MOVIE SPONGE ON THE RUN</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 20px;
-            position: absolute;
             top: 200px;
           "
-          >1-April-2021 | 9.00</t
-        >
-        <t
+          >1-April-2021 | 9.00</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 20px;
-            position: absolute;
             top: 240px;
           "
-          >Theater 1 | ไทย</t
-        >
-        <t
+          >Theater 1 | ไทย</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 20px;
-            position: absolute;
             left: 900px;
             top: 200px;
           "
-          >Seat</t
-        >
-        <t
+          >Seat</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 25px;
-            position: absolute;
             top: 240px;
             left: 900px;
             color: #000080;
           "
-          >B10</t
-        >
-        <t
+          >B10</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 20px;
-            position: absolute;
             top: 340px;
           "
-          >Total price</t
-        >
-        <t
+          >Total price</p>
+        <p
           style="
             margin-left: 50px;
             font-size: 25px;
-            position: absolute;
             top: 380px;
             color: #000080;
           "
-          >200 Baht</t
-        >
+          >200 Baht</p>
       </div>
       <div style="height: 50px; background-color: #6495ed"></div>
 
@@ -107,7 +93,7 @@
 </template>
 
 <script>
-import axios from "axios";
+
 
 export default {
   data() {

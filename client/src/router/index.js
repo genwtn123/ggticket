@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
+import Buyticket from '../views/BuyTicket.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/buy',
+        name: 'Buyticket',
+        component: Buyticket
     }
 
 ]
@@ -29,5 +35,9 @@ const router = new VueRouter({
     routes,
     mode:"history"
 })
+
+// router.beforeEach((to, from, next) =>{
+
+// })
 
 export default router

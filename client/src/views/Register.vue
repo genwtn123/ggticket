@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <v-container>
-      <Mainbar/>
+      <Loginbar/>
       <v-app>
         <Register />
       </v-app>
@@ -12,13 +12,13 @@
 <script>
 // @ is an alias to /src
 import Register from "@/components/Register.vue";
-import Mainbar from "../components/navbar/Mainbar.vue";
+import Loginbar from "../components/navbar/Loginbar.vue";
 
 export default {
   name: "Home",
   components: {
     Register,
-    Mainbar
+    Loginbar
   },
 };
 </script>

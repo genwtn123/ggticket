@@ -15,7 +15,7 @@
               hide-details="auto"
               required
             ></v-text-field>
-            <v-text-field label="Password" v-model='password' required></v-text-field>
+            <v-text-field label="Password" type="password" v-model='password' required></v-text-field>
             <v-text-field label="firstname" v-model='user_fname' required></v-text-field>
             <v-text-field label="lastname" v-model='user_lname' required></v-text-field>
             <v-text-field label="Tel" v-model='user_tel' required></v-text-field>
@@ -65,7 +65,6 @@ export default {
       form.append('user_tel', this.user_tel);
       form.append('user_email', this.user_email);
       form.append('type', this.type)
-      
       return form
     },
     async createAccount(e){
