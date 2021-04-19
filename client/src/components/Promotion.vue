@@ -1,21 +1,24 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <v-container style="margin-top:40px;">
       <div
-        class="column mt-5"
+        class="column"
         style="height: 50px; text-align: center;"
       >
         <p style="font-size: 25px; color: #000080">โปรโมชั่นสุดพิเศษ</p>
       </div>
 
       <div class="column" style="height: 50px; background-color: #6495ed">
-        <t style="font-size: 25px; color: #000080; margin-left: 270px"
-          >ทั้งหมด</t
+        <div class="row">
+            <div class="column"><p style="font-size: 25px; color: #000080;"
+          >ทั้งหมด</p
         >
-        <t style="font-size: 25px; color: #000080; margin-left: 270px">Movie</t>
-        <t style="font-size: 25px; color: #000080; margin-left: 270px"
-          >Food & Beverage</t
-        >
+        </div>
+            <div class="column"><p style="font-size: 25px; color: #000080;">Movie</p></div>
+            <div class="column"><p style="font-size: 25px; color: #000080;"
+          >Food & Beverage</p></div>
+        </div>
+        
+       
       </div>
 
       <div class="is-multiline columns is-variable is-8">
@@ -102,13 +105,13 @@
             </div>
           </div>
         </div>
+
+        
       </div>
-    </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   data() {

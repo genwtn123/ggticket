@@ -3,7 +3,11 @@
     <v-app-bar app color="primary">
       <router-link to="/" class="pr-5" >Home</router-link>
       <router-link to="/login" class="pr-5" >Login</router-link>
-      <router-link to="/register">Register</router-link>
+      <router-link to="/register" class="pr-5">Register</router-link>
+      <router-link to="/buyticket"  class="pr-5">BuyTicket</router-link>
+      <router-link to="/buyticketinfo" class="pr-5">BuyTicketInfo</router-link>
+      <router-link to="/buyfood" class="pr-5">Buyfood</router-link>
+      <router-link to="/promotion">Promotion</router-link>
     </v-app-bar>
   </div>
 </template>
