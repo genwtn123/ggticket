@@ -12,24 +12,199 @@
         <t style="margin-left:20%">Theater 1 | ไทย</t><br>
         </div>
         <div style="margin-left:420px; text-align: left; margin-top: 20px;">
-        <t style="font-size: 25px;">Seat </t>
-        <t style="margin-left:20px; font-size: 30px; color: #000080">B10</t>
-        </div>
-        <div style="margin-left:420px; text-align: left; margin-top: 20px;">
-        <t style="font-size: 25px; margin-top:20px;">Total price</t>
-        <t style="margin-left:20px; font-size: 30px; color: #000080">200</t>
-        <t style="margin-left:20px; font-size: 30px;">Baht</t>
         </div>
     </div>
     <div style="height: 50px; background-color: #6495ed"></div>
     
     <div class="column mt-5">
-        <img v-bind:src="image_chair" style="width: 50px; height: 60px" /><br>
+        <img v-bind:src="image_chair" style="height: 60px" /><br>
         <t>Executive</t><br>
-        <t>350 บาท</t>
+        <t>200 บาท</t>
     </div>
 
-
+    <div class="row">
+    <div class="column-33" style="font-size:40px; margin-right:5%; color:gray">
+    <p>H</p>
+    <p>G</p>
+    <p>F</p>
+    <p>E</p>
+    <p>D</p>
+    <p>C</p>
+    <p>B</p>
+    <p>A</p>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column-33 mt-1">
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    <img v-bind:src="image_chair" style="height: 50px; margin:5px; margin-top:12px;" /><br>
+    </div>
+    <div class="column mt-1">
+    <img v-bind:src="image_movie" style="width: 250px; height: 300px" />
+    <p style="font-size: 20px;">ที่นั่งที่เลือก</p>
+    <p style="font-size: 25px; color: #000080;">A1 A2 A3 H2 D2 E3 C4 D5 D6 D7 B3 E10</p>
+    <p style="font-size: 20px;">ราคารวม</p>
+    <p style="font-size: 25px; color: #000080;">2400 Baht</p>
+     <button
+            style="
+              width: 250px;
+              height: 50px;
+              font-size: 30px;
+              border-radius: 4px;
+              margin-top: 20px;
+              margin-bottom: 120px;
+              background-color: #6495ed;
+              color: white;
+            "
+          >
+            Continue
+          </button>
+    </div>
+    </div>
     
       
   </div>
