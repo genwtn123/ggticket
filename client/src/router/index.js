@@ -9,6 +9,8 @@ import Buyfood from '../views/Buyfood.vue'
 import BuyTicket from '../views/BuyTicket.vue'
 import BuyTicketInfo from '../views/BuyTicketInfo.vue'
 import Promotion from '../views/Promotion.vue'
+import Seat from '../views/Seat.vue'
+
 
 Vue.use(VueRouter)
 
@@ -47,6 +49,11 @@ const routes = [
         path: '/promotion',
         name: 'Promotion',
         component: Promotion
+    },
+    {
+        path: '/seat',
+        name: 'Seat',
+        component: Seat
     }
 
 ]

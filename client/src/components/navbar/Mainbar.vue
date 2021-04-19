@@ -7,7 +7,8 @@
       <router-link to="/buyticket"  class="pr-5">BuyTicket</router-link>
       <router-link to="/buyticketinfo" class="pr-5">BuyTicketInfo</router-link>
       <router-link to="/buyfood" class="pr-5">Buyfood</router-link>
-      <router-link to="/promotion">Promotion</router-link>
+      <router-link to="/promotion" class="pr-5">Promotion</router-link>
+      <router-link to="/seat">Seat</router-link>
     </v-app-bar>
   </div>
 </template>
