@@ -1,21 +1,37 @@
 <template >
   <div id="nav">
-    <v-app-bar app color="primary">
-      <router-link to="/" class="pr-5" >Home</router-link>
-      <router-link to="/login" class="pr-5" >Login</router-link>
-      <router-link to="/register" class="pr-5">Register</router-link>
-      <router-link to="/buyticket"  class="pr-5">BuyTicket</router-link>
-      <router-link to="/buyticketinfo" class="pr-5">BuyTicketInfo</router-link>
-      <router-link to="/buyfood" class="pr-5">Buyfood</router-link>
-      <router-link to="/promotion" class="pr-5">Promotion</router-link>
-      <router-link to="/seat">Seat</router-link>
+    <v-app-bar app color="black">
+      <router-link to="/" class="pr-5">หน้าหลัก</router-link>
+      <router-link to="/movie" class="pr-5">ภาพยนต์</router-link>
+      <router-link to="/theater">โรงภาพยนต์</router-link>
+      <v-btn depressed color="black" class="pr-5" @click="logout"> Logout </v-btn>
     </v-app-bar>
   </div>
 </template>
 
 
+<script>
+import AccountService from '../../service/AccountService';
 
-<style lang="scss">
+export default {
+  name: "Mainbar",
+  components: {},
+  data: () => ({
+    username: "",
+    password: "",
+    error: null,
+  }),
+  methods: {
+      async logout(){
+          await AccountService.Logout()
+          this.$router.push({name:"Login"})
+      }
+  }
+
+};
+</script>
+
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,10 +42,15 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: snow;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: salmon;
+}
+
+#nav button {
+  font-weight: bold;
+  color: snow;
 }
 </style>

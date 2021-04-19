@@ -75,6 +75,7 @@ class User {
         try{
             let stmt = 'select * from USER where username = ? and password = ?'
             let keep = await conn.query(stmt, [this.username, this.password])
+            console.log("asas", keep[0])
             await conn.commit()
             if(keep[0].length == 0){
                 return Promise.reject("Invalid Username or Password")

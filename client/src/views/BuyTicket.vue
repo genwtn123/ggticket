@@ -1,10 +1,8 @@
 <template>
   <div>
     <v-container>
-      
       <v-app>
-        <Mainbar/>
-        <div class="">
+        <div>
           <BuyTicket/>
         </div>
       </v-app>
@@ -12,15 +10,20 @@
   </div>
 </template>
 
+
+
 <script>
 // @ is an alias to /src
-import BuyTicket from "../components/BuyTicket.vue";
-import Mainbar from "../components/navbar/Mainbar.vue";
+
+// import Mainbar from "../components/navbar/Mainbar.vue";
+import BuyTicket from "../components/BuyTicketInfo";
 
 export default {
+  name: "Buyticket",
+  
   components: {
-    BuyTicket,
-    Mainbar
+    // Mainbar,
+    BuyTicket
   },
   data: () => ({}),
 };

@@ -3,7 +3,7 @@
     <v-container>
       
       <v-app>
-        <Mainbar/>
+        <Loginbar/>
         <div class="">
           <Login />
         </div>
@@ -15,12 +15,12 @@
 <script>
 // @ is an alias to /src
 import Login from "../components/Login.vue";
-import Mainbar from "../components/navbar/Mainbar.vue";
+import Loginbar from "../components/navbar/Loginbar.vue";
 
 export default {
   components: {
     Login,
-    Mainbar
+    Loginbar
   },
   data: () => ({}),
 };

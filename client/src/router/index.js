@@ -1,16 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Login from '../components/Login.vue'
 import Register from '../views/Register.vue'
-// import Hello from '../views/Hello.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
-import Buyfood from '../views/Buyfood.vue'
-import BuyTicket from '../views/BuyTicket.vue'
-import BuyTicketInfo from '../views/BuyTicketInfo.vue'
-import Promotion from '../views/Promotion.vue'
-import Seat from '../views/Seat.vue'
-
+import Buyticket from '../views/BuyTicket.vue'
 
 Vue.use(VueRouter)
 
@@ -31,29 +24,9 @@ const routes = [
         component: Home
     },
     {
-        path: '/buyfood',
-        name: 'Buyfood',
-        component: Buyfood
-    },
-    {
-        path: '/buyticket',
-        name: 'BuyTicket',
-        component: BuyTicket
-    },
-    {
-        path: '/buyticketinfo',
-        name: 'BuyTicketInfo',
-        component: BuyTicketInfo
-    },
-    {
-        path: '/promotion',
-        name: 'Promotion',
-        component: Promotion
-    },
-    {
-        path: '/seat',
-        name: 'Seat',
-        component: Seat
+        path: '/buy',
+        name: 'Buyticket',
+        component: Buyticket
     }
 
 ]
@@ -62,5 +35,9 @@ const router = new VueRouter({
     routes,
     mode:"history"
 })
+
+// router.beforeEach((to, from, next) =>{
+
+// })
 
 export default router
