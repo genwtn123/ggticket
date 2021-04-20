@@ -1,38 +1,24 @@
 <template>
-  <div class="container" :key="key" style="margin-top:40px;">
-    <div class="row">
-      <div class="column m-5" style="height: 50px; text-align: center">
-        <p style="font-size: 25px; color: #000080">
-          ชุดป๊อปคอร์นและเครื่องดื่ม
-        </p>
-      </div>
+  <div class="containertop" :key="key">
+    <div class="column">
+      <p class="medfontblue">การชำระเงิน</p>
+    </div>
 
+    <div class="row">
       <div class="is-multiline columns is-variable is-8">
         <div id="card_product" class="column is-one-fifth m-5">
           <div class="card">
-            <div class="card-image" style="width: 250px">
+            <div class="card-image">
               <img v-bind:src="image_popcorn" alt="Placeholder image" />
             </div>
             <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px; color: #000080">
-                  Popcorn Salted Caramel Lemon
-                </p>
-                <p style="font-size: 25px">200 Baht</p>
-                <div style="margin-top: 20px">
-                  <button
-                    @click="decrease(0, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    -
-                  </button>
-                  <t style="font-size: 30px; margin: 25px">{{ amount[0] }}</t>
-                  <button
-                    @click="increase(0, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    +
-                  </button>
+              <div class="media-content">
+                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
+                <p class="medfont">200 Baht</p>
+                <div>
+                  <button @click="decrease(0, 200)" class="buttonMP">-</button>
+                  <t class="fontcount">{{ amount[0] }}</t>
+                  <button @click="increase(0, 200)" class="buttonMP">+</button>
                 </div>
               </div>
             </div>
@@ -41,29 +27,17 @@
 
         <div id="card_product" class="column is-one-fifth m-5">
           <div class="card">
-            <div class="card-image" style="width: 250px">
+            <div class="card-image">
               <img v-bind:src="image_coke" alt="Placeholder image" />
             </div>
             <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px; color: #000080">
-                  Popcorn Salted Caramel Lemon
-                </p>
-                <p style="font-size: 25px">100 Baht</p>
-                <div style="margin-top: 20px">
-                  <button
-                    @click="decrease(1, 100)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    -
-                  </button>
-                  <t style="font-size: 30px; margin: 25px">{{ amount[1] }}</t>
-                  <button
-                    @click="increase(1, 100)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    +
-                  </button>
+              <div class="media-content">
+                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
+                <p class="medfont">100 Baht</p>
+                <div>
+                  <button @click="decrease(1, 100)" class="buttonMP">-</button>
+                  <t class="fontcount">{{ amount[1] }}</t>
+                  <button @click="increase(1, 100)" class="buttonMP">+</button>
                 </div>
               </div>
             </div>
@@ -72,29 +46,17 @@
 
         <div id="card_product" class="column is-one-fifth m-5">
           <div class="card">
-            <div class="card-image" style="width: 250px">
+            <div class="card-image">
               <img v-bind:src="image_popcorn" alt="Placeholder image" />
             </div>
             <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px; color: #000080">
-                  Popcorn Salted Caramel Lemon
-                </p>
-                <p style="font-size: 25px">200 Baht</p>
-                <div style="margin-top: 20px">
-                  <button
-                    @click="decrease(2, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    -
-                  </button>
-                  <t style="font-size: 30px; margin: 25px">{{ amount[2] }}</t>
-                  <button
-                    @click="increase(2, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    +
-                  </button>
+              <div class="media-content">
+                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
+                <p class="medfont">200 Baht</p>
+                <div>
+                  <button @click="decrease(2, 200)" class="buttonMP">-</button>
+                  <t class="fontcount">{{ amount[2] }}</t>
+                  <button @click="increase(2, 200)" class="buttonMP">+</button>
                 </div>
               </div>
             </div>
@@ -103,29 +65,17 @@
 
         <div id="card_product" class="column is-one-fifth m-5">
           <div class="card">
-            <div class="card-image" style="width: 250px">
+            <div class="card-image">
               <img v-bind:src="image_coke" alt="Placeholder image" />
             </div>
             <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px; color: #000080">
-                  Popcorn Salted Caramel Lemon
-                </p>
-                <p style="font-size: 25px">100 Baht</p>
-                <div style="margin-top: 20px">
-                  <button
-                    @click="decrease(3, 100)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    -
-                  </button>
-                  <t style="font-size: 30px; margin: 25px">{{ amount[3] }}</t>
-                  <button
-                    @click="increase(3, 100)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    +
-                  </button>
+              <div class="media-content">
+                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
+                <p class="medfont">100 Baht</p>
+                <div>
+                  <button @click="decrease(3, 100)" class="buttonMP">-</button>
+                  <t class="fontcount">{{ amount[3] }}</t>
+                  <button @click="increase(3, 100)" class="buttonMP">+</button>
                 </div>
               </div>
             </div>
@@ -134,29 +84,17 @@
 
         <div id="card_product" class="column is-one-fifth m-5">
           <div class="card">
-            <div class="card-image" style="width: 250px">
+            <div class="card-image">
               <img v-bind:src="image_popcorn" alt="Placeholder image" />
             </div>
             <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px; color: #000080">
-                  Popcorn Salted Caramel Lemon
-                </p>
-                <p style="font-size: 25px">200 Baht</p>
-                <div style="margin-top: 20px">
-                  <button
-                    @click="decrease(4, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    -
-                  </button>
-                  <t style="font-size: 30px; margin: 25px">{{ amount[4] }}</t>
-                  <button
-                    @click="increase(4, 200)"
-                    style="border-radius: 2px; font-size: 25px; width: 50px"
-                  >
-                    +
-                  </button>
+              <div class="media-content">
+                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
+                <p class="medfont">200 Baht</p>
+                <div>
+                  <button @click="decrease(4, 200)" class="buttonMP">-</button>
+                  <t class="fontcount">{{ amount[4] }}</t>
+                  <button @click="increase(4, 200)" class="buttonMP">+</button>
                 </div>
               </div>
             </div>
@@ -166,32 +104,16 @@
 
       <div id="card_product" class="column is-one-two">
         <div class="card">
-            <t style="font-size: 40px; color: #000000">
-              Payment Amount
-            </t>
-            <t style="font-size: 40px; color: #000080">
-             {{ totalprice }}
-            </t>
-            <t style="font-size: 40px; color: #000000">
-              Baht
-            </t>
+          <t class="fontverybig"> Payment Amount </t>
+          <t class="fontverybigblue">
+            {{ totalprice }}
+          </t>
+          <t class="fontverybig"> Baht </t>
         </div>
       </div>
       <div id="card_product" class="column is-one-two">
         <div class="card">
-          <button
-            style="
-              font-size: 28px;
-              width: 50%;
-              height: 40px;
-              margin-top: 20px;
-              margin-bottom: 120px;
-              color: white;
-              background-color: #6495ed;
-            "
-          >
-            Continue
-          </button>
+          <button class="buttoncon">Continue</button>
         </div>
       </div>
     </div>
@@ -232,4 +154,40 @@ export default {
 </script>
 
 <style>
+.containertop {
+  margin-top: 40px;
+}
+.smallfontblue {
+  font-size: 20px;
+  color: #000080;
+}
+.medfont {
+  font-size: 25px;
+}
+.buttonMP {
+  border-radius: 2px solid;
+  font-size: 25px;
+  width: 50px;
+}
+.fontcount {
+  font-size: 30px;
+  margin: 25px;
+}
+.fontverybig {
+  font-size: 40px;
+  color: #000000;
+}
+.fontverybigblue {
+  font-size: 40px;
+  color: #000080;
+}
+.buttoncon {
+  font-size: 28px;
+  width: 50%;
+  height: 40px;
+  margin-top: 20px;
+  margin-bottom: 120px;
+  color: white;
+  background-color: #6495ed;
+}
 </style>
