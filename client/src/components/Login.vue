@@ -1,33 +1,65 @@
-<template >
-  <v-container>
+<template>
+  <v-fluid >
     <form @submit="login" method="get">
       <!-- Sizes your content based upon application components -->
-      <v-main>
+      <v-main >
         <!-- Provides the application the proper gutter -->
-        <div>
-          <span style="font-size: 20px"><b>LOGIN</b></span>
+          <v-banner elevation="24" class="login_box">
+        <div class="columns p-5">
+          
+        <div class="column pr-6" style="padding-top:10%">
+          <img src="../assets/Be_our.png" alt="" class="regis">
+          <div class="regis_txt">Register</div>
+        </div>
+
+        <div class="vl pr-6"></div>
+
+        <div class="column py-6">
+          <div style="font-size: 45px; color:#FFFFFF;" class="py-6">LOGIN</div>
+          
+          <div style="text-align:left; color:#9D9FA3" class="py-6">
+          Username
+
           <v-text-field
-            label="Username"
+
             hide-details="auto"
             v-model="username"
+            label="username"
             required
-          ></v-text-field>
+            filled
+            rounded
+            dense
+            solo
+            class="pt-2"
+          ></v-text-field></div>
+
+          <div style="text-align:left; color:#9D9FA3"  class="py-6">
+          Password
           <v-text-field
             v-model="password"
             type="password"
-            label="Password"
+            label="password"
             required
-          ></v-text-field>
-        </div>
-        <!-- If using vue-router -->
-        <button class="button is-info" type="submit" @click="login">
+            filled
+            rounded
+            dense
+            solo
+            class="pt-2"
+          ></v-text-field></div>
+          <!-- If using vue-router -->
+        <button class="button" type="submit" @click="login" style="background:#FD7014; color:#FFFFFF;">
           Submit
-        </button>
+        </button> 
+        </div>
+        
+        </div>
+        </v-banner>
       </v-main>
+     
 
       <v-footer app> </v-footer>
     </form>
-  </v-container>
+  </v-fluid>
 </template>
 
 <script>
@@ -62,3 +94,36 @@ export default {
   },
 };
 </script>
+
+<style>
+.login_box {
+  margin-top: 15%;
+  background: #222831 !important;
+  width: 800px;
+}
+
+.regis {
+  width: 270px;
+  height: 225px;
+}
+
+.vl {
+  border-left: 2px solid #9D9FA3;
+}
+
+.regis_txt {
+  color: #EEEEEE;
+  text-decoration: underline;
+  text-decoration-color: #FD7014;
+}
+
+/* #login {
+      background: url(../assets/LoginBG.png);
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    } */
+
+</style>
