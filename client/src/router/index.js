@@ -4,6 +4,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Buyticket from '../views/BuyTicket.vue'
+import History from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
         path: '/buy',
         name: 'Buyticket',
         component: Buyticket
+    },
+    {
+        path: '/history',
+        name: 'History',
+        component: History
     }
 
 ]
