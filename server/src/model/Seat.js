@@ -1,8 +1,8 @@
 const pool = require('../../sql')
 
 class Seat{
-    constructor(seat_id, type_of_seat, seat_status, theater_id){
-        this.seat_id = seat_id
+    constructor(seat_no, type_of_seat, seat_status, theater_id){
+        this.seat_no = seat_no
         this.type_of_seat = type_of_seat
         this.seat_status = seat_status
         this.theater_id = theater_id
@@ -30,8 +30,8 @@ class Seat{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'update SEAT set type_of_seat=?, seat_status=?, theater_id=? where seat_id=?'
-            let keep = await conn.query(stmt, [this.type_of_seat, this.seat_status, this.theater_id, this.seat_id])
+            let stmt = 'update SEAT set type_of_seat=?, seat_status=?, theater_id=? where seat_no=?'
+            let keep = await conn.query(stmt, [this.type_of_seat, this.seat_status, this.theater_id, this.seat_no])
             await conn.commit()
             return Promise.resolve()
         }catch(err){
@@ -47,8 +47,8 @@ class Seat{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'delete from SEAT where seat_id=?;'
-            let keep = await conn.query(stmt, [this.seat_id])
+            let stmt = 'delete from SEAT where seat_no=?;'
+            let keep = await conn.query(stmt, [this.seat_no])
             await conn.commit()
             return Promise.resolve()
         }catch(err){
