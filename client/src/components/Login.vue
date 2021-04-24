@@ -60,9 +60,7 @@ export default {
     password: "",
     error: null,
   }),
-  async created() {
-    console.log(await AccountService.getSession());
-  },
+  
   methods: {
     async login(e) {
       e.preventDefault();

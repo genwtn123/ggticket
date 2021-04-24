@@ -33,7 +33,7 @@ const routes = [
 
         path: '/buy',
         name: 'Buyticket',
-        component: Buyticket
+        component: BuyTicket
     },
     {
         path: '/history',
