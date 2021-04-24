@@ -1,9 +1,10 @@
 <template >
   <v-app>
-    <v-main fluid class="login_bg">
+    <v-main fluid class="bg">
+        <Mainbar/>
     <v-container >
         <div class="">
-          <Login />
+          <History/>
         </div>
     </v-container>
     </v-main>
@@ -12,23 +13,22 @@
 
 <style>
 
-.login_bg {
-      background: url(../assets/LoginBG.png);
+.bg {
+      background-color: #222831;
       max-width: 100% !important;
-      background-size: cover;
-      /* background-position: center; */
     }
 
 </style>
 
 <script>
 // @ is an alias to /src
-import Login from "../components/Login.vue";
-// import Loginbar from "../components/navbar/Loginbar.vue";
+import History from "../components/History.vue";
+import Mainbar from "../components/navbar/Mainbar.vue";
 
 export default {
   components: {
-    Login
+    Mainbar,
+    History
   },
   data: () => ({}),
 };
