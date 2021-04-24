@@ -50,7 +50,7 @@ export default {
       user_email:'',
       user_tel:'',
       type:"",
-      item:['Admin', 'Customer'],
+      item:['Staff', 'Audience'],
       admin_code:''
     }
   },

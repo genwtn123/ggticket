@@ -22,7 +22,7 @@ exports.delSeat = async (req, res, next) => {
 }
 
 exports.editSeat = async (req, res, next) => {
-    let seat = new Seat(req.params.id)
+    let seat = new Seat(req.params.id, req.body.type_of_seat, req.body.seat_status, req.body.theater_id)
     try{
         await seat.editSeat()
         res.send(seat)
