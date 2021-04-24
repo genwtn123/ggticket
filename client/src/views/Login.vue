@@ -1,26 +1,21 @@
-<template>
-  <div>
-    <v-container>
-      
-      <v-app>
-        <Loginbar/>
+<template >
+  <div >
+    <v-fluid >
         <div class="">
           <Login />
         </div>
-      </v-app>
-    </v-container>
+    </v-fluid>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Login from "../components/Login.vue";
-import Loginbar from "../components/navbar/Loginbar.vue";
+// import Loginbar from "../components/navbar/Loginbar.vue";
 
 export default {
   components: {
-    Login,
-    Loginbar
+    Login
   },
   data: () => ({}),
 };
