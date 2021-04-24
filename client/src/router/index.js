@@ -3,8 +3,13 @@ import VueRouter from 'vue-router'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
-import Buyticket from '../views/BuyTicket.vue'
+
 import History from '../views/History.vue'
+import Buyfood from '../views/Buyfood.vue'
+import BuyTicket from '../views/BuyTicket.vue'
+import BuyTicketInfo from '../views/BuyTicketInfo.vue'
+import Promotion from '../views/Promotion.vue'
+import Seat from '../views/Seat.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +30,7 @@ const routes = [
         component: Home
     },
     {
+
         path: '/buy',
         name: 'Buyticket',
         component: Buyticket
@@ -33,6 +39,27 @@ const routes = [
         path: '/history',
         name: 'History',
         component: History
+    },
+    {
+        path: '/buyfood',
+        name: 'Buyfood',
+        component: Buyfood
+    },
+    {
+        path: '/buyticketinfomation',
+        name: 'BuyTicketInfo',
+        component: BuyTicketInfo
+    },
+    {
+        path: '/promotion',
+        name: 'Promotion',
+        component: Promotion
+    },
+    {
+        path: '/seat',
+        name: 'Seat',
+        component: Seat
+
     }
 
 ]
