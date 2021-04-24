@@ -10,10 +10,8 @@
         <img :src="image" class="img_history" />
 
         <div class="column">
-          <div class="card-content">
-            <div class="">
+          <div style="padding-left:2%">
               <p class="history_card_title">Spongbob Movie</p>
-            </div>
 
             <div class="columns">
               <div class="column history_card_layout">
@@ -112,6 +110,7 @@ hr {
   line-height: 22px;
   letter-spacing: -0.408px;
   color: #9d9fa3;
+  padding-left: 5%;
 }
 
 .history_card_layout {

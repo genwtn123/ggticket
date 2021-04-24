@@ -1,11 +1,11 @@
 <template >
   <div id="nav">
     <v-app-bar app color="black">
-      <router-link to="/" class="pr-5">หน้าหลัก</router-link>
       <router-link to="/movie" class="pr-5">ภาพยนต์</router-link>
       <router-link to="/theater">โรงภาพยนต์</router-link>
       <v-btn depressed color="black" class="pr-5" @click="logout"> Logout </v-btn>
     </v-app-bar>
+
   </div>
 </template>
 
