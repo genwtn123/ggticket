@@ -8,20 +8,21 @@ create table USER(
     `user_lname` varchar(255),
     `user_tel` char(10),
     `user_email` varchar(255) unique,
-    `type` ENUM('CUSTOMER', 'ADMIN') not null
+    `user_image` varchar(255),
+    `type` ENUM('AUDIENCE', 'STAFF') not null
 );
 
-create table CUSTOMER(
-    `cus_id` int(10) auto_increment,
+create table AUDIENCE(
+    `audience_id` int(10) auto_increment,
     `user_id` int(10),
-    primary key(`cus_id`, `user_id`),
+    primary key(`audience_id`, `user_id`),
     foreign key(`user_id`) references USER(`user_id`)
 );
 
-create table `ADMIN`(
-    `admin_id` int(10) auto_increment,
+create table `THEATER_STAFF`(
+    `staff_id` int(10) auto_increment,
     `user_id` int(10) ,
-    primary key(`admin_id`, `user_id`),
+    primary key(`staff_id`, `user_id`),
     foreign key(`user_id`) references USER(`user_id`)
 );
 
@@ -30,9 +31,9 @@ create table ADVERTISEMENT(
     `ad_name` varchar(255),
     `ad_detail` varchar(255),
     `ad_image`varchar(255),
-    `admin_id` int(10) not null,
+    `staff_id` int(10) not null,
     primary key(`ad_id`),
-    foreign key(`admin_id`) references `ADMIN`(`admin_id`)
+    foreign key(`staff_id`) references `THEATER_STAFF`(`staff_id`)
 );
 
 create table MOVIE(
@@ -43,39 +44,47 @@ create table MOVIE(
     `movie_length` int(10),
     `movie_image` varchar(255),
     `movie_status` boolean,
-    `admin_id` int(10) not null,
-    primary key(`movie_id`),
-    foreign key(`admin_id`) references `ADMIN`(`admin_id`)
+    `movie_releasetime` DATE,
+    `movie_language` varchar(255),
+    `staff_id` int(10) not null,
+    primary key(`movie_id`)
+);
+
+create table SHOWTIME(
+    `showtime_no` int(10) auto_increment,
+    `time_start` datetime default now(),
+    `time_finish` datetime default now(),
+    `movie_id` int(10) not null,
+    `staff_id` int(10) not null,
+    primary key(`showtime_no`),
+    foreign key(`movie_id`) references MOVIE(`movie_id`),
+    foreign key(`staff_id`) references THEATER_STAFF(`staff_id`)
 );
 
 create table TICKET(
     `ticket_id` int(10) auto_increment,
-    `price` float(8,2),
-    `cus_id` int(10) not null,
-    `movie_id` int(10) not null,
+    `ticket_price` float(8,2),
+    `ticket_datetime` DATETIME,
+    `audience_id` int(10) not null,
+    `showtime_no` int(10) not null,
     primary key(`ticket_id`),
-    foreign key(`cus_id`) references CUSTOMER(`cus_id`),
-    foreign key(`movie_id`) references MOVIE(`movie_id`)
+    foreign key(`audience_id`) references AUDIENCE(`audience_id`),
+    foreign key(`showtime_no`) references SHOWTIME(`showtime_no`)
 );
 
 create table THEATER(
     `theater_id` int(10) auto_increment,
-    `price` float(8,2),
-    primary key(`theater_id`)
-);
-
-create table MOVIE_THEATER(
-    `movie_id` int(10),
-    `theater_id` int(10),
-    primary key(`movie_id`, `theater_id`),
-    foreign key(`movie_id`) references MOVIE(`movie_id`),
-    foreign key(`theater_id`) references THEATER(`theater_id`)
+    `theater_size` ENUM('S', 'M', 'L'),
+    `movie_id` int(10) not null,
+    primary key(`theater_id`),
+    foreign key(`movie_id`) references MOVIE(`movie_id`)
 );
 
 create table SEAT(
     `seat_no` int(10) auto_increment,
     `type_of_seat` ENUM('honeymoon', 'normal'),
     `seat_status` boolean,
+    `seat_price` float(8, 2),
     `theater_id` int(10) not null,
     primary key(`seat_no`),
     foreign key(`theater_id`) references THEATER(`theater_id`)
@@ -91,11 +100,14 @@ create table PAYMENT(
     foreign key(`ticket_id`) references TICKET(`ticket_id`)
 );
 
-create table SHOWTIME(
-    `showtime_no` int(10) auto_increment,
-    `time_start` datetime default now(),
-    `time_finish` datetime default now(),
-    `movie_id` int(10),
-    primary key(`showtime_no`, `movie_id`),
-    foreign key(`movie_id`) references MOVIE(`movie_id`)
-)
+create table FOOD(
+    `food_id` int(10) auto_increment,
+    `food_name` varchar(255),
+    `food_image` varchar(255),
+    `food_price` float(8,2),
+    `staff_id` int(10) not null,
+    `ticket_id` int(10) not null,
+    primary key(`food_id`),
+    foreign key(`staff_id`) references THEATER_STAFF(`staff_id`),
+    foreign key(`ticket_id`) references TICKET(`ticket_id`)
+);

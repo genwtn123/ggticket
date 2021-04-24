@@ -159,16 +159,16 @@ export default {
   name: "Register",
   data() {
     return {
-      username: "",
-      password: "",
-      user_fname: "",
-      user_lname: "",
-      user_email: "",
-      user_tel: "",
-      type: "",
-      item: ["Admin", "Customer"],
-      admin_code: "",
-    };
+      username:'',
+      password:'',
+      user_fname:'',
+      user_lname:'',
+      user_email:'',
+      user_tel:'',
+      type:"",
+      item:['Staff', 'Audience'],
+      admin_code:''
+    }
   },
   props: ["msg"],
   methods: {

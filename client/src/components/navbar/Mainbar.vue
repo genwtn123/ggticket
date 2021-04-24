@@ -2,7 +2,12 @@
   <div id="nav">
     <v-app-bar app color="black">
       <router-link to="/movie" class="pr-5">ภาพยนต์</router-link>
-      <router-link to="/theater">โรงภาพยนต์</router-link>
+      <router-link to="/theater" class="pr-5">โรงภาพยนต์</router-link>
+      <router-link to="/buyfood" class="pr-5">food</router-link>
+      <router-link to="/buyticket" class="pr-5">ticket</router-link>
+      <router-link to="/buyticketinfomation" class="pr-5">ticketinfo</router-link>
+      <router-link to="/promotion" class="pr-5">promotion</router-link>
+      <router-link to="/seat" class="pr-5">seat</router-link>
       <v-btn depressed color="black" class="pr-5" @click="logout"> Logout </v-btn>
     </v-app-bar>
 
