@@ -184,7 +184,7 @@ export default {
       return form;
     },
     async createAccount(e) {
-      if (this.admin_code == "a13579" || this.type == "Customer") {
+      if (this.admin_code == "a13579" || this.type == "Audience") {
         e.preventDefault();
         var result = await AccountService.createAccount(this.createForm());
         console.log("res", result.status);

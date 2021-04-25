@@ -11,7 +11,7 @@ class AccountService {
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
         console.log("json", json.type);
-        if (json.type === "Customer") {
+        if (json.type === "Audience") {
             return await axios.post(registerCustomer, json).then(response => {
                 console.log(response);
                 return response;

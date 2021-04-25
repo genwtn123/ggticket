@@ -1,5 +1,6 @@
 const pool = require('../../sql')
 
+
 class Advertisement{
     constructor(ad_id, ad_name, ad_detail, ad_image, admin_id){
         this.ad_id = ad_id
