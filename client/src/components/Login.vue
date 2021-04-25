@@ -1,5 +1,5 @@
 <template >
-  <v-container>
+  <v-container class="backgroundblue">
     <form @submit="login" method="get">
       <!-- Sizes your content based upon application components -->
       <v-main>
@@ -62,3 +62,13 @@ export default {
   },
 };
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #5aabfc;
+}
+</style>

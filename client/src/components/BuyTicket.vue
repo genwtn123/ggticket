@@ -1,12 +1,12 @@
 <template>
   <div class="containertop">
     <div class="column">
-      <p class="medfontblue">การชำระเงิน</p>
+      <t class="medfontblue">การชำระเงิน</t>
     </div>
 
     <div class="column">
       <img v-bind:src="image_movie" class="bigimg" />
-      <p class="verybigfontbluespace">THE SPONGEBOB MOVIE SPONGE ON THE RUN</p>
+      <t class="verybigfontbluespace">THE SPONGEBOB MOVIE SPONGE ON THE RUN</t>
       <div class="medfontspace">
         <t>1-April-2021 | 9.00</t>
         <t class="theater">Theater 1 | ไทย</t><br />
@@ -32,8 +32,8 @@
         <div class="card">
           <div class="media">
             <div class="media-content">
-              <p class="bigfont">Payment Amount</p>
-              <p class="bigfont">200 Baht</p>
+              <t class="bigfont">Payment Amount</t>
+              <t class="bigfont">200 Baht</t>
             </div>
           </div>
         </div>
@@ -121,4 +121,5 @@ export default {
   background-color: #6495ed;
   color: white;
 }
+
 </style>

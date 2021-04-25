@@ -1,122 +1,127 @@
 <template>
-  <div class="containertop" :key="key">
-    <div class="column">
-      <p class="medfontblue">การชำระเงิน</p>
+<div class="backgroundblack">
+  <div class="backgroundgray" :key="key">
+    <div class="column spacetop ml-9 mr-9 mb-5">
+      <p class="title_food_e">Food & Beverage</p>
+      <p class="title_food_t">เลือกอาหาร และเครื่องดื่มเพิ่มเติม</p>
     </div>
-
-    <div class="row">
-      <div class="is-multiline columns is-variable is-8">
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image">
+    <div class="is-multiline columns is-variable is-2 ml-9 mr-9">
+      <!-- Start สินค้า -->
+      <div class="column is-one-quarter mt-5">
+        <div id="card_food" class="card">
+          <div id="img_food" class="card-image">
+            <figure class="image is-1by1">
               <img v-bind:src="image_popcorn" alt="Placeholder image" />
-            </div>
-            <div class="media">
+            </figure>
+          </div>
+          <div id="card_body" class="card-content">
+            <div id="food" class="media">
               <div class="media-content">
-                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
-                <p class="medfont">200 Baht</p>
-                <div>
-                  <button @click="decrease(0, 200)" class="buttonMP">-</button>
-                  <t class="fontcount">{{ amount[0] }}</t>
-                  <button @click="increase(0, 200)" class="buttonMP">+</button>
-                </div>
+                <p id="detail_pro_food" class="whitefont">
+                  Popcorn Salted Caramel Lemon
+                </p>
+                <p class="whitefont">200 บาท</p>
               </div>
             </div>
           </div>
+          <footer id="foot_h" class="card-footer">
+            <v-btn @click="decrease(0, 200)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> - </v-btn>
+            <p id="footer_food" class="card-footer-item">{{amount[0]}}</p>
+            <v-btn @click="increase(0, 200)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> + </v-btn>
+          </footer>
         </div>
+      </div>
 
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image">
+      <div class="column is-one-quarter mt-5">
+        <div id="card_food" class="card">
+          <div id="img_food" class="card-image">
+            <figure class="image is-1by1">
               <img v-bind:src="image_coke" alt="Placeholder image" />
-            </div>
-            <div class="media">
+            </figure>
+          </div>
+          <div id="card_body" class="card-content">
+            <div id="food" class="media">
               <div class="media-content">
-                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
-                <p class="medfont">100 Baht</p>
-                <div>
-                  <button @click="decrease(1, 100)" class="buttonMP">-</button>
-                  <t class="fontcount">{{ amount[1] }}</t>
-                  <button @click="increase(1, 100)" class="buttonMP">+</button>
-                </div>
+                <p id="detail_pro_food" class="whitefont">Coke Original</p>
+                <p class="whitefont">20บาท</p>
               </div>
             </div>
           </div>
+          <footer id="foot_h" class="card-footer">
+            <v-btn @click="decrease(1, 20)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> - </v-btn>
+            <p id="footer_food" class="card-footer-item">{{amount[1]}}</p>
+            <v-btn @click="increase(1, 20)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> + </v-btn>
+          </footer>
         </div>
+      </div>
 
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image">
+      <div class="column is-one-quarter mt-5">
+        <div id="card_food" class="card">
+          <div id="img_food" class="card-image">
+            <figure class="image is-1by1">
               <img v-bind:src="image_popcorn" alt="Placeholder image" />
-            </div>
-            <div class="media">
+            </figure>
+          </div>
+          <div id="card_body" class="card-content">
+            <div id="food" class="media">
               <div class="media-content">
-                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
-                <p class="medfont">200 Baht</p>
-                <div>
-                  <button @click="decrease(2, 200)" class="buttonMP">-</button>
-                  <t class="fontcount">{{ amount[2] }}</t>
-                  <button @click="increase(2, 200)" class="buttonMP">+</button>
-                </div>
+                <p id="detail_pro_food" class="whitefont">
+                  Popcorn Salted Caramel Lemon
+                </p>
+                <p class="whitefont">200 บาท</p>
               </div>
             </div>
           </div>
+          <footer id="foot_h" class="card-footer">
+            <v-btn @click="decrease(2, 200)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> - </v-btn>
+            <p id="footer_food" class="card-footer-item">{{amount[2]}}</p>
+            <v-btn @click="increase(2, 200)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> + </v-btn>
+          </footer>
         </div>
+      </div>
 
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image">
+      <div class="column is-one-one">
+        <div
+          style="
+            text-align: center;
+            border: #dcdcdc 1px solid;
+            width: 110%;
+            height: 600px;
+          "
+        >
+          <p id="total_e">Total</p>
+          <p id="total_t">ราคารวม</p>
+          <p id="total_m">{{totalprice}} บาท</p>
+          <v-btn id="button_next" color="#ff7810" dark v-bind="attrs">ต่อไป</v-btn>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter mt-5">
+        <div id="card_food" class="card">
+          <div id="img_food" class="card-image">
+            <figure class="image is-1by1">
               <img v-bind:src="image_coke" alt="Placeholder image" />
-            </div>
-            <div class="media">
+            </figure>
+          </div>
+          <div id="card_body" class="card-content">
+            <div id="food" class="media">
               <div class="media-content">
-                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
-                <p class="medfont">100 Baht</p>
-                <div>
-                  <button @click="decrease(3, 100)" class="buttonMP">-</button>
-                  <t class="fontcount">{{ amount[3] }}</t>
-                  <button @click="increase(3, 100)" class="buttonMP">+</button>
-                </div>
+                <p id="detail_pro_food" class="whitefont">Coke Original</p>
+                <p class="whitefont">20 บาท</p>
               </div>
             </div>
           </div>
-        </div>
-
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image">
-              <img v-bind:src="image_popcorn" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content">
-                <p class="smallfontblue">Popcorn Salted Caramel Lemon</p>
-                <p class="medfont">200 Baht</p>
-                <div>
-                  <button @click="decrease(4, 200)" class="buttonMP">-</button>
-                  <t class="fontcount">{{ amount[4] }}</t>
-                  <button @click="increase(4, 200)" class="buttonMP">+</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <footer id="foot_h" class="card-footer">
+            <v-btn @click="decrease(3, 20)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> - </v-btn>
+            <p id="footer_food" class="card-footer-item">{{amount[3]}}</p>
+            <v-btn @click="increase(3, 20)" id="footer_food_cal" color="#ff7810" dark v-bind="attrs"> + </v-btn>
+          </footer>
         </div>
       </div>
 
-      <div id="card_product" class="column is-one-two">
-        <div class="card">
-          <t class="fontverybig"> Payment Amount </t>
-          <t class="fontverybigblue">
-            {{ totalprice }}
-          </t>
-          <t class="fontverybig"> Baht </t>
-        </div>
-      </div>
-      <div id="card_product" class="column is-one-two">
-        <div class="card">
-          <button class="buttoncon">Continue</button>
-        </div>
-      </div>
+      <!-- End สินค้า -->
     </div>
+  </div>
   </div>
 </template>
 
@@ -129,7 +134,8 @@ export default {
       totalprice: 0,
       image_popcorn:
         "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
-      image_coke: "https://i.ebayimg.com/images/g/M~kAAOSwWOJdneqZ/s-l400.jpg",
+      image_coke:
+        "https://i.pinimg.com/474x/65/37/ec/6537ecc2e7900a6076c8b28557d4e5c0.jpg",
     };
   },
   methods: {
@@ -150,44 +156,84 @@ export default {
       this.key += 1;
     },
   },
-};
+}
 </script>
 
 <style>
-.containertop {
-  margin-top: 40px;
+#img_food {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
-.smallfontblue {
-  font-size: 20px;
-  color: #000080;
+.spacetop {
+  margin-top: 60px;
 }
-.medfont {
-  font-size: 25px;
-}
-.buttonMP {
-  border-radius: 2px solid;
-  font-size: 25px;
-  width: 50px;
-}
-.fontcount {
+.title_food_t {
   font-size: 30px;
-  margin: 25px;
+  color: #6f717b;
+  text-align: left;
 }
-.fontverybig {
+.title_food_e {
   font-size: 40px;
-  color: #000000;
+  color: #dcdcdc;
+  text-align: left;
 }
-.fontverybigblue {
-  font-size: 40px;
-  color: #000080;
+
+.backgroundgray {
+  background-color: #212835;
+  
 }
-.buttoncon {
-  font-size: 28px;
-  width: 50%;
-  height: 40px;
-  margin-top: 20px;
-  margin-bottom: 120px;
-  color: white;
-  background-color: #6495ed;
+.whitefont {
+  color: #dcdcdc;
+  font-size: 20px;
+}
+#card_food {
+  background-color: #ff7810;
+  border-radius: 20px;
+  width: 70%;
+  text-align: center;
+}
+#footer_food {
+  color: #dcdcdc;
+  font-size: 30px;
+  border-color: #ff7810;
+  margin-top:6%;
+}
+#footer_food_cal {
+  color: #dcdcdc;
+  margin-bottom: 5%;
+  font-size: 30px;
+  height:100%; 
+}
+#card_body {
+  height: 180px;
+}
+#detail_pro_food {
+  height: 80px;
+}
+#foot_h {
+  height: 50px;
+}
+#total_e {
+  margin-top: 30%;
+  font-size: 68px;
+  color: #ff7810;
+}
+#total_t {
+  font-size: 52px;
+  color: #6f717b;
+}
+#total_m {
+  font-size: 60px;
+  color: #dcdcdc;
+}
+#button_next {
+  width: 80%;
+  background-color: #ff7810;
+  border-color: #ff7810;
+  color: #dcdcdc;
+  font-size: 30px;
+  height: 10%;
 }
 </style>

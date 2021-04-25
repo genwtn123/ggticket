@@ -2,21 +2,19 @@
   <div>
       <v-app>
         <Mainbar/>
-        <div class="">
-          <BuyTicket/>
-        </div>
+        <Movie/>
       </v-app>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import BuyTicket from "../components/BuyTicket.vue";
+import Movie from "../components/Movie.vue";
 import Mainbar from "../components/navbar/Mainbar.vue";
 
 export default {
   components: {
-    BuyTicket,
+    Movie,
     Mainbar
   },
   data: () => ({}),
