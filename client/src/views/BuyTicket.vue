@@ -2,9 +2,7 @@
   <div>
       <v-app>
         <Mainbar/>
-        <div class="">
           <BuyTicket/>
-        </div>
       </v-app>
   </div>
 </template>

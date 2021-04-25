@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
+import History from '../views/History.vue'
 import Buyfood from '../views/Buyfood.vue'
 import BuyTicket from '../views/BuyTicket.vue'
 import Theater from '../views/Theater.vue'
@@ -10,7 +11,6 @@ import Promotion from '../views/Promotion.vue'
 import Seat from '../views/Seat.vue'
 import Movie from '../views/Movie.vue'
 import MovieSchedule from '../views/MovieSchedule.vue'
-import History from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +31,17 @@ const routes = [
         component: Home
     },
     {
+
+        path: '/buyticket',
+        name: 'Buyticket',
+        component: BuyTicket
+    },
+    {
+        path: '/history',
+        name: 'History',
+        component: History
+    },
+    {
         path: '/buyfood',
         name: 'Buyfood',
         component: Buyfood
@@ -39,11 +50,6 @@ const routes = [
         path: '/theaterselect',
         name: 'Theater',
         component: Theater
-    },
-    {
-        path: '/buyticket',
-        name: 'BuyTicket',
-        component: BuyTicket
     },
     {
         path: '/promotion',
@@ -64,11 +70,6 @@ const routes = [
         path: '/movieschedule',
         name: 'MovieSchedule',
         component: MovieSchedule
-    },
-    {
-        path: '/history',
-        name: 'History',
-        component: History
     }
     
 ]

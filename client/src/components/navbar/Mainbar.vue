@@ -1,6 +1,6 @@
 <template >
   <div id="nav">
-    <v-app-bar app color="black">
+    <v-app-bar app dark>
       <router-link to="/" class="pr-5">หน้าหลัก</router-link>
       <router-link to="/movie" class="pr-5">ภาพยนต์</router-link>
       <router-link to="/movieschedule" class="pr-5">ตารางภาพยนต์</router-link>
