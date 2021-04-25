@@ -2,7 +2,7 @@ const Seat = require('../src/model/Seat')
 
 
 exports.addSeat = async (req, res, next) => {
-    let seat= new Seat(null, req.body.type_of_seat, req.body.seat_status, req.body.theater_id)
+    let seat= new Seat(null, req.body.type_of_seat, req.body.seat_status, req.body.seat_price, req.body.theater_id)
     try{
         await seat.addSeat()
         res.send(seat)
@@ -22,7 +22,7 @@ exports.delSeat = async (req, res, next) => {
 }
 
 exports.editSeat = async (req, res, next) => {
-    let seat = new Seat(req.params.id, req.body.type_of_seat, req.body.seat_status, req.body.theater_id)
+    let seat = new Seat(req.params.id, req.body.type_of_seat, req.body.seat_status, req.body.seat_price, req.body.theater_id)
     try{
         await seat.editSeat()
         res.send(seat)

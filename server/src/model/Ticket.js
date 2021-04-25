@@ -1,19 +1,20 @@
 const pool = require('../../sql')
 
 class Ticket{
-    constructor(ticket_id, price, cus_id, movie_id){
+    constructor(ticket_id, ticket_price, audience_id, showtime_no, ticket_datetime){
         this.ticket_id = ticket_id
-        this.price = price
-        this.cus_id = cus_id
-        this.movie_id = movie_id
+        this.ticket_price = ticket_price
+        this.audience_id = audience_id
+        this.showtime_no = showtime_no
+        this.ticket_datetime = ticket_datetime
     }
 
     async customerTicket(){
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'insert into TICKET (price, cus_id, movie_id) values(?, ?, ?);'
-            let keep = await conn.query(stmt, [this.price, this.cus_id, this.movie_id])
+            let stmt = 'insert into TICKET (ticket_price, audience_id, showtime_no, ticket_datetime) values(?, ?, ?, CURRENT_TIMESTAMP);'
+            let keep = await conn.query(stmt, [this.ticket_price, this.audience_id, this.showtime_no])
             this.ticket_id = keep[0].insertId
             await conn.commit()
             return Promise.resolve()

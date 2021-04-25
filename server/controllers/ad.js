@@ -2,7 +2,7 @@ const Ad = require('../src/model/Advertisement')
 
 
 exports.createAd = async (req, res, next) => {
-    let ad = new Ad(null, req.body.ad_name, req.body.ad_detail, req.file, req.body.admin_id)
+    let ad = new Ad(null, req.body.ad_name, req.body.ad_detail, req.file.path, req.body.admin_id)
     try{
         await ad.createAd()
         res.send(ad)

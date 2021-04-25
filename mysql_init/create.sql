@@ -75,7 +75,7 @@ create table TICKET(
 create table THEATER(
     `theater_id` int(10) auto_increment,
     `theater_size` ENUM('S', 'M', 'L'),
-    `movie_id` int(10) not null,
+    `movie_id` int(10),
     primary key(`theater_id`),
     foreign key(`movie_id`) references MOVIE(`movie_id`)
 );
