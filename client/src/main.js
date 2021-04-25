@@ -6,7 +6,6 @@ import '../node_modules/bulma/css/bulma.css'
 import 'bulma/css/bulma.css'
 import axios from 'axios'
 
-
 Vue.config.productionTip = false
 axios.defaults.withCredentials = true
 

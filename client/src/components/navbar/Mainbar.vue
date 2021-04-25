@@ -11,6 +11,7 @@
       <router-link to="/seat" class="pr-5">seat</router-link>
       <v-btn depressed color="black" class="pr-5" @click="logout"> Logout </v-btn>
     </v-app-bar>
+
   </div>
 </template>
 

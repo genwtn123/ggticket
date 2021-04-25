@@ -116,7 +116,7 @@
               rounded
               dense
               solo
-              class="pt-3"
+              class="pt-2"
             ></v-text-field>
           </div>
         </div>
