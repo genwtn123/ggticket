@@ -1,47 +1,74 @@
 <template>
-  <div class="containertop">
-    <div class="column">
-      <t class="medfontblue">การชำระเงิน</t>
-    </div>
-
-    <div class="column">
-      <img v-bind:src="image_movie" class="bigimg" />
-      <t class="verybigfontbluespace">THE SPONGEBOB MOVIE SPONGE ON THE RUN</t>
-      <div class="medfontspace">
-        <t>1-April-2021 | 9.00</t>
-        <t class="theater">Theater 1 | ไทย</t><br />
+  <div class="backgroundblackticket">
+    <div class="backgroundgray">
+      <div class="column spacetop ml-9 mr-9">
+        <p class="title_food_e">Payment</p>
+        <p class="title_food_t">การชำระเงิน</p>
       </div>
-      <div class="spacetop">
-        <t class="medfont">Seat </t>
-        <t class="bigfontblueleft">B10</t>
-      </div>
-      <div class="spacetop">
-        <t class="medfont margin-top:20px;">Total price</t>
-        <t class="bigfontblueleft">200</t>
-        <t class="bigfontleft">Baht</t>
-      </div>
-    </div>
-    <div class="bar"></div>
+      <div class="is-multiline columns">
+        <div class="column is-three-fifths is-multiline columns">
+          <div id="box">
+            <img v-bind:src="image_movie" alt="Placeholder image" />
+          </div>
+          <div id="detail_ticket" class="column">
+            <p id="topic_ticket" class="title_ticket">Title</p>
+            <p id="topic_ticket" class="date_ticket">Date</p>
+            <p id="topic_ticket">Time</p>
+            <p id="topic_ticket">Theater</p>
+            <p id="topic_ticket">Languge</p>
+            <p id="topic_ticket">Seat</p>
+          </div>
+          <div id="detail_ticket" class="column">
+            <p id="info_ticket" class="title_ticket">Spongebob Movie</p>
+            <p id="info_ticket" class="date_ticket">1-April-2021</p>
+            <p id="info_ticket">09:00-11:00</p>
+            <p id="info_ticket">1</p>
+            <p id="info_ticket">TH</p>
+            <p id="info_ticket">B10</p>
+          </div>
+        </div>
 
-    <div class="spaceimg">
-      <img v-bind:src="image_promotion" />
-    </div>
-
-    <div class="is-multiline columns is-variable is-8 mt-3">
-      <div id="card_product" class="column is-one-two">
-        <div class="card">
-          <div class="media">
-            <div class="media-content">
-              <t class="bigfont">Payment Amount</t>
-              <t class="bigfont">200 Baht</t>
+        <div id="box_payment" class="column">
+          <div id="box_text">
+            <p id="total_payment">Total</p>
+            <div class="row">
+              <p
+                id="ticket_payment"
+                class="ticket_payment"
+              >
+                Ticket x 1
+              </p>
+              <p id="ticket_payment">200 บาท</p>
+            </div>
+            <div class="row">
+              <p
+                id="food_payment"
+                class="ticket_payment"
+              >
+                Food & Beverage
+              </p>
+              <p id="food_payment">300 บาท</p>
             </div>
           </div>
         </div>
-      </div>
-      <div id="card_product" class="column is-one-two">
-        <div class="card">
-          <button class="buttonpay">PAYMENT(200)</button>
+
+        <div id="ticket_border" class="column is-three-fifths is-multiline columns">
+          <div id="box">
+            <img v-bind:src="image_food" alt="Placeholder image" />
+          </div>
+          <div id="detail_ticket_bot" class="column">
+            <p id="topic_ticket_head" class="column">Add Food & Beverage</p>
+            <p id="text_ticket_info" class="date_ticket">เลือกซื้ออาหารและเครื่องดื่ม</p>
+            <v-btn id="button_payment" color="#ff7810" dark v-bind="attrs">Click here</v-btn>
+          </div>
         </div>
+
+        <div id="box_bot" class="column">
+          <p id="total_t">ราคารวม</p>
+          <p id="total_m">300 บาท</p>
+          <v-btn id="button_payment" color="#ff7810" dark v-bind="attrs">ชำระเงิน</v-btn>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -52,9 +79,9 @@ export default {
   data() {
     return {
       image_movie:
-        "https://thumbnails.cbsig.net/_x/w370/CBS_Production_Entertainment_VMS/SOTR_SAlone_Poster_1400x2100.jpg",
-      image_promotion:
-        "https://lh3.googleusercontent.com/YKAeRCXjkMkl3lsRC-7uW8d3nK6tfXrEqqG3OvueE490zxK-3PhUmp1wA74Ey7kOOj9zHJIx135WsVVnrAxtziyrrI22xxss=w945",
+        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
+      image_food:
+        "https://cf.shopee.co.th/file/9bfa60613f84e8b5c4a766544ffbdc14",
     };
   },
   methods: {},
@@ -62,64 +89,87 @@ export default {
 </script>
 
 <style>
-.containertop {
-  margin-top: 40px;
+#detial_ticket_bot{
+  text-align: center;
 }
-.medfontblue {
+#topic_ticket_head{
+  font-size: 26px;
+  color: #dcdcdc;
+}
+#text_ticket_info{
   font-size: 25px;
-  color: #000080;
+  color: #6f717b;
 }
-.bigimg {
-  width: 300px;
-  height: 350px;
+#ticket_border{
+  border: #6f717b 2px solid;
+  margin-bottom: 0px;
+ 
 }
-.verybigfontbluespace {
-  font-size: 35px;
-  color: #000080;
-  margin-top: 30px;
+.backgroundblackticket{
+  background-color: #121212;
+  padding-bottom:1%;
 }
-.medfontspace {
-  margin-top: 20px;
+#box_bot {
+  border-bottom: #6f717b 2px solid;
+  border-right: #6f717b 2px solid;
+  border-left: #6f717b 2px solid;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+#box_text {
+  margin-top: 20%;
+}
+.ticket_payment {
+  margin-left: 5%; width: 250px
+}
+#total_payment {
+  font-size: 72px;
+  color: #ff7810;
+}
+#ticket_payment {
   font-size: 25px;
+  color: #dcdcdc;
 }
-.spacetop {
-  margin-top: 20px;
-}
-.theater {
-  margin-left: 20%;
-}
-.medfont {
+#food_payment {
   font-size: 25px;
+  color: #dcdcdc;
 }
-.bigfontblueleft {
-  margin-left: 20px;
+#box_payment {
+  border-top: #6f717b 2px solid;
+  border-right: #6f717b 2px solid;
+  border-left: #6f717b 2px solid;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+#button_payment {
+  width: 80%;
+  background-color: #ff7810;
+  border-color: #ff7810;
+  color: #dcdcdc;
   font-size: 30px;
-  color: #000080;
+  height: 60px;
 }
-.bigfontleft {
-  margin-left: 20px;
-  font-size: 30px;
+#topic_ticket {
+  color: #dcdcdc;
 }
-.bar {
+#info_ticket {
+  color: #6f717b;
+}
+.date_ticket {
   height: 50px;
-  background-color: #6495ed;
 }
-.spaceimg {
-  margin-top: 40px;
-  margin-left: 10%;
+.title_ticket {
+  height: 80px;
 }
-.bigfont {
-  font-size: 30px;
+#detail_ticket {
+  font-size: 20px;
+  text-align: left;
 }
-.buttonpay {
-  width: 350px;
-  height: 50px;
-  font-size: 30px;
-  border-radius: 4px;
-  margin-top: 20px;
-  margin-bottom: 120px;
-  background-color: #6495ed;
-  color: white;
+#box {
+  display: block;
+  width: 50%;
+  margin-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
-
 </style>

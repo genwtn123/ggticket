@@ -9,7 +9,7 @@
     <div class="container is-max-desktop">
       
       <div class="is-multiline columns is-variable is-2 mb-5">
-        <!-- Start สินค้า -->
+        
         <div class="column is-one-quarter">
           <a href="order.html">
             <div
@@ -102,28 +102,7 @@
           </a>
         </div>
 
-         <div class="column is-one-quarter">
-          <a href="order.html">
-            <div
-              id="card" class="card"
-              
-            >
-              <div class="card-image">
-                <figure class="image is-1by1">
-                  <img v-bind:src="image" alt="Placeholder image" />
-                </figure>
-              </div>
-              <div class="card-content">
-                <div id="media" class="media">
-                  <div class="media-content">
-                    <p id="title" class="whitefont">Spongebob Movie</p>
-                    <p class="whitefont">01-April-2021</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+         
         
 
       </div>
@@ -161,10 +140,12 @@ export default {
   text-align: left;
 }
 
-.backgroundgray {
+.backgroundgray{
   background-color: #212835;
-  margin-left: 15%;
-  margin-right: 15%;
+   margin-left: 12%;
+  margin-right: 12%;
+  padding-left: 2%;
+  padding-bottom: 12%;
 }
 .whitefont {
   color: #dcdcdc;

@@ -6,6 +6,7 @@
         <p class="movie_table_t">กรุณาเลือก วันและเวลา ที่ต้องการ</p>
       </div>
       <div class="container is-max-desktop">
+
         <div class="is-multiline columns is-variable is-2 mt-5">
           <div id="img_theater">
             <img v-bind:src="image" alt="Placeholder image" />
@@ -101,6 +102,7 @@
           <v-btn id="botton_choose" color="black" dark v-bind="attrs"> Choose </v-btn>
         </div>
 
+        
 
       </div>
     </div>

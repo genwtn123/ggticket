@@ -14,20 +14,20 @@
           </div>
           <div class="is-multiline columns">
             <div id="info_history">
-              <p>Date</p>
-              <p>Theater</p>
+              <p id="space_right">Date</p>
+              <p >Theater</p>
               <p>Seat</p>
             </div>
-            <div id="info_history">
-              <p style="margin-right: 100px">1-April</p>
+            <div id="info_history_gray">
+              <p id="space_right">1-Apirl-2021</p>
               <p>1</p>
               <p>B10</p>
             </div>
             <div id="info_history">
               <p>Time</p>
-              <p>09:00-11:00</p>
+              <p id="space_right">09:00-11:00</p>
             </div>
-            <div id="info_history">
+            <div id="info_history_gray">
               <p>Languge</p>
               <p>TH</p>
             </div>
@@ -43,20 +43,20 @@
           </div>
           <div class="is-multiline columns">
             <div id="info_history">
-              <p>Date</p>
+              <p id="space_right">Date</p>
               <p>Theater</p>
               <p>Seat</p>
             </div>
-            <div id="info_history">
-              <p style="margin-right: 100px">1-April</p>
+            <div id="info_history_gray">
+              <p id="space_right">1-April-2021</p>
               <p>1</p>
               <p>B10</p>
             </div>
             <div id="info_history">
               <p>Time</p>
-              <p>09:00-11:00</p>
+              <p id="space_right">09:00-11:00</p>
             </div>
-            <div id="info_history">
+            <div id="info_history_gray">
               <p>Languge</p>
               <p>TH</p>
             </div>
@@ -72,20 +72,20 @@
           </div>
           <div class="is-multiline columns">
             <div id="info_history">
-              <p>Date</p>
+              <p id="space_right">Date</p>
               <p>Theater</p>
               <p>Seat</p>
             </div>
-            <div id="info_history">
-              <p style="margin-right: 100px">1-April</p>
+            <div id="info_history_gray">
+              <p id="space_right">1-April-2021</p>
               <p>1</p>
               <p>B10</p>
             </div>
             <div id="info_history">
               <p>Time</p>
-              <p>09:00-11:00</p>
+              <p id="space_right">09:00-11:00</p>
             </div>
-            <div id="info_history">
+            <div id="info_history_gray">
               <p>Languge</p>
               <p>TH</p>
             </div>
@@ -111,6 +111,14 @@ export default {
 </script>
 
 <style>
+#info_history_gray{
+  font-size: 25px;
+  color:#6f717b;
+  margin-top: 5%;
+}
+#space_right{
+  padding-right:40px
+}
 .history_e {
   font-size: 40px;
   color: #dcdcdc;
