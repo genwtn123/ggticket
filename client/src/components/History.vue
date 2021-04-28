@@ -3,9 +3,9 @@
     <div style="line-height: 32pt">
       <div class="title_head">History</div>
       <div class="title_sub">ประวัติการเข้าชม</div>
-      <hr />
+      <hr>
     </div>
-    <v-main>
+    <div class="py-6">
       <div class="card columns history_card">
         <img :src="image" class="img_history" />
 
@@ -15,12 +15,12 @@
 
             <div class="columns">
               <div class="column history_card_layout">
-                <div>
+                <div class="pb-4">
                   <span class="history_card_title_sub">Date</span>
                   <span class="history_card_txt">1-Apr-2021</span>
                 </div>
 
-                <div>
+                <div class="pb-4">
                   <span class="history_card_title_sub">Theater</span>
                   <span class="history_card_txt">1</span>
                 </div>
@@ -32,7 +32,7 @@
               </div>
 
               <div class="column history_card_layout">
-                <div>
+                <div class="pb-4">
                   <span class="history_card_title_sub">Time</span>
                   <span class="history_card_txt">09:00-11:00</span>
                 </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-    </v-main>
+    </div>
   </v-container>
 </template>
 

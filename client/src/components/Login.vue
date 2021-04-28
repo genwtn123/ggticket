@@ -10,7 +10,7 @@
         <div class="vl"></div>
 
         <form @submit="login" method="get" class="column" style="padding-right: 6%">
-          <div style="font-size: 45px; color:#FFFFFF; padding-top:16%" class="pb-5">LOGIN</div>
+          <div style="font-size: 45px; color:#FFFFFF; padding-top:16%" class="pb-2">LOGIN</div>
   
           <div style="text-align:left; color:#9D9FA3" class="py-6">Username
             <v-text-field

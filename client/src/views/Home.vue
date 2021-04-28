@@ -7,6 +7,7 @@
          <Recommend/>
          <p class="py-5"></p>
          <Update/>
+         <Modal/>
          <p style="padding-bottom:10%"></p>
          <Footer/>
     </v-main>
@@ -30,6 +31,7 @@ import Carousel from "../components/Carousel.vue";
 import Update from "../components/Home_up.vue";
 import Recommend from "../components/Home_recom.vue";
 import Footer from "../components/Footer.vue";
+import Modal from "../components/profile_modal.vue";
 
 import axios from "../../node_modules/axios";
 
@@ -53,6 +55,7 @@ export default {
     Update,
     Recommend,
     Footer,
+    Modal
   },
   data: () => ({}),
 };
