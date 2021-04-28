@@ -11,6 +11,7 @@
       >
       <router-link to="/promotion" class="pr-5">promotion</router-link>
       <router-link to="/seat" class="pr-5">seat</router-link>
+      <router-link to="/history" class="pr-5">history</router-link>
       <v-btn depressed color="black" class="mr-2" @click="isopen = true">
         Profile
       </v-btn>
