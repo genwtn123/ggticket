@@ -1,33 +1,53 @@
-<template >
-  <v-container class="backgroundblue">
-    <form @submit="login" method="get">
-      <!-- Sizes your content based upon application components -->
-      <v-main>
-        <!-- Provides the application the proper gutter -->
-        <div>
-          <span style="font-size: 20px"><b>LOGIN</b></span>
-          <v-text-field
-            label="Username"
-            hide-details="auto"
-            v-model="username"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            type="password"
-            label="Password"
-            required
-          ></v-text-field>
+<template>
+    <v-banner elevation="24" class="login_box">
+      <div class="columns">
+ 
+        <div class="column">
+          <router-link to="/Register" class="regis_txt pt-3"><img src="../assets/Be_our.png" alt="" class="regis"></router-link>
+          <router-link to="/Register" class="regis_txt pt-3">Register</router-link>
         </div>
-        <!-- If using vue-router -->
-        <button class="button is-info" type="submit" @click="login">
-          Submit
-        </button>
-      </v-main>
 
-      <v-footer app> </v-footer>
-    </form>
-  </v-container>
+        <div class="vl"></div>
+
+        <form @submit="login" method="get" class="column" style="padding-right: 6%">
+          <div style="font-size: 45px; color:#FFFFFF; padding-top:16%" class="pb-2">LOGIN</div>
+  
+          <div style="text-align:left; color:#9D9FA3" class="py-6">Username
+            <v-text-field
+              hide-details="auto"
+              v-model="username"
+              label="username"
+              required
+              filled
+              rounded
+              dense
+              solo
+              class="pt-3"
+            ></v-text-field>
+          </div>
+
+          <div style="text-align:left; color:#9D9FA3" class="py-6">Password
+            <v-text-field
+              v-model="password"
+              type="password"
+              label="password"
+              required
+              filled
+              rounded
+              dense
+              solo
+              class="pt-3"
+            ></v-text-field>
+          </div>
+
+          <!-- If using vue-router -->
+          <button class="button" type="submit" @click="login" style="background:#FD7014; color:#FFFFFF;">
+            LOGIN
+          </button> 
+        </form>
+      </div>
+    </v-banner>
+
 </template>
 
 <script>
@@ -40,9 +60,7 @@ export default {
     password: "",
     error: null,
   }),
-  async created() {
-    console.log(await AccountService.getSession());
-  },
+  
   methods: {
     async login(e) {
       e.preventDefault();
@@ -64,11 +82,29 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #5aabfc;
+.login_box {
+  background: #21262e !important;
+  margin-top: 7% !important;
+  width: 63%;
+  margin: auto;
+}
+.regis {
+  width: 284px;
+  height: 241px;
+  margin-top: 25%;
+  padding-right: 2%;
+}
+.vl {
+  border-left: 2px solid #9D9FA3;
+  height: 445px;
+  margin-top: 3%;
+  padding-right: 5%;
+}
+.regis_txt {
+  color: #EEEEEE !important;
+  text-decoration: 2px underline;
+  text-decoration-color: #FD7014;
+  margin-bottom: 30%;
+  font-size: 25px;
 }
 </style>

@@ -1,26 +1,29 @@
-<template>
-  <div>
-      <v-app>
+<template >
+  <v-app>
+    <v-main fluid class="bg">
         <Mainbar/>
+    <v-container >
         <div class="">
           <Buyfood/>
-          <Modal/>
         </div>
-      </v-app>
-  </div>
+    </v-container>
+    </v-main>
+  </v-app>
 </template>
+
+<style>
+
+</style>
 
 <script>
 // @ is an alias to /src
-import Buyfood from "../components/Buyfood.vue";
+import Buyfood from "../components/Buyfood_admin.vue";
 import Mainbar from "../components/navbar/Mainbar.vue";
-import Modal from "../components/Food_modal.vue";
 
 export default {
   components: {
-    Buyfood,
     Mainbar,
-    Modal
+    Buyfood,
   },
   data: () => ({}),
 };

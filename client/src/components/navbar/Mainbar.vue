@@ -12,13 +12,43 @@
       <router-link to="/history" class="pr-5">History</router-link>
       <v-btn depressed color="black" class="pr-5" @click="logout"> Logout </v-btn>
     </v-app-bar>
+      <router-link to="/buyticketinfomation" class="pr-5"
+        >ticketinfo</router-link
+      >
+      <router-link to="/promotion" class="pr-5">promotion</router-link>
+      <router-link to="/seat" class="pr-5">seat</router-link>
+      <router-link to="/history" class="pr-5">history</router-link>
+      <router-link to="/afood" class="pr-5">Admin_food</router-link>
+      <router-link to="/apromo" class="pr-5">Admin_promo</router-link>
+      <v-btn depressed color="black" class="mr-2" @click="isopen = true">
+        Profile
+      </v-btn>
+      <v-btn depressed color="black" class="" @click="logout"> Logout </v-btn>
+      
+      <v-menu left bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
 
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+          <v-list-item  @click="logout">
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
   </div>
 </template>
 
 
 <script>
-import AccountService from '../../service/AccountService';
+import AccountService from "../../service/AccountService";
 
 export default {
   name: "Mainbar",
@@ -29,12 +59,11 @@ export default {
     error: null,
   }),
   methods: {
-      async logout(){
-          await AccountService.Logout()
-          this.$router.push({name:"Login"})
-      }
-  }
-
+    async logout() {
+      await AccountService.Logout();
+      this.$router.push({ name: "Login" });
+    },
+  },
 };
 </script>
 

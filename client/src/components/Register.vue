@@ -2,7 +2,7 @@
   <v-banner elevation="24" class="regis_box">
     <form @submit="createAccount" method="POST">
       <div
-        style="font-size: 45px; color: #FD7014; padding-top: 5%; padding-bottom:5%;"
+        style="font-size: 45px; color: #FD7014; padding-top: 5%; padding-bottom:4%;"
       >
         REGISTER
       </div>

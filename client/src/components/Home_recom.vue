@@ -1,20 +1,18 @@
 <template>
-<v-fluid>
+  <v-fluid>
     <p class="home_head">RECOMMEND MOVIE FOR YOU</p>
-    
     <div class="scrolling-wrapper">
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-  <div class="card home_card"></div>
-</div>
-
-</v-fluid>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+      <div class="card home_card"></div>
+    </div>
+  </v-fluid>
 </template>
 
 <style>
@@ -25,10 +23,10 @@
 }
 
 .home_card {
-    display: inline-block;
-    width: 20%;
-    margin: 2% ;
-    height: 400px;
+  display: inline-block;
+  width: 20%;
+  margin: 2%;
+  height: 400px;
 }
 
 ::-webkit-scrollbar {
@@ -37,27 +35,23 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
-
 </style>
 
 <script>
 export default {
-    setup() {
-        
-    },
-    
-}
+  setup() {},
+};
 </script>
 
