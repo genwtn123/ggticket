@@ -11,6 +11,9 @@ import BuyTicketInfo from '../views/BuyTicketInfo.vue'
 import Promotion from '../views/Promotion.vue'
 import Seat from '../views/Seat.vue'
 
+import ABuyfood from '../views/Buyfood_admin.vue'
+import APromotion from '../views/Promotion_admin.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -60,8 +63,19 @@ const routes = [
         name: 'Seat',
         component: Seat
 
-    }
+    },
+    {
+        path: '/afood',
+        name: 'ABuyfood',
+        component: ABuyfood
 
+    },
+    {
+        path: '/apromo',
+        name: 'APromotion',
+        component: APromotion
+
+    }
 ]
 
 const router = new VueRouter({
