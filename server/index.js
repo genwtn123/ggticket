@@ -21,6 +21,9 @@ const showtimeRoute = require('./routes/showtime')
 const paymentRoute = require('./routes/payment')
 const seatRoute = require('./routes/seat')
 const historyRoute = require('./routes/history')
+const foodRoute = require('./routes/food')
+const ticket_seatRoute = require('./routes/ticket_seat')
+const ticket_foodRoute = require('./routes/ticket_food')
 
 const sess = {
     store: new MemoryStore(),
@@ -32,9 +35,9 @@ const sess = {
     },
 }
 app.use(session(sess));
-app.use(upload.array())
-app.use(express.static('static'))
-app.use('/files', express.static('files'));
+// app.use(express.static('static'))
+app.use("/static", express.static(path.join(__dirname, "static")));
+// app.use('/files', express.static('files'));
 app.use(express.json())
 app.use(cors({
     origin:true,
@@ -59,6 +62,9 @@ app.use('/showtime', showtimeRoute)
 app.use('/payment', paymentRoute)
 app.use('/seat', seatRoute)
 app.use('/history', historyRoute)
+app.use('/food', foodRoute)
+app.use('/ticketseat', ticket_seatRoute)
+app.use('/ticketfood', ticket_foodRoute)
 
 app.get('/',async (req, res) => {
     const conn = await pool.getConnection()

@@ -18,11 +18,12 @@ class Admin extends User{
             await conn.commit()
             return Promise.resolve()
         } catch (err) {
+            console.log(err)
             await conn.rollback();
             return Promise.reject(err)
         } finally {
             console.log("finally");
-            conn.release
+            conn.release()
         }
     }
 }

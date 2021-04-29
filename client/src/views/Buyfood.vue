@@ -1,7 +1,5 @@
 <template>
   <div>
-    <v-container>
-      
       <v-app>
         <Mainbar/>
         <div class="">
@@ -9,7 +7,6 @@
           <Modal/>
         </div>
       </v-app>
-    </v-container>
   </div>
 </template>
 

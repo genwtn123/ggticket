@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <v-app>
         <router-view></router-view>
+    </v-app>
   </div>
 </template>
 <script>
@@ -40,4 +42,3 @@ export default {
 font: 1em/1.25em 'Lato',Helvetica,Arial,sans-serif;
 }
 </style>
-

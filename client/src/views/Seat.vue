@@ -1,14 +1,9 @@
 <template>
   <div>
-    <v-container>
-      
       <v-app>
         <Mainbar/>
-        <div class="">
           <Seat/>
-        </div>
       </v-app>
-    </v-container>
   </div>
 </template>
 

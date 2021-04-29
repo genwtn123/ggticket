@@ -87,23 +87,19 @@ export default {
   margin-top: 7% !important;
   width: 63%;
   margin: auto;
-
 }
-
 .regis {
   width: 284px;
   height: 241px;
   margin-top: 25%;
   padding-right: 2%;
 }
-
 .vl {
   border-left: 2px solid #9D9FA3;
   height: 445px;
   margin-top: 3%;
   padding-right: 5%;
 }
-
 .regis_txt {
   color: #EEEEEE !important;
   text-decoration: 2px underline;
@@ -111,5 +107,4 @@ export default {
   margin-bottom: 30%;
   font-size: 25px;
 }
-
 </style>

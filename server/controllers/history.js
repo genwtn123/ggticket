@@ -1,13 +1,13 @@
 const History = require('../src/model/History')
+const Joi = require('joi')
 
 exports.getHistory = async (req, res, next) => {
-    let history = new History(req.body.audience_id)
-    console.log(history)
     try {
+        console.log("ses", req.session.userdata.user_id)
+        let history = new History(req.session.userdata.user_id)
         let keep = await history.getHistory()
-        console.log("history",await history.getHistory())
         res.send(keep)
     } catch (err) {
-        res.sendStatus(404)
+        res.status(404).send(err)
     }
 }
