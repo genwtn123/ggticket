@@ -1,128 +1,162 @@
 <template>
-  <v-container style="margin-top:40px;">
-      <div
-        class="column"
-        style="height: 50px; text-align: center;"
-      >
-        <p style="font-size: 25px; color: #000080">โปรโมชั่นสุดพิเศษ</p>
+  <div class="backgroundblack">
+    <div class="backgroundgray">
+      <div class="column spacetop ml-9 mr-9 mb-5">
+        <p class="title_pro_e">Promotion</p>
+        <p class="title_pro_t">โปรโมชั่น</p>
+      </div>
+      <div class="is-multiline columns is-variable is-2 ml-9 mr-9">
+        
+        
+        <div class="column is-one-third mt-5">
+          <div id="card_pro" class="card">
+            <div id="card_img_pro" class="card-image">
+              <figure class="image is-1by1">
+                <img v-bind:src="image_pro" alt="Placeholder image" />
+              </figure>
+            </div>
+            <div id="card_body_pro" class="card-content">
+              <div id="food" class="media">
+                <div class="media-content">
+                  <p id="detail_pro " class="whitefont">
+                    ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
+                    จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
+                  </p>
+                  <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+        <div class="column is-one-third mt-5">
+        <div id="card_pro" class="card">
+          <div id="card_img_pro" class="card-image">
+            <figure class="image is-1by1">
+              <img v-bind:src="image_pro" alt="Placeholder image" />
+            </figure>
+          </div>
+          <div id="card_body_pro" class="card-content">
+            <div id="food" class="media">
+              <div class="media-content">
+                <p id="detail_pro " class="whitefont">
+                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
+                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
+                </p>
+                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="column" style="height: 50px; background-color: #6495ed">
-        <div class="row">
-            <div class="column"><p style="font-size: 25px; color: #000080;"
-          >ทั้งหมด</p
-        >
+
+      <div class="column is-one-third mt-5">
+        <div id="card_pro" class="card">
+          <div id="card_img_pro" class="card-image">
+            <figure class="image is-1by1">
+              <img v-bind:src="image_pro" alt="Placeholder image" />
+            </figure>
+          </div>
+          <div id="card_body_pro" class="card-content">
+            <div id="food" class="media">
+              <div class="media-content">
+                <p id="detail_pro " class="whitefont">
+                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
+                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
+                </p>
+                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
+              </div>
+            </div>
+          </div>
         </div>
-            <div class="column"><p style="font-size: 25px; color: #000080;">Movie</p></div>
-            <div class="column"><p style="font-size: 25px; color: #000080;"
-          >Food & Beverage</p></div>
-        </div>
-        
-       
       </div>
 
-      <div class="is-multiline columns is-variable is-8">
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image" style="width: 230px">
-              <img v-bind:src="image" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  สำหรับสมาชิก
-                </p>
-                <p class="subtitle is-6 has-text-danger mt-2">จำกัดจำนวน 10000 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image" style="width: 230px">
-              <img v-bind:src="image" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px">
+      <div class="column is-one-third mt-5">
+        <div id="card_pro" class="card">
+          <div id="card_img_pro" class="card-image">
+            <figure class="image is-1by1">
+              <img v-bind:src="image_pro" alt="Placeholder image" />
+            </figure>
+          </div>
+          <div id="card_body_pro" class="card-content">
+            <div id="food" class="media">
+              <div class="media-content">
+                <p id="detail_pro " class="whitefont">
                   ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  สำหรับสมาชิก
+                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
                 </p>
-                <p class="subtitle is-6 has-text-danger mt-2">จำกัดจำนวน 10000 สิทธิ์</p>
+                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
               </div>
             </div>
           </div>
         </div>
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image" style="width: 230px">
-              <img v-bind:src="image" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  สำหรับสมาชิก
-                </p>
-                <p class="subtitle is-6 has-text-danger mt-2">จำกัดจำนวน 10000 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image" style="width: 230px">
-              <img v-bind:src="image" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  สำหรับสมาชิก
-                </p>
-                <p class="subtitle is-6 has-text-danger mt-2">จำกัดจำนวน 10000 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div id="card_product" class="column is-one-fifth m-5">
-          <div class="card">
-            <div class="card-image" style="width: 230px">
-              <img v-bind:src="image" alt="Placeholder image" />
-            </div>
-            <div class="media">
-              <div class="media-content" style="text-align: center">
-                <p style="font-size: 20px">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  สำหรับสมาชิก
-                </p>
-                <p class="subtitle is-6 has-text-danger mt-2">จำกัดจำนวน 10000 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
       </div>
-  </v-container>
+      
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      image:
+      image_pro:
         "https://www.ryt9.com/img/files/20200805/iq1ae0ceafc9324bf358ca899a26c3831c.jpg",
     };
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
 
 <style>
+#condition {
+  color: #121212;
+  font-size: 20px;
+}
+#card_img_pro {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.spacetop {
+  margin-top: 60px;
+}
+.title_pro_t {
+  font-size: 30px;
+  color: #6f717b;
+  text-align: left;
+  border-bottom: #dcdcdc 5px solid;
+}
+.title_pro_e {
+  font-size: 40px;
+  color: #dcdcdc;
+  text-align: left;
+}
+
+.backgroundgray {
+  background-color: #212835;
+}
+.whitefont {
+  color: #dcdcdc;
+  font-size: 20px;
+}
+#card_pro {
+  background-color: #ff7810;
+  border-radius: 20px;
+  width: 70%;
+  text-align: center;
+}
+#card_body_pro {
+  height: 220px;
+}
+#detail_pro {
+  height: 62px;
+}
 </style>
