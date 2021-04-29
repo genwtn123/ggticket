@@ -29,13 +29,13 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
-    },
-    {
-
-        path: '/buyticket',
+    }
+    ,{
+        path: '/buy',
         name: 'Buyticket',
         component: BuyTicket
     },
+
     {
         path: '/history',
         name: 'History',

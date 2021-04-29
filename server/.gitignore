@@ -21,3 +21,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+static/uploads/*
+!static/uploads/hold.txt

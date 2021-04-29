@@ -11,7 +11,7 @@ class AccountService {
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
         console.log("json", json.type);
-        if (json.type === "Customer") {
+        if (json.type === "Audience") {
             return await axios.post(registerCustomer, json).then(response => {
                 console.log(response);
                 return response;
@@ -35,7 +35,7 @@ class AccountService {
         form.forEach((value, key) => object[key] = value);
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
-        console.log(json)
+        console.log("json",json)
         return await axios.post(login,
             json
         )
