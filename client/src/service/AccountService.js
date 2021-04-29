@@ -35,7 +35,7 @@ class AccountService {
         form.forEach((value, key) => object[key] = value);
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
-        console.log(json)
+        console.log("json",json)
         return await axios.post(login,
             json
         )

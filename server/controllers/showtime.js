@@ -1,9 +1,21 @@
 const Showtime = require('../src/model/Showtime')
+const Joi = require('joi')
+const { valid } = require('joi')
 
+
+
+const validshowtime = Joi.object({
+    time_start: Joi.date().timestamp().iso().required(),
+    time_finish: Joi.date().timestamp().iso().min(Joi.ref('time_start')).required(),
+    movie_id: Joi.number().integer().required(),
+    staff_id:Joi.number().integer().required(),
+    theater_id:Joi.number().integer().required(),
+})
 
 exports.addShowtime = async (req, res, next) => {
-    let showtime= new Showtime(null, req.body.time_start, req.body.time_finish, req.body.movie_id, req.body.staff_id)
     try{
+        await validshowtime.validateAsync(req.body, {abortEarly:false})
+        let showtime= new Showtime(null, req.body.time_start, req.body.time_finish, true, req.body.movie_id, req.body.staff_id, req.body.theater_id)
         await showtime.addShowtime()
         res.send(showtime)
     }catch(err){
@@ -22,8 +34,9 @@ exports.delShowtime = async (req, res, next) => {
 }
 
 exports.editShowtime = async (req, res, next) => {
-    let showtime = new Showtime(req.params.id, req.body.time_start, req.body.time_finish, req.body.movie_id, req.body.staff_id)
     try{
+        await validshowtime.validateAsync(req.body, {abortEarly:false})
+        let showtime = new Showtime(req.params.id, req.body.time_start, req.body.time_finish, req.body.movie_id, req.body.staff_id)
         await showtime.editShowtime()
         res.send(showtime)
     }catch(err){

@@ -13,8 +13,8 @@ class Payment{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'insert into PAYMENT (total, pay_datetime, pay_status, ticket_id) values(?, ?, ?, ?);'
-            let keep = await conn.query(stmt, [this.total, this.pay_datetime, this.pay_status, this.ticket_id])
+            let stmt = 'insert into PAYMENT (total, pay_datetime, pay_status, ticket_id) values(?, CURRENT_TIMESTAMP, ?, ?);'
+            let keep = await conn.query(stmt, [this.total, this.pay_status, this.ticket_id])
             this.pay_id = keep[0].insertId
             await conn.commit()
             return Promise.resolve()

@@ -6,7 +6,7 @@ import Home from '../views/Home.vue'
 
 import History from '../views/History.vue'
 import Buyfood from '../views/Buyfood.vue'
-// import BuyTicket from '../views/BuyTicket.vue'
+import BuyTicket from '../views/BuyTicket.vue'
 import BuyTicketInfo from '../views/BuyTicketInfo.vue'
 import Promotion from '../views/Promotion.vue'
 import Seat from '../views/Seat.vue'

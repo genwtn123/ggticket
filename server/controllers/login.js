@@ -1,16 +1,22 @@
 const User = require('../src/model/User')
+const Joi = require('joi')
+
+
+const loginSchema = Joi.object({
+    username : Joi.required(),
+    password : Joi.required()
+})
 
 exports.login = async (req, res, next) => {
-    let user = new User(null, req.body.username, req.body.password)
-    console.log(user)
     try {
+        await loginSchema.validateAsync(req.body, { abortEarly: false })
+        let user = new User(null, req.body.username, req.body.password)
         await user.login()
-        console.log("ses", req.session)
         req.session.userdata = user
-        console.log("ses2", req.session)
+        console.log("session", req.session)
         res.status(200).send(user)
     } catch (err) {
-        res.sendStatus(404)
+        res.send(err)
     }
 }
 
