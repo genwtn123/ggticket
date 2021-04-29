@@ -38,4 +38,7 @@ export default {
   color: #42b983;
 }
 
+*{
+font: 1em/1.25em 'Lato',Helvetica,Arial,sans-serif;
+}
 </style>

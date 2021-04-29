@@ -4,7 +4,7 @@
       <div class="title_head">History</div>
       <div class="title_sub">ประวัติการเข้าชม</div>
     </div>
-    <div class="py-6">
+    <div class="py-6" >
       <v-card
         v-for="his in history"
         :key="his.ticket_id"

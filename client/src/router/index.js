@@ -12,6 +12,9 @@ import Seat from '../views/Seat.vue'
 import Movie from '../views/Movie.vue'
 import MovieSchedule from '../views/MovieSchedule.vue'
 
+import ABuyfood from '../views/Buyfood_admin.vue'
+import APromotion from '../views/Promotion_admin.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -70,8 +73,19 @@ const routes = [
         path: '/movieschedule',
         name: 'MovieSchedule',
         component: MovieSchedule
+    },
+    {
+        path: '/afood',
+        name: 'ABuyfood',
+        component: ABuyfood
+
+    },
+    {
+        path: '/apromo',
+        name: 'APromotion',
+        component: APromotion
+
     }
-    
 ]
 
 const router = new VueRouter({
