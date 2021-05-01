@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <div style="line-height: 32pt" class="columns">
-      <div class="is-3 column">
-        <div class="title_head">Food & Beverage</div>
-        <div class="title_sub">อาหาร และเครื่องดื่ม</div>
+      <div class="column is-4" style="width: 240px">
+        <div class="title_head">Movie Table</div>
+        <div class="title_sub">ตารางเวลาภาพยนต์</div>
       </div>
       <div class="column pt-5" style="text-align: left">
         <img
@@ -16,31 +16,58 @@
     </div>
     <hr />
     <div class="pt-6">
-      <div class="columns pl-6" v-for="index in 2" :key="index">
-        <div class="card admin_card mx-6 my-6" v-for="index in 5" :key="index">
-          <figure class="image">
-            <img :src="image" alt="Placeholder image" />
-          </figure>
-          <div class="card-content">
-            <div style="font-size: 18px">Popcorn Salted Caramel Lemon</div>
-            <div style="font-size: 23px">200บาท</div>
+      <div class="buttons are-medium">
+        <v-btn id="button_date" color="black" dark v-bind="attrs"> Date </v-btn>
+        <v-btn id="button_day" color="black" dark v-bind="attrs">
+          1-April-2021
+        </v-btn>
+      </div>
+
+      <div class="is-multiline columns is-variable is-2 mt-5">
+        <div id="topic" class="column is-one-quarter"></div>
+        <div id="topic" class="column">
+          <p>Movie</p>
+        </div>
+        <div id="topic" class="column">
+          <p>Theater</p>
+        </div>
+        <div id="topic" class="column">
+          <p>Time</p>
+        </div>
+        <div id="topic" class="column">
+          <p>Languge</p>
+        </div>
+      </div>
+      <div>
+        <div
+          id="border"
+          class="is-multiline columns is-variable is-2"
+          @click="edit_isopen = true"
+        >
+          <div class="column is-one-quarter">
+            <img id="img" v-bind:src="image" alt="Placeholder image" />
           </div>
-          <footer class="card-footer" style="background-color: white">
-            <div
-              style="width: 50%; color: #fd7014"
-              @click="edit_isopen = true"
-              class="card-footer-item"
-            >
-              Edit
-            </div>
-            <div
-              style="width: 50%; color: #fd7014"
-              @click="delete_isopen = true"
-              class="card-footer-item"
-            >
-              Delete
-            </div>
-          </footer>
+          <div class="column">
+            <p class="shecdule_admin_card_detail">Spongebob Movie</p>
+          </div>
+          <div class="column">
+            <p class="shecdule_admin_card_detail">1</p>
+          </div>
+          <div class="column">
+            <p class="shecdule_admin_card_detail">09:00-11:00</p>
+          </div>
+          <div class="column">
+            <p class="shecdule_admin_card_detail">TH</p>
+          </div>
+        </div>
+        <div id="bot_set" class="is-multiline columns">
+          <p id="detail_bot_topic" style="font-size: 25px">Category</p>
+
+          <p id="detail_bot_info" style="font-size: 25px">Cartoon</p>
+
+          <p id="detail_bot_topic" style="font-size: 25px">Movie length</p>
+
+          <p id="detail_bot_info" style="font-size: 25px">140 นาที</p>
         </div>
       </div>
     </div>
@@ -48,7 +75,7 @@
     <!-- add modal -->
     <div class="modal" :class="{ 'is-active': add_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card modal-card_admin">
+      <div class="modal-card modal-card_admin" style="width: 65%">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -65,48 +92,73 @@
 
         <section class="modal-card-body profile_modal">
           <p
-            class="regis_txt pb-3"
+            class="regis_txt pt-3 pb-4"
             style="text-decoration: none; font-size: 30px"
           >
-            Add Food & Beverage
+            Add Movie
           </p>
           <div class="columns">
-            <div class="column is-3" style="text-align: right">
-              <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+            <div class="column is-5">
+              <v-date-picker
+                v-model="picker"
+                header-color="#fd7014"
+                color="#fd7014"
+              ></v-date-picker>
             </div>
 
-            <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
+            <div
+              class="column is-2"
+              style="text-align: right; padding-top: 3.6%"
+            >
+              <p class="profile_modal_txt py-2">Movie :</p>
+              <p class="profile_modal_txt py-4">Time Start :</p>
+              <p class="profile_modal_txt py-4">Time End :</p>
+              <p class="profile_modal_txt py-4">Theater :</p>
+              <p class="profile_modal_txt py-4">Language :</p>
+            </div>
+
+            <div class="column is-4 pt-6">
+              <v-select
+                v-model="movie"
+                :items="all_movie"
+                label="movie"
+                required
                 rounded
                 dense
                 solo
+                class="pt-3"
+              ></v-select>
+
+              <v-banner
+                elevation="18"
+                class="input_box mb-6"
+                style="text-align: left"
               >
-              </v-file-input>
+                <input type="time" min="" max="" />
+              </v-banner>
 
-              <v-text-field
-                v-model="name"
-                label="name"
+              <v-banner
+                elevation="18"
+                class="input_box mb-6"
+                style="text-align: left"
+              >
+                <input type="time" min="" max="" />
+              </v-banner>
+
+              <v-select
+                v-model="theater"
+                :items="all_theater"
+                label="theater"
+                required
                 rounded
                 dense
                 solo
-              ></v-text-field>
+                class="pt-3"
+              ></v-select>
 
               <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
+                v-model="language"
+                label="language"
                 rounded
                 dense
                 solo
@@ -150,7 +202,7 @@
     <!-- edit modal -->
     <div class="modal" :class="{ 'is-active': edit_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card modal-card_admin">
+      <div class="modal-card modal-card_admin" style="width: 65%">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -170,45 +222,70 @@
             class="regis_txt pb-3"
             style="text-decoration: none; font-size: 30px"
           >
-            Edit Food & Beverage
+            Edit Movie
           </p>
           <div class="columns">
-            <div class="column is-3" style="text-align: right">
-              <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+            <div class="column is-5">
+              <v-date-picker
+                v-model="picker"
+                header-color="#fd7014"
+                color="#fd7014"
+              ></v-date-picker>
             </div>
 
-            <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
+            <div
+              class="column is-2"
+              style="text-align: right; padding-top: 3.6%"
+            >
+              <p class="profile_modal_txt py-2">Movie :</p>
+              <p class="profile_modal_txt py-4">Time Start :</p>
+              <p class="profile_modal_txt py-4">Time End :</p>
+              <p class="profile_modal_txt py-4">Theater :</p>
+              <p class="profile_modal_txt py-4">Language :</p>
+            </div>
+
+            <div class="column is-4 pt-6">
+              <v-select
+                v-model="movie"
+                :items="all_movie"
+                label="movie"
+                required
                 rounded
                 dense
                 solo
+                class="pt-3"
+              ></v-select>
+
+              <v-banner
+                elevation="18"
+                class="input_box mb-6"
+                style="text-align: left"
               >
-              </v-file-input>
+                <input type="time" min="" max="" />
+              </v-banner>
 
-              <v-text-field
-                v-model="name"
-                label="name"
+              <v-banner
+                elevation="18"
+                class="input_box mb-6"
+                style="text-align: left"
+              >
+                <input type="time" min="" max="" />
+              </v-banner>
+
+              <v-select
+                v-model="theater"
+                :items="all_theater"
+                label="theater"
+                required
                 rounded
                 dense
                 solo
-              ></v-text-field>
+                class="pt-3"
+              ></v-select>
 
               <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
+                v-model="language"
+                label="language"
                 rounded
                 dense
                 solo
@@ -239,9 +316,9 @@
                 color: white;
               "
               class="button mx-3"
-              @click="edit_isopen = flase"
+              @click="delete_isopen = true"
             >
-              CANCEL
+              DELETE
             </button>
           </div>
         </footer>
@@ -310,10 +387,13 @@ export default {
   data() {
     return {
       image:
-        "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
+        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
+      picker: new Date().toISOString().substr(0, 10),
+      all_movie: ["Sponbob", "Conan"],
+      all_theater: ["1", "2"],
     };
   },
   methods: {},
@@ -321,14 +401,16 @@ export default {
 </script>
 
 <style>
-.admin_card {
-  width: 15%;
-  height: 375px;
-  background-color: #fd7014 !important;
-  color: #ffffff !important;
+.shecdule_admin_card_detail {
+  color: white;
+  font-size: 25px;
+  padding-top: 25%;
 }
 
-.modal-card_admin{
-  width: 50%;
+.input_box {
+  background-color: white !important;
+  width: 100%;
+  height: 35px;
+  border-radius: 60px !important;
 }
 </style>
