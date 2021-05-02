@@ -1,218 +1,137 @@
 <template>
-  <div class="backgroundblack">
-    <div class="backgroundgray" :key="key">
-      <div class="column spacetop ml-9 mr-9 mb-5">
-        <p class="title_food_e">Food & Beverage</p>
-        <p class="title_food_t">เลือกอาหาร และเครื่องดื่มเพิ่มเติม</p>
-      </div>
-      <div class="is-multiline columns is-variable is-2 ml-9 mr-9">
-
-        <div class="column is-one-quarter mt-5">
-          <div id="card_food" class="card">
-            <div id="img_food" class="card-image">
-              <figure class="image is-1by1">
-                <img v-bind:src="image_popcorn" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div id="card_body" class="card-content">
-              <div id="food" class="media">
-                <div class="media-content">
-                  <p id="detail_pro_food" class="whitefont">
-                    Popcorn Salted Caramel Lemon
-                  </p>
-                  <p class="whitefont">200 บาท</p>
-                </div>
-              </div>
-            </div>
-            <footer id="foot_h" class="card-footer">
-              <v-btn
-                @click="decrease(0, 200)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
+  <v-container>
+    <v-card flat color="#000000">
+      <v-card-text>
+        <v-row>
+          <v-card-title
+            ><div class="column spacetop ml-9 mr-9 mb-5">
+              <v-row class="title_food_e">Food & Beverage</v-row>
+              <v-row class="title_food_t"
+                >เลือกอาหาร และเครื่องดื่มเพิ่มเติม</v-row
               >
-                -
-              </v-btn>
-              <p id="footer_food" class="card-footer-item">{{ amount[0] }}</p>
-              <v-btn
-                @click="increase(0, 200)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                +
-              </v-btn>
-            </footer>
-          </div>
-        </div>
-
-        <div class="column is-one-quarter mt-5">
-          <div id="card_food" class="card">
-            <div id="img_food" class="card-image">
-              <figure class="image is-1by1">
-                <img v-bind:src="image_coke" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div id="card_body" class="card-content">
-              <div id="food" class="media">
-                <div class="media-content">
-                  <p id="detail_pro_food" class="whitefont">Coke Original</p>
-                  <p class="whitefont">20บาท</p>
-                </div>
-              </div>
-            </div>
-            <footer id="foot_h" class="card-footer">
-              <v-btn
-                @click="decrease(1, 20)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                -
-              </v-btn>
-              <p id="footer_food" class="card-footer-item">{{ amount[1] }}</p>
-              <v-btn
-                @click="increase(1, 20)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                +
-              </v-btn>
-            </footer>
-          </div>
-        </div>
-
-        <div class="column is-one-quarter mt-5">
-          <div id="card_food" class="card">
-            <div id="img_food" class="card-image">
-              <figure class="image is-1by1">
-                <img v-bind:src="image_popcorn" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div id="card_body" class="card-content">
-              <div id="food" class="media">
-                <div class="media-content">
-                  <p id="detail_pro_food" class="whitefont">
-                    Popcorn Salted Caramel Lemon
-                  </p>
-                  <p class="whitefont">200 บาท</p>
-                </div>
-              </div>
-            </div>
-            <footer id="foot_h" class="card-footer">
-              <v-btn
-                @click="decrease(2, 200)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                -
-              </v-btn>
-              <p id="footer_food" class="card-footer-item">{{ amount[2] }}</p>
-              <v-btn
-                @click="increase(2, 200)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                +
-              </v-btn>
-            </footer>
-          </div>
-        </div>
-
-        <div class="column is-one-one">
-          <div id="final_food_cal">
-            <p id="total_e">Total</p>
-            <p id="total_t">ราคารวม</p>
-            <p id="total_m">{{ totalprice }} บาท</p>
-            <v-btn id="button_next" color="#ff7810" dark v-bind="attrs"
-              >ต่อไป</v-btn
-            >
-          </div>
-        </div>
-
-        <div class="column is-one-quarter mt-5">
-          <div id="card_food" class="card">
-            <div id="img_food" class="card-image">
-              <figure class="image is-1by1">
-                <img v-bind:src="image_coke" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div id="card_body" class="card-content">
-              <div id="food" class="media">
-                <div class="media-content">
-                  <p id="detail_pro_food" class="whitefont">Coke Original</p>
-                  <p class="whitefont">20 บาท</p>
-                </div>
-              </div>
-            </div>
-            <footer id="foot_h" class="card-footer">
-              <v-btn
-                @click="decrease(3, 20)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                -
-              </v-btn>
-              <p id="footer_food" class="card-footer-item">{{ amount[3] }}</p>
-              <v-btn
-                @click="increase(3, 20)"
-                id="footer_food_cal"
-                color="#ff7810"
-                dark
-                v-bind="attrs"
-              >
-                +
-              </v-btn>
-            </footer>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+            </div></v-card-title
+          >
+          <v-col cols="9">
+            <v-card color="#212835" flat shaped outlined>
+              <v-card-text>
+                <v-row>
+                  <v-col cols="4" v-for="food of this.food" :key="food.food_id">
+                    <v-card id="card_food" class="card">
+                      <div id="img_food" class="card-image">
+                        <figure class="image is-1by1">
+                          <img
+                            v-bind:src="imagePath(food.food_image)"
+                            alt="Placeholder image"
+                          />
+                        </figure>
+                      </div>
+                      <div id="card_body" class="card-content">
+                        <div id="food" class="media">
+                          <div class="media-content">
+                            <p id="detail_pro_food" class="whitefont">
+                              {{ food.food_name }}
+                            </p>
+                            <p class="whitefont">{{ food.food_price }} บาท</p>
+                          </div>
+                        </div>
+                      </div>
+                      <footer id="foot_h" class="card-footer">
+                        <v-btn
+                          id="footer_food_cal"
+                          color="#ff7810"
+                          dark
+                          @click="revfood(food)"
+                        >
+                          -
+                        </v-btn>
+                        <p id="footer_food" class="card-footer-item">
+                          {{ food.amount }}
+                        </p>
+                        <v-btn
+                          id="footer_food_cal"
+                          color="#ff7810"
+                          dark
+                          @click="addFood(food)"
+                        >
+                          +
+                        </v-btn>
+                      </footer>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="3" style="position: -webkit-sticky; position: sticky"
+            ><div id="final_food_cal">
+              <p id="total_e">Total</p>
+              <p id="total_t">ราคารวม</p>
+              <p id="total_m">{{ totalprice }} บาท</p>
+              <v-btn id="button_next" color="#ff7810" dark @click="nextpage()">ต่อไป</v-btn>
+            </div></v-col
+          >
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
+import FoodService from "../service/FoodService";
+
 export default {
   data() {
     return {
-      key: 0,
-      amount: [0, 0, 0, 0, 0],
       totalprice: 0,
       image_popcorn:
         "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
       image_coke:
         "https://i.pinimg.com/474x/65/37/ec/6537ecc2e7900a6076c8b28557d4e5c0.jpg",
+      food: [],
+      keep:[]
     };
   },
+  mounted() {
+    this.getFood();
+  },
   methods: {
-    increase(index, price) {
-      this.amount[index] += 1;
-      this.totalprice += price;
-      this.key += 1;
-    },
-    decrease(index, price) {
-      if (this.amount[index] == 0) {
-        return;
+    async getFood() {
+      try {
+        let keep = await FoodService.getFood();
+        for (let food of keep.data) {
+          food.amount = 0;
+        }
+        this.food = keep.data;
+      } catch (err) {
+        console.log(err);
       }
-      if (this.totalprice - price < 0) {
-        return;
-      }
-      this.amount[index] -= 1;
-      this.totalprice -= price;
-      this.key += 1;
     },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    addFood(food) {
+      food.amount += 1;
+      this.totalprice += food.food_price;
+    },
+    revfood(food) {
+      if (food.amount > 0) {
+        food.amount -= 1;
+        this.totalprice -= food.food_price;
+      }
+    },
+    nextpage(){
+      for(let food of this.food){
+        if(food.amount > 0){
+          this.keep.push(food)
+        }
+      }
+      this.$store.commit("keepfood", this.keep);
+      this.$router.push({name:'Buyticket'})
+    }
   },
 };
 </script>
@@ -270,10 +189,10 @@ export default {
   height: 100%;
 }
 #card_body {
-  height: 200px;
+  height: 120px;
 }
 #detail_pro_food {
-  height: 120px;
+  height: 50px;
 }
 #foot_h {
   height: 50px;

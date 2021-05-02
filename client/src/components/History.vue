@@ -84,7 +84,7 @@
                     }}</v-card-text
                   >
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="1">
                   <v-card-text class="history_card_title_sub">
                     Seat
                   </v-card-text>
@@ -104,7 +104,7 @@
                     >Total
                   </v-card-text>
                 </v-col>
-                <v-col cols="1">
+                <v-col cols="2">
                   <v-card-text class="history_card_txt">{{
                     his.food_price + his.seat_price + " $"
                   }}</v-card-text>
@@ -137,23 +137,20 @@ export default {
       try {
         await HistoryService.getHistory()
           .then((response) => {
-            console.log(response.data);
             for (let data of response.data) {
               for (let his of this.history) {
                 if (his.ticket_id == data.ticket_id) {
                   data.checkseat_name = true;
+                  data.checkfood_name = true;
                   for (let seat of his.seat_name) {
                     if (seat.name == data.seat_name) {
-                      console.log(seat);
                       data.checkseat_name = false;
-                    } else {
-                      his.food_name.push({
-                        name: data.food_name,
-                        price: data.food_price,
-                        unit: data.unit,
-                      });
-                      his.food_price += data.food_price * data.unit;
-                    }
+                    } 
+                  }
+                  for(let food of his.food_name){
+                    if (food.name == data.food_name) {
+                      data.checkfood_name = false;
+                    } 
                   }
                   if (data.checkseat_name) {
                     his.seat_name.push({
@@ -162,12 +159,18 @@ export default {
                     });
                     his.seat_price += data.seat_price;
                   }
+                  if(data.checkfood_name){
+                    his.food_name.push({
+                        name: data.food_name != null ? data.food_name : "-",
+                        price: data.food_price,
+                        unit: data.unit,
+                      });
+                      his.food_price += data.food_price * data.unit;
+                  }
                   data.checked = true;
                 }
-                console.log(data.checked);
               }
               if (data.checked == undefined) {
-                console.log("data");
                 var obj = {
                   ticket_id: data.ticket_id,
                   movie_name: data.movie_name,

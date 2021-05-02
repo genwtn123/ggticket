@@ -8,7 +8,10 @@
       <div class="is-multiline columns">
         <div class="column is-three-fifths is-multiline columns">
           <div id="box">
-            <img v-bind:src="image_movie" alt="Placeholder image" />
+            <img
+              :src="imagePath(this.show.movie_image)"
+              alt="Placeholder image"
+            />
           </div>
           <div id="detail_ticket" class="column">
             <p id="topic_ticket" class="title_ticket">Title</p>
@@ -19,12 +22,20 @@
             <p id="topic_ticket">Seat</p>
           </div>
           <div id="detail_ticket" class="column">
-            <p id="info_ticket" class="title_ticket">Spongebob Movie</p>
-            <p id="info_ticket" class="date_ticket">1-April-2021</p>
-            <p id="info_ticket">09:00-11:00</p>
-            <p id="info_ticket">1</p>
-            <p id="info_ticket">TH</p>
-            <p id="info_ticket">B10</p>
+            <p id="info_ticket" class="title_ticket">
+              {{ this.show.movie_name }}
+            </p>
+            <p id="info_ticket" class="date_ticket">{{ this.show.date }}</p>
+            <p id="info_ticket">
+              {{ this.show.start_time + "-" + this.show.end_time }}
+            </p>
+            <p id="info_ticket">{{ this.show.theater_id }}</p>
+            <p id="info_ticket">{{ this.show.movie_language }}</p>
+            <p id="info_ticket">
+              <span v-for="seat of this.seat" :key="seat.seat_no">{{
+                seat.seat_name + " "
+              }}</span>
+            </p>
           </div>
         </div>
 
@@ -32,49 +43,54 @@
           <div id="box_text">
             <p id="total_payment">Total</p>
             <div class="row">
-              <p
-                id="ticket_payment"
-                class="ticket_payment"
-              >
-                Ticket x 1
+              <p id="ticket_payment" class="ticket_payment">
+                <template v-for="seat of this.seat">
+                  <span :key="seat.seat_no">{{
+                    seat.seat_name + " " + ""
+                  }}</span>
+                </template>
               </p>
-              <p id="ticket_payment">200 บาท</p>
+              <p id="ticket_payment">{{ this.seatprice }} บาท</p>
             </div>
-            <div class="row">
-              <p
-                id="food_payment"
-                class="ticket_payment"
-              >
-                Food & Beverage
+            <div class="row" v-for="food of this.food" :key="food.food_id">
+              <p id="food_payment" class="ticket_payment">
+                {{ food.food_name + " x " + food.amount }}
               </p>
-              <p id="food_payment">300 บาท</p>
+              <p id="food_payment">{{ food.food_price * food.amount }} บาท</p>
             </div>
           </div>
         </div>
 
-        <div id="ticket_border" class="column is-three-fifths is-multiline columns">
+        <div
+          id="ticket_border"
+          class="column is-three-fifths is-multiline columns"
+        >
           <div id="box">
             <img v-bind:src="image_food" alt="Placeholder image" />
           </div>
           <div id="detail_ticket_bot" class="column">
             <p id="topic_ticket_head" class="column">Add Food & Beverage</p>
-            <p id="text_ticket_info" class="date_ticket">เลือกซื้ออาหารและเครื่องดื่ม</p>
-            <v-btn id="button_payment" color="#ff7810" dark v-bind="attrs">Click here</v-btn>
+            <p id="text_ticket_info" class="date_ticket">
+              เลือกซื้ออาหารและเครื่องดื่ม
+            </p>
+            <v-btn id="button_payment" color="#ff7810" dark>Click here</v-btn>
           </div>
         </div>
 
         <div id="box_bot" class="column">
           <p id="total_t">ราคารวม</p>
-          <p id="total_m">300 บาท</p>
-          <v-btn id="button_payment" color="#ff7810" dark v-bind="attrs">ชำระเงิน</v-btn>
+          <p id="total_m">{{ this.total }} บาท</p>
+          <v-btn id="button_payment" color="#ff7810" dark @click="buyticket()"
+            >ชำระเงิน</v-btn
+          >
         </div>
-        
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import TicketService from "../service/TicketService";
 export default {
   data() {
     return {
@@ -82,32 +98,78 @@ export default {
         "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       image_food:
         "https://cf.shopee.co.th/file/9bfa60613f84e8b5c4a766544ffbdc14",
+      seat: this.$store.getters.getseat,
+      show: this.$store.getters.getshow,
+      food: this.$store.getters.getfood,
+      seatprice: this.$store.getters.getseatprice,
+      confirmseat: [],
+      confirmfood: [],
     };
   },
-  methods: {},
+  methods: {
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    async buyticket() {
+      for (let seatz of this.seat) {
+        this.confirmseat.push(seatz.seat_no);
+      }
+      for (let foodz of this.food) {
+        this.confirmfood.push({ food_id: foodz.food_id, amount: foodz.amount });
+      }
+      try {
+        await TicketService.buyticket({
+          showtime_no: this.show.showtime_no,
+          food: this.confirmfood,
+          seat_no: this.confirmseat,
+        });
+        this.$store.commit("keepmovie", "");
+        this.$store.commit("keepshow", "");
+        this.$store.commit("keepseat", "");
+        this.$store.commit("keepfood", "");
+        this.$store.commit("keepseatprice", "");
+        this.$router.push({ name: "Home" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  computed: {
+    total() {
+      let p = 0;
+      for (let food of this.food) {
+        p += food.food_price * food.amount;
+      }
+      p += this.seatprice;
+      return p;
+    },
+  },
 };
 </script>
 
 <style>
-#detial_ticket_bot{
+#detial_ticket_bot {
   text-align: center;
 }
-#topic_ticket_head{
+#topic_ticket_head {
   font-size: 26px;
   color: #dcdcdc;
 }
-#text_ticket_info{
+#text_ticket_info {
   font-size: 25px;
   color: #6f717b;
 }
-#ticket_border{
+#ticket_border {
   border: #6f717b 2px solid;
   margin-bottom: 0px;
- 
 }
-.backgroundblackticket{
+.backgroundblackticket {
   background-color: #121212;
-  padding-bottom:1%;
+  padding-bottom: 1%;
 }
 #box_bot {
   border-bottom: #6f717b 2px solid;
@@ -120,7 +182,8 @@ export default {
   margin-top: 20%;
 }
 .ticket_payment {
-  margin-left: 5%; width: 250px
+  margin-left: 5%;
+  width: 250px;
 }
 #total_payment {
   font-size: 72px;

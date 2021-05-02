@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <div style="line-height: 32pt" class="columns">
-      <div class="is-3 column">
-        <div class="title_head">Food & Beverage</div>
-        <div class="title_sub">อาหาร และเครื่องดื่ม</div>
+      <div class="is-1 column">
+        <div class="title_head">Movie</div>
+        <div class="title_sub">ภาพยนต์</div>
       </div>
-      <div class="column pt-5" style="text-align: left">
+      <div class="column pt-5 pl-6 ml-6" style="text-align: left">
         <img
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
@@ -17,13 +17,14 @@
     <hr />
     <div class="pt-6">
       <div class="columns pl-6" v-for="index in 2" :key="index">
-        <div class="card admin_card mx-6 my-6" v-for="index in 5" :key="index">
+        <div class="card admin_card mx-6 my-6" style="width:20%; height:430px" v-for="index in 5" :key="index">
           <figure class="image">
-            <img :src="image" alt="Placeholder image" />
+            <img style="height: 250px" :src="image" alt="Placeholder image" />
           </figure>
           <div class="card-content">
-            <div style="font-size: 18px">Popcorn Salted Caramel Lemon</div>
-            <div style="font-size: 23px">200บาท</div>
+            <div style="font-size: 15px"><b style="color: #520c0c">Title : </b>Popcorn Salted Caramel Lemon</div>
+            <div style="font-size: 15px"><b style="color: #520c0c">Movie length : </b> 140 นาที</div>
+            <div style="font-size: 15px"><b style="color: #520c0c">Category : </b> Cartoon</div>
           </div>
           <footer class="card-footer" style="background-color: white">
             <div
@@ -68,14 +69,14 @@
             class="regis_txt pb-3"
             style="text-decoration: none; font-size: 30px"
           >
-            Add Food & Beverage
+            Add Movie
           </p>
           <div class="columns">
             <div class="column is-3" style="text-align: right">
               <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+              <p class="profile_modal_txt py-4">Tittle :</p>
+              <p class="profile_modal_txt py-4">Movie Length :</p>
+              <p class="profile_modal_txt py-4">Category :</p>
             </div>
 
             <div class="column pr-6 is-8">
@@ -89,16 +90,16 @@
               </v-file-input>
 
               <v-text-field
-                v-model="name"
-                label="name"
+                v-model="tittle"
+                label="tittle"
                 rounded
                 dense
                 solo
               ></v-text-field>
 
               <v-text-field
-                v-model="price"
-                label="price"
+                v-model="length"
+                label="movie length"
                 rounded
                 dense
                 solo
@@ -170,14 +171,14 @@
             class="regis_txt pb-3"
             style="text-decoration: none; font-size: 30px"
           >
-            Edit Food & Beverage
+            Edit Movie
           </p>
           <div class="columns">
             <div class="column is-3" style="text-align: right">
               <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+              <p class="profile_modal_txt py-4">Tittle :</p>
+              <p class="profile_modal_txt py-4">Movie Length :</p>
+              <p class="profile_modal_txt py-4">Category :</p>
             </div>
 
             <div class="column pr-6 is-8">
@@ -191,16 +192,16 @@
               </v-file-input>
 
               <v-text-field
-                v-model="name"
-                label="name"
+                v-model="tittle"
+                label="tittle"
                 rounded
                 dense
                 solo
               ></v-text-field>
 
               <v-text-field
-                v-model="price"
-                label="price"
+                v-model="length"
+                label="movie length"
                 rounded
                 dense
                 solo
@@ -310,7 +311,7 @@ export default {
   data() {
     return {
       image:
-        "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
+        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
@@ -321,14 +322,5 @@ export default {
 </script>
 
 <style>
-.admin_card {
-  width: 15%;
-  height: 375px;
-  background-color: #fd7014 !important;
-  color: #ffffff !important;
-}
 
-.modal-card_admin{
-  width: 50%;
-}
 </style>

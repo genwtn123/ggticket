@@ -1,7 +1,7 @@
 <template >
   <v-app>
     <v-main fluid class="bg">
-        <Mainbar/>
+        <Adminbar/>
     <v-container >
         <div class="">
           <Buyfood/>
@@ -18,11 +18,11 @@
 <script>
 // @ is an alias to /src
 import Buyfood from "../components/Buyfood_admin.vue";
-import Mainbar from "../components/navbar/Mainbar.vue";
+import Adminbar from "../components/navbar/Adminbar.vue";
 
 export default {
   components: {
-    Mainbar,
+    Adminbar,
     Buyfood,
   },
   data: () => ({}),
