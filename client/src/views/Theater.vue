@@ -1,10 +1,8 @@
 <template>
   <div>
-      <v-app>
+      <v-app> 
         <Mainbar/>
-        <div class="">
           <Theater/>
-        </div>
       </v-app>
   </div>
 </template>

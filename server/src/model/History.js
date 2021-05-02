@@ -26,7 +26,8 @@ class History{
             using (ticket_id) \
             left outer join FOOD \
             using (food_id) \
-            where audience_id = ?'
+            where audience_id = ? \
+            order by (ticket_id) DESC;'
             // let kept = await conn.query(stmt3)
             // console.log(kept[0])
 

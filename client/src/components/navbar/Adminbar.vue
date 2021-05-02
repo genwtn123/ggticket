@@ -13,13 +13,21 @@
 
     <div class="navbar-menu">
       <div class="navbar-start">
-      <router-link to="/movie" class="pr-5 navbar-item nav_font">ภาพยนต์</router-link>
-      <router-link to="/movieschedule" class="pr-5 navbar-item nav_font">ตารางภาพยนต์</router-link>
-      <router-link to="/buyfood" class="pr-5 navbar-item nav_font">food</router-link>
-      <router-link to="/promotion" class="pr-5 navbar-item nav_font">promotion</router-link>
-
-      <router-link to="/history" class="pr-5 navbar-item nav_font">History</router-link>
-
+        <router-link to="/amovie" class="pr-5 navbar-item nav_font"
+          >AMovie</router-link
+        >
+        <router-link to="/aschedule" class="pr-5 navbar-item nav_font"
+          >Aschedule</router-link
+        >
+        <router-link to="/afood" class="pr-5 navbar-item nav_font"
+          >Afood</router-link
+        >
+        <router-link to="/atheater" class="pr-5 navbar-item nav_font"
+          >Atheater</router-link
+        >
+        <router-link to="/apromo" class="pr-5 navbar-item nav_font"
+          >Apromotion</router-link
+        >
       </div>
 
       <div class="navbar-end">
@@ -54,18 +62,24 @@
       </div>
     </div>
   </nav>
+
 </template>
 
 
 <script>
 import AccountService from "../../service/AccountService";
+
 export default {
+  props: {
+
+  },
   name: "Mainbar",
   components: {},
   data: () => ({
     username: "",
     password: "",
     error: null,
+    logo: "../assets/Logo.png",
   }),
   methods: {
     async logout() {
@@ -84,32 +98,23 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 #nav a {
   font-weight: bold;
   color: snow;
 }
+
 #nav a.router-link-exact-active {
   color: salmon;
 }
+
 #nav button {
   font-weight: bold;
   color: snow;
 }
+
 .nav_font {
   color: white;
   font-size: 20px;
 }
 </style>
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete

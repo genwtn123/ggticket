@@ -14,6 +14,7 @@ const valideditSeat = Joi.object({
     theater_id: Joi.number().integer().required()
 })
 
+
 exports.addSeat = async (req, res, next) => {
     try {
         await validseat.validateAsync(req.body, { abortEarly: false })

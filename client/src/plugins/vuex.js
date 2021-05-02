@@ -10,16 +10,46 @@ const store = new Vuex.Store({
     state:{
         seat : [],
         ticket_id:"",
-        food: []
+        food: [],
+        movie:"",
+        show:"",
+        seatprice:0
     },
     mutations:{
-        setTempOperatorContactId(state, operator_id){
-            state.Temp.temp_operator_contact_id = operator_id
+        keepmovie(state, movie){
+            state.movie = movie
+        },
+        keepshow(state, show){
+            state.show = show
+        },
+        keepseat(state, seat){
+            state.seat = seat
+        },
+        keepfood(state, food){
+            state.food = food
+        },
+        keepseatprice(state, price){
+            state.seatprice = price
         }
     },
     getters:{
-        isAuthenticated: (state) => {
-            return state.user.username ? true : false
+        getmovieid: (state) => {
+            return state.movie.movie_id
+        },
+        getmovie:(state) =>{
+            return state.movie
+        },
+        getshow:(state) =>{
+            return state.show
+        },
+        getseat:(state) => {
+            return state.seat
+        },
+        getfood:(state) => {
+            return state.food
+        },
+        getseatprice:(state) => {
+            return state.seatprice
         }
     }
 })

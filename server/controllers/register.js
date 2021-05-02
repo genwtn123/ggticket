@@ -55,6 +55,7 @@ exports.registerCustomer = async (req,res,next) => {
         await user.createCustomer()
         res.send(user)
     }catch(err){
+        console.log(err)
         res.status(400).send(err)
     }
 }

@@ -14,6 +14,9 @@ import MovieSchedule from '../views/MovieSchedule.vue'
 
 import ABuyfood from '../views/Buyfood_admin.vue'
 import APromotion from '../views/Promotion_admin.vue'
+import AMovie from '../views/Movie_admin.vue'
+import Aschedule from '../views/Schedule_admin.vue'
+import Atheater from '../views/Theater_admin.vue'
 
 Vue.use(VueRouter)
 
@@ -34,7 +37,7 @@ const routes = [
         component: Home
     }
     ,{
-        path: '/buy',
+        path: '/buyticket',
         name: 'Buyticket',
         component: BuyTicket
     },
@@ -84,6 +87,24 @@ const routes = [
         path: '/apromo',
         name: 'APromotion',
         component: APromotion
+
+    },
+    {
+        path: '/amovie',
+        name: 'AMovie',
+        component: AMovie
+
+    },
+    {
+        path: '/aschedule',
+        name: 'Aschedule',
+        component: Aschedule
+
+    },
+    {
+        path: '/atheater',
+        name: 'Atheater',
+        component: Atheater
 
     }
 ]
