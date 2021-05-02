@@ -1,47 +1,64 @@
 <template >
-  <div id="nav">
-    <v-app-bar app dark>
-      <router-link to="/" class="pr-5">หน้าหลัก</router-link>
-      <router-link to="/movie" class="pr-5">ภาพยนต์</router-link>
-      <router-link to="/movieschedule" class="pr-5">ตารางภาพยนต์</router-link>
-      <!-- <router-link to="/buyfood" class="pr-5">food</router-link> -->
-      <!-- <router-link to="/buyticket" class="pr-5">ticket</router-link> -->
-      <!-- <router-link to="/theaterselect" class="pr-5">โรงภาพยนตร์</router-link> -->
-      <router-link to="/promotion" class="pr-5">promotion</router-link>
-      <!-- <router-link to="/seat" class="pr-5">seat</router-link> -->
-      <router-link to="/history" class="pr-5">History</router-link>
-      <router-link to="/afood" class="pr-5">Admin_food</router-link>
-      <router-link to="/apromo" class="pr-5">Admin_promo</router-link>
-      <v-btn depressed color="black" class="mr-2" @click="isopen = true">
-        Profile
-      </v-btn>
-      <v-btn depressed color="black" class="" @click="logout"> Logout </v-btn>
-      
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
+  <nav
+    class="navbar is-transparent"
+    style="background-color: black; height: 80px"
+  >
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <router-link to="/" class="pr-5 navbar-item"
+          ><img src="https://i.ibb.co/BCtPq5T/Component-1.png"
+        /></router-link>
+      </a>
+    </div>
 
+    <div class="navbar-menu">
+      <div class="navbar-start">
+      <router-link to="/movie" class="pr-5 navbar-item nav_font">ภาพยนต์</router-link>
+      <router-link to="/movieschedule" class="pr-5 navbar-item nav_font">ตารางภาพยนต์</router-link>
+      <router-link to="/buyfood" class="pr-5 navbar-item nav_font">food</router-link>
+      <router-link to="/promotion" class="pr-5 navbar-item nav_font">promotion</router-link>
 
-        <v-list>
-          <v-list-item>
-            <v-list-item-title>Profile</v-list-item-title>
-          </v-list-item>
-          <v-list-item  @click="logout">
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
-  </div>
+      <router-link to="/history" class="pr-5 navbar-item nav_font">History</router-link>
+
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <v-avatar
+              style="text-align: left"
+              color="warning lighten"
+              size="40"
+            >
+              <!-- <img src="" alt="" srcset=""> -->
+            </v-avatar>
+
+            <v-menu left bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon color="white">mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title>Profile</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="logout">
+                  <v-list-item-title>Logout</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 
 <script>
 import AccountService from "../../service/AccountService";
-
 export default {
   name: "Mainbar",
   components: {},
@@ -67,18 +84,32 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 #nav a {
   font-weight: bold;
   color: snow;
 }
-
 #nav a.router-link-exact-active {
   color: salmon;
 }
-
 #nav button {
   font-weight: bold;
   color: snow;
 }
+.nav_font {
+  color: white;
+  font-size: 20px;
+}
 </style>
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
