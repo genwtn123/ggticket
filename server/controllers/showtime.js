@@ -12,6 +12,26 @@ const validshowtime = Joi.object({
     theater_id:Joi.number().integer().required(),
 })
 
+exports.getseatinShowtime = async (req, res, next) => {
+    try{
+        let showtime = new Showtime(req.body.showtime_no, null, null, null, null, null, req.body.theater_id)
+        let keep = await showtime.getseatinShowtime()
+        res.send(keep)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+exports.getShowtime = async (req, res, next) => {
+    try{
+        let showtime = new Showtime
+        let keep = await showtime.getShowtime()
+        res.send(keep)
+    }catch(err){
+        console.log(err)
+    }
+}
+
 exports.addShowtime = async (req, res, next) => {
     try{
         await validshowtime.validateAsync(req.body, {abortEarly:false})

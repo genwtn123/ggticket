@@ -62,6 +62,66 @@ class Showtime{
             conn.release()
         }
     }
+
+    async getShowtime(){
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try{
+            let stmt = 'select * from SHOWTIME \
+            join MOVIE \
+            using (movie_id) \
+            join THEATER \
+            using(theater_id) \
+            order by (time_start)'
+            let keep = await conn.query(stmt)
+            await conn.commit()
+            return Promise.resolve(keep[0])
+        }catch(err){
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        }finally{
+            conn.release()
+        }
+    }
+
+    async getseatinShowtime(){
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try{
+            let stmt = 'select * from TICKET \
+            join TICKET_SEAT \
+            using(ticket_id) \
+            join SHOWTIME \
+            using(showtime_no) \
+            where showtime_no = ?'
+            let keep = await conn.query(stmt, this.showtime_no)
+
+            let stmt2 = 'select * from SEAT \
+            join THEATER \
+            using(theater_id) \
+            where theater_id = 1 \
+            order by seat_name'
+            let keep2 = await conn.query(stmt2, this.theater_id)
+
+            for(let seat of keep2[0]){
+                for(let used of keep[0]){
+                    if(seat.seat_no === used.seat_no){
+                        seat.seat_status = 0
+                    }
+                }
+            }
+            
+            await conn.commit()
+            return Promise.resolve(keep2[0])
+        }catch(err){
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        }finally{
+            conn.release()
+        }
+    }
 }
 
 module.exports = Showtime

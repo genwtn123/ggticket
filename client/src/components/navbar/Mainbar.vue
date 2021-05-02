@@ -16,9 +16,8 @@
       <router-link to="/movie" class="pr-5 navbar-item nav_font">ภาพยนต์</router-link>
       <router-link to="/movieschedule" class="pr-5 navbar-item nav_font">ตารางภาพยนต์</router-link>
       <router-link to="/buyfood" class="pr-5 navbar-item nav_font">food</router-link>
-      <router-link to="/theaterselect" class="pr-5 navbar-item nav_font">โรงภาพยนตร์</router-link>
       <router-link to="/promotion" class="pr-5 navbar-item nav_font">promotion</router-link>
-      <router-link to="/seat" class="pr-5 navbar-item nav_font">seat</router-link>
+
       <router-link to="/history" class="pr-5 navbar-item nav_font">History</router-link>
 
       </div>
@@ -60,7 +59,6 @@
 
 <script>
 import AccountService from "../../service/AccountService";
-
 export default {
   name: "Mainbar",
   components: {},
@@ -86,23 +84,32 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 #nav a {
   font-weight: bold;
   color: snow;
 }
-
 #nav a.router-link-exact-active {
   color: salmon;
 }
-
 #nav button {
   font-weight: bold;
   color: snow;
 }
-
 .nav_font {
   color: white;
   font-size: 20px;
 }
 </style>
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete

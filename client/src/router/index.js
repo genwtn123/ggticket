@@ -37,7 +37,7 @@ const routes = [
         component: Home
     }
     ,{
-        path: '/buy',
+        path: '/buyticket',
         name: 'Buyticket',
         component: BuyTicket
     },

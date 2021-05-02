@@ -11,6 +11,7 @@ exports.addTheater = async (req, res, next) => {
     try{
         await validtheater.validateAsync(req.body, {abortEarly: false})
         let theater = new Theater(null, req.body.theater_size, req.body.theater_name)
+        console.log(theater)
         await theater.addTheater()
         res.send(theater)
     }catch(err){
