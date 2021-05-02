@@ -80,7 +80,7 @@
                     :key="food.name"
                     >{{
                       food.name +
-                      (food.name != "-" ? food.price + " $ x" + food.unit : "")
+                      (food.name != "-" ? " "+food.price + " $ x" + food.unit : "")
                     }}</v-card-text
                   >
                 </v-col>

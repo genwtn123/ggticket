@@ -18,69 +18,84 @@ import AMovie from '../views/Movie_admin.vue'
 import Aschedule from '../views/Schedule_admin.vue'
 import Atheater from '../views/Theater_admin.vue'
 
+import AccountService from '../service/AccountService'
+import store from "../plugins/vuex";
+
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/login',
-        name:'Login',
-        component: Login
+        name: 'Login',
+        component: Login,
+        meta: { guess: true },
     },
     {
         path: '/register',
         name: 'Register',
-        component: Register
+        component: Register,
+        meta: { guess: true },
     },
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: { login: true },
     }
-    ,{
+    , {
         path: '/buyticket',
         name: 'Buyticket',
-        component: BuyTicket
+        component: BuyTicket,
+        meta: { login: true, step: true },
     },
 
     {
         path: '/history',
         name: 'History',
-        component: History
+        component: History,
+        meta: { login: true },
     },
     {
         path: '/buyfood',
         name: 'Buyfood',
-        component: Buyfood
+        component: Buyfood,
+        meta: { login: true, step: true },
     },
     {
         path: '/theaterselect',
         name: 'Theater',
-        component: Theater
+        component: Theater,
+        meta: { login: true, step: true },
     },
     {
         path: '/promotion',
         name: 'Promotion',
-        component: Promotion
+        component: Promotion,
+        meta: { login: true },
     },
     {
         path: '/seat',
         name: 'Seat',
-        component: Seat
+        component: Seat,
+        meta: { login: true, step: true },
     },
     {
         path: '/movie',
         name: 'Movie',
-        component: Movie
+        component: Movie,
+        meta: { login: true },
     },
     {
         path: '/movieschedule',
         name: 'MovieSchedule',
-        component: MovieSchedule
+        component: MovieSchedule,
+        meta: { login: true },
     },
     {
         path: '/afood',
         name: 'ABuyfood',
-        component: ABuyfood
+        component: ABuyfood,
+
 
     },
     {
@@ -111,7 +126,29 @@ const routes = [
 
 const router = new VueRouter({
     routes,
-    mode:"history"
+    mode: "history"
+})
+
+router.beforeEach(async (to, from, next) => {
+    try {
+        let isLoggedIn = !!await AccountService.getSession()
+        let isselectedmovie = !!store.getters.getmovie != ""
+        if (to.meta.login && !isLoggedIn) {
+            next({ name: 'Login' })
+        }
+
+        if (to.meta.guess && isLoggedIn) {
+            next({ name: 'Home' })
+        }
+
+        if(to.meta.step && !isselectedmovie){
+            next({ name: 'Movie' })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+
+    next()
 })
 
 // router.beforeEach((to, from, next) =>{
