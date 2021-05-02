@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <div style="line-height: 32pt" class="columns">
-      <div class="is-3 column">
-        <div class="title_head">Food & Beverage</div>
-        <div class="title_sub">อาหาร และเครื่องดื่ม</div>
+    <div style="line-height: 32pt" class="columns pt-6 mt-6">
+      <div class="column is-2">
+        <div class="title_head">Theater</div>
+        <div class="title_sub">จัดการโรงภาพยนต์</div>
       </div>
       <div class="column pt-5" style="text-align: left">
         <img
@@ -14,33 +14,37 @@
         />
       </div>
     </div>
-    <hr />
-    <div class="pt-6">
-      <div class="columns pl-6" v-for="index in 2" :key="index">
-        <div class="card admin_card mx-6 my-6" v-for="index in 5" :key="index">
-          <figure class="image">
-            <img :src="image" alt="Placeholder image" />
-          </figure>
-          <div class="card-content">
-            <div style="font-size: 18px">Popcorn Salted Caramel Lemon</div>
-            <div style="font-size: 23px">200บาท</div>
-          </div>
-          <footer class="card-footer" style="background-color: white">
-            <div
-              style="width: 50%; color: #fd7014"
-              @click="edit_isopen = true"
-              class="card-footer-item"
-            >
-              Edit
-            </div>
-            <div
-              style="width: 50%; color: #fd7014"
-              @click="delete_isopen = true"
-              class="card-footer-item"
-            >
-              Delete
-            </div>
-          </footer>
+    <div>
+      <div class="columns is-2 atheater_box my-6">
+        <div class="atheater_box_head column is-4">
+          Theater 1
+          <span class="atheater_box_sub"
+            >size
+            <span style="color: #ffffff">2</span>
+          </span>
+        </div>
+        <div class="column is-3"></div>
+        <div class="column">
+          <v-btn
+            v-if="topen"
+            @click="topen = !topen"
+            class="atheater_btn mr-6"
+            color="#29FEA5"
+            >OPEN</v-btn
+          >
+          <v-btn
+            v-if="!topen"
+            @click="topen = !topen"
+            class="atheater_btn mr-6"
+            color="#FE2929"
+            >CLOSE</v-btn
+          >
+          <v-btn
+            class="atheater_btn"
+            color="#FD7014"
+            @click="edit_isopen = true"
+            >EDIT</v-btn
+          >
         </div>
       </div>
     </div>
@@ -48,7 +52,7 @@
     <!-- add modal -->
     <div class="modal" :class="{ 'is-active': add_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card modal-card_admin">
+      <div class="modal-card modal-card_admin" style="">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -65,29 +69,21 @@
 
         <section class="modal-card-body profile_modal">
           <p
-            class="regis_txt pb-3"
+            class="regis_txt pt-3 pb-4"
             style="text-decoration: none; font-size: 30px"
           >
-            Add Food & Beverage
+            Add Theater
           </p>
           <div class="columns">
-            <div class="column is-3" style="text-align: right">
-              <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+            <div
+              class="column is-3"
+              style="text-align: right; padding-top: 3.6%"
+            >
+              <p class="profile_modal_txt py-2 pb-6">Name :</p>
+              <p class="profile_modal_txt py-4">Size :</p>
             </div>
 
-            <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
-
+            <div class="column pt-6 is-7">
               <v-text-field
                 v-model="name"
                 label="name"
@@ -96,21 +92,16 @@
                 solo
               ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
+              <v-select
+                v-model="size"
+                :items="all_size"
+                label="size"
+                required
                 rounded
                 dense
                 solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                class="pt-3"
+              ></v-select>
             </div>
           </div>
         </section>
@@ -170,26 +161,79 @@
             class="regis_txt pb-3"
             style="text-decoration: none; font-size: 30px"
           >
-            Edit Food & Beverage
+            Edit Theater
           </p>
           <div class="columns">
-            <div class="column is-3" style="text-align: right">
-              <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+            <div class="column pt-3 is-3 pl-6 ml-5">
+              <div class="columns" style="width: 350px">
+                <p style="color: white" class="column is-4">
+                  A
+                  <img
+                    class="seat_image"
+                    v-bind:src="image_seat"
+                    alt="Placeholder image"
+                  />
+                </p>
+                <v-checkbox v-model="checkbox" class="column"></v-checkbox>
+              </div>
+
+              <div class="columns" style="width: 350px">
+                <p style="color: white" class="column is-4">
+                  B
+                  <img class="seat_image"
+                    v-bind:src="image_seat"
+                    alt="Placeholder image"
+                  />
+                </p>
+                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
+              </div>
+
+              <div class="columns" style="width: 350px">
+                <p style="color: white" class="column is-4">
+                  C
+                  <img
+                    class="seat_image"
+                    v-bind:src="image_seat"
+                    alt="Placeholder image"
+                  />
+                </p>
+                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
+              </div>
+
+              <div class="columns" style="width: 350px">
+                <p style="color: white" class="column is-4">
+                  D
+                  <img
+                    class="seat_image"
+                    v-bind:src="image_seat"
+                    alt="Placeholder image"
+                  />
+                </p>
+                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
+              </div>
+
+              <div class="columns" style="width: 350px">
+                <p style="color: white" class="column is-4">
+                  E
+                  <img
+                    class="seat_image"
+                    v-bind:src="image_seat"
+                    alt="Placeholder image"
+                  />
+                </p>
+                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
+              </div>
             </div>
 
-            <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+            <div
+              class="column is-2"
+              style="text-align: right; padding-top: 3.6%"
+            >
+              <p class="profile_modal_txt py-2 pb-6">Name :</p>
+              <p class="profile_modal_txt py-4">Size :</p>
+            </div>
 
+            <div class="column is-6 pt-6">
               <v-text-field
                 v-model="name"
                 label="name"
@@ -198,21 +242,16 @@
                 solo
               ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
+              <v-select
+                v-model="size"
+                :items="all_size"
+                label="size"
+                required
                 rounded
                 dense
                 solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                class="pt-3"
+              ></v-select>
             </div>
           </div>
         </section>
@@ -239,9 +278,9 @@
                 color: white;
               "
               class="button mx-3"
-              @click="edit_isopen = flase"
+              @click="delete_isopen = true"
             >
-              CANCEL
+              DELETE
             </button>
           </div>
         </footer>
@@ -310,10 +349,16 @@ export default {
   data() {
     return {
       image:
-        "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
+        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
+      image_seat:
+        "https://cdn3.iconfinder.com/data/icons/movie-entertainment-filled-outline-style/64/13_seat-movie-cinema-chair-theater-512.png",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
+      picker: new Date().toISOString().substr(0, 10),
+      all_size: ["S", "M", "L"],
+      topen: false,
+      checkbox: true,
     };
   },
   methods: {},
@@ -321,14 +366,32 @@ export default {
 </script>
 
 <style>
-.admin_card {
-  width: 15%;
-  height: 375px;
-  background-color: #fd7014 !important;
-  color: #ffffff !important;
+.atheater_box {
+  border: 3px solid #fd7014;
+  height: 120px;
 }
 
-.modal-card_admin{
-  width: 50%;
+.atheater_box_head {
+  padding-top: 35px;
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.atheater_box_sub {
+  padding-top: 35px;
+  font-size: 30px;
+  color: #74787d;
+}
+
+.atheater_btn {
+  margin-top: 20px;
+  height: 50px !important;
+  width: 150px !important;
+  border-radius: 0px;
+  font-size: 30px !important;
+}
+
+.seat_image {
+  width: 50px;
 }
 </style>
