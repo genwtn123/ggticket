@@ -11,7 +11,8 @@ class Theater{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'insert into THEATER (theater_size, theater_name) values(?);'
+            console.log(this.theater_size, this.theater_name)
+            let stmt = 'insert into THEATER (theater_size, theater_name) values(?, ?);'
             let keep = await conn.query(stmt, [this.theater_size, this.theater_name])
             this.theater_id = keep[0].insertId
             await conn.commit()
