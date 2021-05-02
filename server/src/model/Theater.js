@@ -15,6 +15,8 @@ class Theater{
             let stmt = 'insert into THEATER (theater_size, theater_name) values(?, ?);'
             let keep = await conn.query(stmt, [this.theater_size, this.theater_name])
             this.theater_id = keep[0].insertId
+
+            // let stmt2 = 'insert into seat (sea'
             await conn.commit()
             return Promise.resolve()
         }catch(err){
