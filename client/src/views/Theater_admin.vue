@@ -4,7 +4,7 @@
         <Adminbar/>
     <v-container >
         <div class="">
-          <Promotion/>
+          <Theater/>
         </div>
     </v-container>
     </v-main>
@@ -17,13 +17,13 @@
 
 <script>
 // @ is an alias to /src
-import Promotion from "../components/Promotion_admin.vue";
+import Theater from "../components/Theater_admin.vue";
 import Adminbar from "../components/navbar/Adminbar.vue";
 
 export default {
   components: {
     Adminbar,
-    Promotion,
+    Theater,
   },
   data: () => ({}),
 };

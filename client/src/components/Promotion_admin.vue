@@ -63,7 +63,7 @@
     <!-- add modal -->
     <div class="modal" :class="{ 'is-active': add_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card">
+      <div class="modal-card modal-card_admin">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -86,14 +86,14 @@
             Add Promotion
           </p>
           <div class="columns">
-            <div class="column is-2" style="text-align: right">
+            <div class="column is-3" style="text-align: right">
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Title :</p>
               <p class="profile_modal_txt py-4">Detail :</p>
               <p class="profile_modal_txt py-4">Quantity :</p>
             </div>
 
-            <div class="column pr-6">
+            <div class="column pr-6 is-8">
               <v-file-input
                 truncate-length="15"
                 label="picture"
@@ -165,7 +165,7 @@
     <!-- edit modal -->
     <div class="modal" :class="{ 'is-active': edit_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card">
+      <div class="modal-card modal-card_admin">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -188,14 +188,14 @@
             Edit Promotion
           </p>
           <div class="columns">
-            <div class="column is-2" style="text-align: right">
+            <div class="column is-3" style="text-align: right">
               <p class="profile_modal_txt py-2">Picture :</p>
-              <p class="profile_modal_txt py-4">Name :</p>
-              <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
+              <p class="profile_modal_txt py-4">Title :</p>
+              <p class="profile_modal_txt py-4">Detail :</p>
+              <p class="profile_modal_txt py-4">Quantity :</p>
             </div>
 
-            <div class="column pr-6">
+            <div class="column pr-6 is-8">
               <v-file-input
                 truncate-length="15"
                 label="picture"
@@ -206,24 +206,24 @@
               </v-file-input>
 
               <v-text-field
-                v-model="name"
-                label="name"
+                v-model="tile"
+                label="tile"
                 rounded
                 dense
                 solo
               ></v-text-field>
 
               <v-text-field
-                v-model="price"
-                label="price"
+                v-model="detail"
+                label="detail"
                 rounded
                 dense
                 solo
               ></v-text-field>
 
               <v-text-field
-                v-model="stock"
-                label="stock"
+                v-model="quantity"
+                label="quantity"
                 rounded
                 dense
                 solo

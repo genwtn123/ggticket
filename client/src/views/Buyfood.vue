@@ -23,7 +23,8 @@ import Mainbar from "../components/navbar/Mainbar.vue";
 export default {
   components: {
     Buyfood,
-    Mainbar,
+    Mainbar
+
   },
   data: () => ({}),
 };
