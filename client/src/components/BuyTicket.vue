@@ -71,9 +71,9 @@
           <div id="detail_ticket_bot" class="column">
             <p id="topic_ticket_head" class="column">Add Food & Beverage</p>
             <p id="text_ticket_info" class="date_ticket">
-              เลือกซื้ออาหารและเครื่องดื่ม
+              เลือกซื้ออาหารและเครื่องดื่มเพิ่ม
             </p>
-            <v-btn id="button_payment" color="#ff7810" dark>Click here</v-btn>
+            <v-btn id="button_payment" color="#ff7810" dark @click="buyfood()">Click here</v-btn>
           </div>
         </div>
 
@@ -106,6 +106,11 @@ export default {
       confirmfood: [],
     };
   },
+  mounted(){
+// if(this.$store.getters.getmovie == ""){
+//         this.$router.push({name:'Movie'})
+//       }
+  },
   methods: {
     imagePath(file_path) {
       if (file_path) {
@@ -137,6 +142,9 @@ export default {
         console.log(err);
       }
     },
+    buyfood(){
+      this.$router.push({ name: "Buyfood" });
+    }
   },
   computed: {
     total() {

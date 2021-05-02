@@ -45,6 +45,8 @@ class AccountService {
         return await axios.get(login).then(response => {
             console.log(response)
             return response;
+        }).catch(() => {
+            return false
         })
     }
 

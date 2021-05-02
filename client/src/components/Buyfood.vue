@@ -15,49 +15,55 @@
             <v-card color="#212835" flat shaped outlined>
               <v-card-text>
                 <v-row>
-                  <v-col cols="4" v-for="food of this.food" :key="food.food_id">
-                    <v-card id="card_food" class="card">
-                      <div id="img_food" class="card-image">
-                        <figure class="image is-1by1">
-                          <img
-                            v-bind:src="imagePath(food.food_image)"
-                            alt="Placeholder image"
-                          />
-                        </figure>
-                      </div>
-                      <div id="card_body" class="card-content">
-                        <div id="food" class="media">
-                          <div class="media-content">
-                            <p id="detail_pro_food" class="whitefont">
-                              {{ food.food_name }}
-                            </p>
-                            <p class="whitefont">{{ food.food_price }} บาท</p>
+                  <template v-for="food of this.food">
+                    <v-col
+                      cols="4"
+                      :key="food.food_id"
+                      v-if="food.food_status != 0"
+                    >
+                      <v-card id="card_food" class="card">
+                        <div id="img_food" class="card-image">
+                          <figure class="image is-1by1">
+                            <img
+                              v-bind:src="imagePath(food.food_image)"
+                              alt="Placeholder image"
+                            />
+                          </figure>
+                        </div>
+                        <div id="card_body" class="card-content">
+                          <div id="food" class="media">
+                            <div class="media-content">
+                              <p id="detail_pro_food" class="whitefont">
+                                {{ food.food_name }}
+                              </p>
+                              <p class="whitefont">{{ food.food_price }} บาท</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <footer id="foot_h" class="card-footer">
-                        <v-btn
-                          id="footer_food_cal"
-                          color="#ff7810"
-                          dark
-                          @click="revfood(food)"
-                        >
-                          -
-                        </v-btn>
-                        <p id="footer_food" class="card-footer-item">
-                          {{ food.amount }}
-                        </p>
-                        <v-btn
-                          id="footer_food_cal"
-                          color="#ff7810"
-                          dark
-                          @click="addFood(food)"
-                        >
-                          +
-                        </v-btn>
-                      </footer>
-                    </v-card>
-                  </v-col>
+                        <footer id="foot_h" class="card-footer">
+                          <v-btn
+                            id="footer_food_cal"
+                            color="#ff7810"
+                            dark
+                            @click="revfood(food)"
+                          >
+                            -
+                          </v-btn>
+                          <p id="footer_food" class="card-footer-item">
+                            {{ food.amount }}
+                          </p>
+                          <v-btn
+                            id="footer_food_cal"
+                            color="#ff7810"
+                            dark
+                            @click="addFood(food)"
+                          >
+                            +
+                          </v-btn>
+                        </footer>
+                      </v-card>
+                    </v-col>
+                  </template>
                 </v-row>
               </v-card-text>
             </v-card>
@@ -66,8 +72,10 @@
             ><div id="final_food_cal">
               <p id="total_e">Total</p>
               <p id="total_t">ราคารวม</p>
-              <p id="total_m">{{ totalprice }} บาท</p>
-              <v-btn id="button_next" color="#ff7810" dark @click="nextpage()">ต่อไป</v-btn>
+              <p id="total_m">{{ this.totalprice }} บาท</p>
+              <v-btn id="button_next" color="#ff7810" dark @click="nextpage()"
+                >ต่อไป</v-btn
+              >
             </div></v-col
           >
         </v-row>
@@ -82,13 +90,13 @@ import FoodService from "../service/FoodService";
 export default {
   data() {
     return {
-      totalprice: 0,
       image_popcorn:
         "https://www.syioknya.com/custom/picture/18240/syioknya1_5d95c544a07f7.png",
       image_coke:
         "https://i.pinimg.com/474x/65/37/ec/6537ecc2e7900a6076c8b28557d4e5c0.jpg",
       food: [],
-      keep:[]
+      keep: [],
+      totalprice:0
     };
   },
   mounted() {
@@ -96,12 +104,30 @@ export default {
   },
   methods: {
     async getFood() {
+      // if(this.$store.getters.getmovie == ""){
+      //   this.$router.push({name:'Movie'})
+      // }
       try {
         let keep = await FoodService.getFood();
+        console.log(this.$store.getters.getfood);
         for (let food of keep.data) {
-          food.amount = 0;
+          if (this.$store.getters.getfood != "") {
+            for (let foood of this.$store.getters.getfood) {
+              if (food.food_id === foood.food_id) {
+                food.amount = foood.amount;
+              }
+            }
+            if (food.amount == undefined) {
+              food.amount = 0;
+            }
+          } else {
+            food.amount = 0;
+          }
         }
         this.food = keep.data;
+        for (let food of this.food) {
+          this.totalprice += food.food_price * food.amount;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -123,16 +149,17 @@ export default {
         this.totalprice -= food.food_price;
       }
     },
-    nextpage(){
-      for(let food of this.food){
-        if(food.amount > 0){
-          this.keep.push(food)
+    nextpage() {
+      for (let food of this.food) {
+        if (food.amount > 0) {
+          this.keep.push(food);
         }
       }
       this.$store.commit("keepfood", this.keep);
-      this.$router.push({name:'Buyticket'})
-    }
+      this.$router.push({ name: "Buyticket" });
+    },
   },
+  computed: {},
 };
 </script>
 

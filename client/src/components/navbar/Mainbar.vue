@@ -15,7 +15,6 @@
       <div class="navbar-start">
       <router-link to="/movie" class="pr-5 navbar-item nav_font">ภาพยนต์</router-link>
       <router-link to="/movieschedule" class="pr-5 navbar-item nav_font">ตารางภาพยนต์</router-link>
-      <router-link to="/buyfood" class="pr-5 navbar-item nav_font">food</router-link>
       <router-link to="/promotion" class="pr-5 navbar-item nav_font">promotion</router-link>
 
       <router-link to="/history" class="pr-5 navbar-item nav_font">History</router-link>
