@@ -54,6 +54,7 @@ create table THEATER(
     `theater_id` int(10) auto_increment,
     `theater_name` varchar(255),
     `theater_size` ENUM('S', 'M', 'L'),
+    `theater_status` boolean,
     primary key(`theater_id`)
 );
 

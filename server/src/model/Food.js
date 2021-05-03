@@ -15,7 +15,7 @@ class FOOD{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'select * from FOOD'
+            let stmt = 'select * from FOOD where food_status <> 0'
             let keep = await conn.query(stmt)
             console.log(keep[0])
             await conn.commit()

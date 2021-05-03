@@ -9,13 +9,14 @@
 
         <div class="vl"></div>
 
-        <form @submit="login" method="get" class="column" style="padding-right: 6%">
+        <v-form @submit="login" method="get" ref="form" class="column" style="padding-right: 6%">
           <div style="font-size: 45px; color:#FFFFFF; padding-top:16%" class="pb-2">LOGIN</div>
   
           <div style="text-align:left; color:#9D9FA3" class="py-6">Username
             <v-text-field
               hide-details="auto"
               v-model="username"
+              :rules="nameRules"
               label="username"
               required
               filled
@@ -41,10 +42,10 @@
           </div>
 
           <!-- If using vue-router -->
-          <button class="button" type="submit" @click="login" style="background:#FD7014; color:#FFFFFF;">
+          <button class="button" type="submit" style="background:#FD7014; color:#FFFFFF;">
             LOGIN
           </button> 
-        </form>
+        </v-form>
       </div>
     </v-banner>
 
@@ -59,11 +60,16 @@ export default {
     username: "",
     password: "",
     error: null,
+    nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
   }),
   
   methods: {
     async login(e) {
       e.preventDefault();
+      this.$refs.form.validate()
       try {
         await AccountService.Login(this.createForm());
         this.$router.push({name:"Home"})
