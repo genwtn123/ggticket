@@ -7,6 +7,25 @@ class Theater{
         this.theater_name = theater_name
     }
 
+    async getTheater() {
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try {
+            let stmt = 'SELECT * FROM THEATER'
+            let keep = await conn.query(stmt)
+            console.log(keep[0])
+            await conn.commit()
+            return Promise.resolve(keep[0])
+        } catch (err) {
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        } finally {
+            conn.release()
+        }
+    }
+
+
     async addTheater(){
         const conn = await pool.getConnection()
         await conn.beginTransaction();

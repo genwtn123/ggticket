@@ -14,16 +14,15 @@
         />
       </div>
     </div>
-    <div>
+    <div v-for="theater in theaters" :key="theater.theater_id">
       <div class="columns is-2 atheater_box my-6">
-        <div class="atheater_box_head column is-4">
-          Theater 1
+        <div class="atheater_box_head column is-8">
+          Theater {{theater.theater_name}}
           <span class="atheater_box_sub"
             >size
-            <span style="color: #ffffff">2</span>
+            <span style="color: #ffffff">{{theater.theater_size}}</span>
           </span>
         </div>
-        <div class="column is-3"></div>
         <div class="column">
           <v-btn
             v-if="topen"
@@ -345,6 +344,7 @@
 </template>
 
 <script>
+import TheaterAdmin from "../admin/TheaterAdmin";
 export default {
   data() {
     return {
@@ -355,13 +355,29 @@ export default {
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
-      picker: new Date().toISOString().substr(0, 10),
       all_size: ["S", "M", "L"],
       topen: false,
       checkbox: true,
+      theaters: [],
     };
   },
-  methods: {},
+  mounted() {
+    this.getTheater();
+  },
+  methods: {
+    async getTheater(){
+      try {
+        let keep = await TheaterAdmin.getTheater();
+        console.log(keep);
+        this.theaters = keep.data
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    
+
+  },
 };
 </script>
 
@@ -373,8 +389,10 @@ export default {
 
 .atheater_box_head {
   padding-top: 35px;
-  font-size: 40px;
+  font-size: 38px;
   color: #ffffff;
+  text-align: left;
+  padding-left: 5%;
 }
 
 .atheater_box_sub {
@@ -393,5 +411,19 @@ export default {
 
 .seat_image {
   width: 50px;
+}
+
+.logo_card {
+  text-align: left;
+  width: 170px;
+  height: 30px;
+}
+
+.profile_modal {
+  background-color: #222831 !important;
+}
+
+.profile_modal_txt {
+  color: #a1a4a8;
 }
 </style>

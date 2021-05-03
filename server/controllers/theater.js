@@ -6,6 +6,16 @@ const validtheater = Joi.object({
     theater_name : Joi.string().required()
 })
 
+exports.getTheater = async (req, res, next) => {
+    try{
+        let theater = new Theater()
+        let keep = await theater.getTheater()
+        console.log("theater",await theater.getTheater())
+        res.send(keep)
+    }catch(err){
+        console.log(err)
+    }
+}
 
 exports.addTheater = async (req, res, next) => {
     try{
@@ -28,6 +38,7 @@ exports.delTheater = async (req, res, next) => {
         console.log(err)
     }
 }
+
 exports.editTheater = async (req, res, next) => {
     try{
         await validtheater.validateAsync(req.bod, {abortEarly: false})
