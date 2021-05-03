@@ -4,17 +4,20 @@
       <div class="title_head">History</div>
       <div class="title_sub">ประวัติการเข้าชม</div>
     </div>
-    <div class="py-6" >
+    <div class="py-6">
       <v-card
         v-for="his in history"
         :key="his.ticket_id"
         class="card columns history_card"
       >
-        <img :src="imagePath(his.movie_image)" class="img_history pt-2 pl-1" />
+        <img
+          :src="imagePath(his.ticket.movie_image)"
+          class="img_history pt-2 pl-1"
+        />
 
         <div class="column">
           <div style="padding-left: 2%">
-            <p class="history_card_title">{{ his.movie_name }}</p>
+            <p class="history_card_title">{{ his.ticket.movie_name }}</p>
 
             <div class="columns">
               <div class="column history_card_layout">
@@ -27,16 +30,18 @@
 
                 <div class="pb-4">
                   <span class="history_card_title_sub">Theater</span>
-                  <span class="history_card_txt">{{ his.theater_name }}</span>
+                  <span class="history_card_txt">{{
+                    his.ticket.theater_name
+                  }}</span>
                 </div>
 
                 <div>
                   <span class="history_card_title_sub">Seat</span>
                   <span
                     class="history_card_txt"
-                    v-for="seat in his.seat_name"
-                    :key="seat.name"
-                    >{{ seat.name }}</span
+                    v-for="seat in his.seat"
+                    :key="seat.seat_name"
+                    >{{ seat.seat_name }}</span
                   >
                 </div>
               </div>
@@ -51,7 +56,9 @@
 
                 <div>
                   <span class="history_card_title_sub">Languge</span>
-                  <span class="history_card_txt">{{ his.movie_language }}</span>
+                  <span class="history_card_txt">{{
+                    his.ticket.movie_language
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -76,11 +83,13 @@
                 <v-col cols="3">
                   <v-card-text
                     class="history_card_txt"
-                    v-for="food in his.food_result"
-                    :key="food.name"
+                    v-for="food in his.food"
+                    :key="food.food_name"
                     >{{
-                      food.name +
-                      (food.name != "-" ? food.price + " $ x" + food.unit : "")
+                      food.food_name +
+                      (food.food_name != "-"
+                        ? " " + food.food_price + " $ x" + food.unit
+                        : "")
                     }}</v-card-text
                   >
                 </v-col>
@@ -91,11 +100,12 @@
                 </v-col>
                 <v-col>
                   <v-card-text
-                  cols="2"
-                  class="history_card_txt"
-                  v-for="seatz in his.seat_name"
-                  :key="seatz.name">
-                  {{ seatz.name + " " + seatz.price +"$" }}
+                    cols="2"
+                    class="history_card_txt"
+                    v-for="seatz in his.seat"
+                    :key="seatz.seat_name"
+                  >
+                    {{ seatz.seat_name + " " + seatz.seat_price + "$" }}
                   </v-card-text>
                 </v-col>
 
@@ -106,7 +116,7 @@
                 </v-col>
                 <v-col cols="2">
                   <v-card-text class="history_card_txt">{{
-                    his.food_price + his.seat_price + " $"
+                    his.foodprice + his.seatprice + " $"
                   }}</v-card-text>
                 </v-col>
               </v-row>
@@ -138,65 +148,15 @@ export default {
         await HistoryService.getHistory()
           .then((response) => {
             for (let data of response.data) {
-              for (let his of this.history) {
-                if (his.ticket_id == data.ticket_id) {
-                  data.checkseat_name = true;
-                  data.checkfood_name = true;
-                  for (let seat of his.seat_name) {
-                    if (seat.name == data.seat_name) {
-                      data.checkseat_name = false;
-                    } 
-                  }
-                  for(let food of his.food_name){
-                    if (food.name == data.food_name) {
-                      data.checkfood_name = false;
-                    } 
-                  }
-                  if (data.checkseat_name) {
-                    his.seat_name.push({
-                      name: data.seat_name,
-                      price: data.seat_price,
-                    });
-                    his.seat_price += data.seat_price;
-                  }
-                  if(data.checkfood_name){
-                    his.food_name.push({
-                        name: data.food_name != null ? data.food_name : "-",
-                        price: data.food_price,
-                        unit: data.unit,
-                      });
-                      his.food_price += data.food_price * data.unit;
-                  }
-                  data.checked = true;
-                }
+              if (data.food.length == 0) {
+                data.food.push({ food_name: "-" });
               }
-              if (data.checked == undefined) {
-                var obj = {
-                  ticket_id: data.ticket_id,
-                  movie_name: data.movie_name,
-                  time_start_date: data.time_start.match(/.+(?=T)/)[0],
-                  time_finish_date: data.time_finish.match(/.+(?=T)/)[0],
-                  time_start: data.time_start.match(/\d+:\d+/)[0],
-                  time_finish: data.time_finish.match(/\d+:\d+/)[0],
-                  theater_name: data.theater_name,
-                  movie_language: data.movie_language,
-                  seat_name: [{ name: data.seat_name, price: data.seat_price }],
-                  movie_image: data.movie_image,
-                  show: false,
-                  seat_price: data.seat_price,
-                  food_name: [],
-                  food_price: 0,
-                };
-                this.history.push(obj);
-              }
-            }
-            for (let hiss of this.history) {
-              hiss.food_result = hiss.food_name.filter(
-                (item, index) => hiss.food_name.indexOf(item) === index
-              );
-              if (hiss.food_result.length == 0) {
-                hiss.food_result.push({ name: "-" });
-              }
+              data.time_start_date = data.ticket.time_start.match(/.+(?=T)/)[0];
+              data.time_finish_date = data.ticket.time_finish.match(/.+(?=T)/)[0];
+              data.time_start = data.ticket.time_start.match(/\d+:\d+/)[0];
+              data.time_finish = data.ticket.time_finish.match(/\d+:\d+/)[0];
+              data.show = false;
+              this.history.push(data);
             }
           })
           .catch((err) => {
@@ -266,6 +226,7 @@ hr {
   letter-spacing: -0.408px;
   color: #9d9fa3;
   padding-left: 5%;
+  text-align: left;
 }
 
 .history_card_layout {

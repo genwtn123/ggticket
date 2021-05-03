@@ -41,10 +41,10 @@ exports.delTheater = async (req, res, next) => {
 
 exports.editTheater = async (req, res, next) => {
     try{
-        await validtheater.validateAsync(req.bod, {abortEarly: false})
-        let theater = new Theater(req.params.id, req.body.theater_size, req.body.theater_name)
+        // await validtheater.validateAsync(req.body, {abortEarly: false})
+        let theater = new Theater(req.params.id, null, null, req.body.theater_status)
         await theater.editTheater()
-        res.send(`edit size Theater ${req.params.id} to ${req.body.theater_size}`)
+        res.send(`edit status Theater ${req.params.id} to ${req.body.theater_status}`)
     }catch(err){
         console.log(err)
     }

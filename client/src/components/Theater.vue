@@ -114,6 +114,9 @@ export default {
   },
   methods: {
     async getTheater() {
+      // if(this.$store.getters.getmovie == ""){
+      //   this.$router.push({name:'Movie'})
+      // }
       try {
         let keep = await TheaterService.getTheater();
         for (let movie of keep.data) {

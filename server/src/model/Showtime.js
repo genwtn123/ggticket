@@ -101,7 +101,7 @@ class Showtime{
             join THEATER \
             using(theater_id) \
             where theater_id = 1 \
-            order by seat_name'
+            order by seat_name desc, seat_name asc'
             let keep2 = await conn.query(stmt2, this.theater_id)
 
             for(let seat of keep2[0]){

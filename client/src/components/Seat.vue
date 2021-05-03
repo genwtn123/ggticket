@@ -41,7 +41,7 @@
         </div>
         <div id="screen">หน้าจอ</div>
         <div class="is-multiline columns" id="space_screen">
-          <div class="column">
+          <div class="column is-one-fifths">
             <p id="alpha">E</p>
             <p id="alpha">D</p>
             <p id="alpha">C</p>
@@ -79,16 +79,27 @@
               <p id="title_seat">ที่นั่งแสนนุ่ม</p>
               <p id="topic_payment_seat">ที่นั่งที่เลือก</p>
               <p id="detail_payment_seat" style="word-wrap: break-word">
-                <template
-                  v-for="(seatname, index) of this.selected"
-                >
-                  <span class="pr-1" :key="seatname.seat_name" v-if="selected.length-1 === index">{{ seatname.seat_name }}</span>
-                  <span class="pr-1" :key="seatname.seat_name" v-else>{{ seatname.seat_name }}, </span>
+                <template v-for="(seatname, index) of this.selected">
+                  <span
+                    class="pr-1"
+                    :key="seatname.seat_name"
+                    v-if="selected.length - 1 === index"
+                    >{{ seatname.seat_name }}</span
+                  >
+                  <span class="pr-1" :key="seatname.seat_name" v-else
+                    >{{ seatname.seat_name }},
+                  </span>
                 </template>
               </p>
               <p id="topic_payment_seat">ราคารวม</p>
               <p id="detail_payment_seat">{{ price }}</p>
-              <v-btn id="button_next_seat" color="#ff7810" dark @click="nextpage()">ต่อไป</v-btn>
+              <v-btn
+                id="button_next_seat"
+                color="#ff7810"
+                dark
+                @click="nextpage()"
+                >ต่อไป</v-btn
+              >
             </div>
           </div>
         </div>
@@ -120,6 +131,9 @@ export default {
   },
   methods: {
     async getSeat() {
+      //  if(this.$store.getters.getmovie == ""){
+      //     this.$router.push({name:'Movie'})
+      //   }
       try {
         let keep = await TheaterService.getSeat(this.data);
         for (let seat of keep.data) {
@@ -149,11 +163,18 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
-    nextpage(){
-      this.$store.commit("keepseat", this.selected);
-      this.$store.commit("keepseatprice", this.price);
-      this.$router.push({name:'Buyfood'})
-    }
+    nextpage() {
+      if (this.selected.length != 0) {
+        this.$store.commit("keepseat", this.selected);
+        this.$store.commit("keepseatprice", this.price);
+        this.$router.push({ name: "Buyfood" });
+      }else{
+        alert("Select seat first")
+      }
+      // this.$store.commit("keepseat", this.selected);
+      // this.$store.commit("keepseatprice", this.price);
+      // this.$router.push({name:'Buyfood'})
+    },
   },
   computed: {
     price() {

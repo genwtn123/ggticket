@@ -89,9 +89,7 @@ class User {
             if(!await bcrypt.compare(this.password, keep[0][0].password)){
                 return Promise.reject("Invalid Username or Password")
             }
-
-
-            console.log("asas", keep[0][0])
+            
             await conn.commit()
             let data = keep2[0][0]
             this.user_id = data.user_id

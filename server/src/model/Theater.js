@@ -1,10 +1,11 @@
 const pool = require('../../sql')
 
 class Theater{
-    constructor(theater_id, theater_size, theater_name){
+    constructor(theater_id, theater_size, theater_name, theater_status){
         this.theater_id = theater_id,
         this.theater_size = theater_size,
-        this.theater_name = theater_name
+        this.theater_name = theater_name,
+        this.theater_status = theater_status
     }
 
     async getTheater() {
@@ -34,6 +35,8 @@ class Theater{
             let stmt = 'insert into THEATER (theater_size, theater_name) values(?, ?);'
             let keep = await conn.query(stmt, [this.theater_size, this.theater_name])
             this.theater_id = keep[0].insertId
+
+            // let stmt2 = 'insert into seat (sea'
             await conn.commit()
             return Promise.resolve()
         }catch(err){
@@ -66,8 +69,8 @@ class Theater{
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try{
-            let stmt = 'update THEATER set theater_size=?, theater_name=? where theater_id = ?'
-            let keep = await conn.query(stmt, [this.theater_size, this.theater_name, this.theater_id])
+            let stmt = 'update THEATER set theater_status= ? where theater_id = ?'
+            let keep = await conn.query(stmt, [this.theater_status, this.theater_id])
             await conn.commit()
             return Promise.resolve()
         }catch(err){
