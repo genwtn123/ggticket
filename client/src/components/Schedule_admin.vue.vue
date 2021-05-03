@@ -18,8 +18,8 @@
     <div class="pt-6">
       <div class="buttons are-medium">
         <v-btn id="button_date" color="black" dark v-bind="attrs"> Date </v-btn>
-        <v-btn id="button_day" color="black" dark v-bind="attrs">
-          1-April-2021
+        <v-btn id="button_day" color="black" dark v-bind="attrs" v-for="date in dates" :key="date" @click="choose_date = date">
+          {{date.substring(8, 10)}}-{{month[date.substring(5, 7)]}}-{{date.substring(0, 4)}}
         </v-btn>
       </div>
 
@@ -38,39 +38,43 @@
           <p>Languge</p>
         </div>
       </div>
-      <div>
+      <span v-for="showtime in showtimes" :key="showtime.showtime_no">
+        <span v-if="showtime.time_start.substring(0, 10) == choose_date">
         <div
           id="border"
           class="is-multiline columns is-variable is-2"
           @click="edit_isopen = true"
+          style="height: 180px"
         >
           <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
+            <img id="img" v-bind:src="movie_image" alt="Placeholder image" />
           </div>
           <div class="column">
-            <p class="shecdule_admin_card_detail">Spongebob Movie</p>
+            <p class="shecdule_admin_card_detail">{{showtime.movie_name}}</p>
           </div>
           <div class="column">
-            <p class="shecdule_admin_card_detail">1</p>
+            <p class="shecdule_admin_card_detail">{{showtime.theater_name}}</p>
           </div>
           <div class="column">
-            <p class="shecdule_admin_card_detail">09:00-11:00</p>
+            <p class="shecdule_admin_card_detail">{{showtime.time_start.substring(11, 16)}} - {{showtime.time_finish.substring(11, 16)}}</p>
           </div>
           <div class="column">
-            <p class="shecdule_admin_card_detail">TH</p>
+            <p class="shecdule_admin_card_detail">{{showtime.movie_language}}</p>
           </div>
         </div>
-        <div id="bot_set" class="is-multiline columns">
-          <p id="detail_bot_topic" style="font-size: 25px">Category</p>
+        <div id="bot_set" class="is-multiline columns pb-6">
+          <p id="detail_bot_topic">Category</p>
 
-          <p id="detail_bot_info" style="font-size: 25px">Cartoon</p>
+          <p id="detail_bot_info">{{showtime.movie_type}}</p>
 
-          <p id="detail_bot_topic" style="font-size: 25px">Movie length</p>
+          <p id="detail_bot_topic">Movie length</p>
 
-          <p id="detail_bot_info" style="font-size: 25px">140 นาที</p>
+          <p id="detail_bot_info">{{showtime.movie_length}} นาที</p>
         </div>
-      </div>
+     </span> 
+     </span>
     </div>
+    
 
     <!-- add modal -->
     <div class="modal" :class="{ 'is-active': add_isopen }">
@@ -383,20 +387,41 @@
 </template>
 
 <script>
+import ShowtimeAdmin from "../admin/ShowtimeAdmin";
 export default {
+  mounted(){
+    this.getShowtime();
+  },
   data() {
     return {
-      image:
-        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
       picker: new Date().toISOString().substr(0, 10),
       all_movie: ["Sponbob", "Conan"],
       all_theater: ["1", "2"],
+      showtimes: [],
+      dates: [],
+      month : [null, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      choose_date: 0
     };
   },
-  methods: {},
+  methods: {
+    async getShowtime(){
+      try {
+        let keep = await ShowtimeAdmin.getShowtime();
+        console.log(keep);
+        this.showtimes = keep.data
+        this.showtimes.forEach(showtime => {
+          let d = showtime.time_start.substring(0, 10)
+          !this.dates.includes(d) ? this.dates.push(d) : 0
+          this.choose_date = this.dates[0]
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  },
 };
 </script>
 
