@@ -17,9 +17,18 @@
     <hr />
     <div class="pt-6">
       <div class="buttons are-medium">
-        <v-btn id="button_date" color="black" dark v-bind="attrs"> Date </v-btn>
-        <v-btn id="button_day" color="black" dark v-bind="attrs">
-          1-April-2021
+        <v-btn id="button_date" color="black" dark> Date </v-btn>
+        <v-btn
+          id="button_day"
+          color="black"
+          dark
+          v-for="date in dates"
+          :key="date"
+          @click="choose_date = date"
+        >
+          {{ date.substring(8, 10) }}-{{ month[parseInt(date.substring(5, 7))] }}-{{
+            date.substring(0, 4)
+          }}
         </v-btn>
       </div>
 
@@ -38,38 +47,50 @@
           <p>Languge</p>
         </div>
       </div>
-      <div>
-        <div
-          id="border"
-          class="is-multiline columns is-variable is-2"
-          @click="edit_isopen = true"
-        >
-          <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
+      <span v-for="showtime in showtimes" :key="showtime.showtime_no">
+        <span v-if="showtime.time_start.substring(0, 10) == choose_date">
+          <div
+            id="border"
+            class="is-multiline columns is-variable is-2"
+            @click="edit_isopen = true"
+            style="height: 180px"
+          >
+            <div class="column is-one-quarter">
+              <img id="img" v-bind:src="movie_image" alt="Placeholder image" />
+            </div>
+            <div class="column">
+              <p class="shecdule_admin_card_detail">
+                {{ showtime.movie_name }}
+              </p>
+            </div>
+            <div class="column">
+              <p class="shecdule_admin_card_detail">
+                {{ showtime.theater_name }}
+              </p>
+            </div>
+            <div class="column">
+              <p class="shecdule_admin_card_detail">
+                {{ showtime.time_start.substring(11, 16) }} -
+                {{ showtime.time_finish.substring(11, 16) }}
+              </p>
+            </div>
+            <div class="column">
+              <p class="shecdule_admin_card_detail">
+                {{ showtime.movie_language }}
+              </p>
+            </div>
           </div>
-          <div class="column">
-            <p class="shecdule_admin_card_detail">Spongebob Movie</p>
-          </div>
-          <div class="column">
-            <p class="shecdule_admin_card_detail">1</p>
-          </div>
-          <div class="column">
-            <p class="shecdule_admin_card_detail">09:00-11:00</p>
-          </div>
-          <div class="column">
-            <p class="shecdule_admin_card_detail">TH</p>
-          </div>
-        </div>
-        <div id="bot_set" class="is-multiline columns">
-          <p id="detail_bot_topic" style="font-size: 25px">Category</p>
+          <div id="bot_set" class="is-multiline columns pb-6">
+            <p id="detail_bot_topic">Category</p>
 
-          <p id="detail_bot_info" style="font-size: 25px">Cartoon</p>
+            <p id="detail_bot_info">{{ showtime.movie_type }}</p>
 
-          <p id="detail_bot_topic" style="font-size: 25px">Movie length</p>
+            <p id="detail_bot_topic">Movie length</p>
 
-          <p id="detail_bot_info" style="font-size: 25px">140 นาที</p>
-        </div>
-      </div>
+            <p id="detail_bot_info">{{ showtime.movie_length }} นาที</p>
+          </div>
+        </span>
+      </span>
     </div>
 
     <!-- add modal -->
@@ -89,7 +110,6 @@
             @click="add_isopen = flase"
           ></button>
         </header>
-
         <section class="modal-card-body profile_modal">
           <p
             class="regis_txt pt-3 pb-4"
@@ -100,7 +120,7 @@
           <div class="columns">
             <div class="column is-5">
               <v-date-picker
-                v-model="picker"
+                v-model="picker_addDate"
                 header-color="#fd7014"
                 color="#fd7014"
               ></v-date-picker>
@@ -119,7 +139,7 @@
 
             <div class="column is-4 pt-6">
               <v-select
-                v-model="movie"
+                v-model="add_movie"
                 :items="all_movie"
                 label="movie"
                 required
@@ -134,7 +154,7 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" />
+                <input type="time" min="" max="" v-model="add_timeStart" />
               </v-banner>
 
               <v-banner
@@ -142,11 +162,11 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" />
+                <input type="time" min="" max="" v-model="add_timeEnd" />
               </v-banner>
 
               <v-select
-                v-model="theater"
+                v-model="add_theater"
                 :items="all_theater"
                 label="theater"
                 required
@@ -157,12 +177,17 @@
               ></v-select>
 
               <v-text-field
-                v-model="language"
+                v-model="add_language"
                 label="language"
                 rounded
                 dense
                 solo
               ></v-text-field>
+
+              <label class="checkbox" style="color: #9d9fa3">
+                <input type="checkbox" v-model="add_status" />
+                Status
+              </label>
             </div>
           </div>
         </section>
@@ -179,6 +204,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="addShowtime"
             >
               ADD
             </button>
@@ -383,20 +409,100 @@
 </template>
 
 <script>
+import ShowtimeAdmin from "../admin/ShowtimeAdmin";
 export default {
+  mounted() {
+    this.getShowtime();
+  },
   data() {
     return {
-      image:
-        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
-      picker: new Date().toISOString().substr(0, 10),
-      all_movie: ["Sponbob", "Conan"],
-      all_theater: ["1", "2"],
+      picker_addDate: new Date().toISOString().substr(0, 10),
+      add_movie: "",
+      add_theater: "",
+      add_language: "",
+      all_movie: [],
+      all_theater: [],
+      showtimes: [],
+      dates: [],
+      month: [
+        null,
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      choose_date: 0,
+      add_timeStart: 0,
+      add_timeEnd: 0,
+      add_status: false,
+      all: [],
     };
   },
-  methods: {},
+  methods: {
+    async getShowtime() {
+      try {
+        let keep = await ShowtimeAdmin.getShowtime();
+        console.log(keep);
+        this.all = keep.data;
+        this.showtimes = keep.data[0];
+        this.showtimes.forEach((showtime) => {
+          let d = showtime.time_start.substring(0, 10);
+          !this.dates.includes(d) ? this.dates.push(d) : 0;
+          this.choose_date = this.dates[0];
+        });
+
+        keep.data[2].forEach((movie) => {
+          this.all_movie.push(movie.movie_name);
+        });
+
+        keep.data[3].forEach((theater) => {
+          this.all_theater.push(theater.theater_name);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    createForm: function () {
+      let form = new FormData();
+      let start = this.picker_addDate + " " + this.add_timeStart + ":00";
+      let end = this.picker_addDate + " " + this.add_timeEnd + ":00";
+      let mid = "";
+      let tid = "";
+      this.all[2].forEach((movie) => {
+        if (movie.movie_name == this.add_movie) mid = movie.movie_id;
+      });
+      this.all[3].forEach((theater) => {
+        if (theater.theater_name == this.add_theater) tid = theater.theater_id;
+      });
+
+      form.append("time_start", start);
+      form.append("time_finish", end);
+      form.append("showtime_status", this.add_status);
+      form.append("movie_id", mid);
+      form.append("staff_id", 1);
+      form.append("theater_id", tid);
+      console.log(form);
+      return form;
+    },
+    async addShowtime() {
+      var result = await ShowtimeAdmin.addShowtime(this.createForm());
+      console.log("res", result.status);
+      console.log("success by vuejs");
+      this.clearForm();
+    },
+  },
 };
 </script>
 

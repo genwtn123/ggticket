@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <div id="border" class="is-multiline columns is-variable is-2">
+        <div id="border" class="is-multiline columns is-variable is-2" style="height: 180px">
           <div class="column is-one-quarter">
             <img id="img" v-bind:src="image" alt="Placeholder image" />
           </div>
@@ -159,12 +159,12 @@ export default {
 #button_day{
   margin-right: 2%;
   height: 50px;
-  width: 15%;
+  width: 12%;
 }
 #button_date{
   margin-right: 2%;
   height: 50px;
-  width: 10%;
+  width: 8%;
 }
 .movie_table_t {
   font-size: 30px;
@@ -178,6 +178,7 @@ export default {
   background-color: #212835;
 }
 #img {
+  height: 150px !important;
   width: 100px;
   margin-left: 10px;
 }
@@ -199,12 +200,12 @@ export default {
   height: 50px;
 }
 #detail_bot_topic {
-  font-size: 30px;
+  font-size: 22px;
   color: #dcdcdc;
   margin-right: 3%;
 }
 #detail_bot_info {
-  font-size: 30px;
+  font-size: 22px;
   color: #6f717b;
   margin-right: 8%;
 }
