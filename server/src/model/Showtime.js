@@ -73,9 +73,21 @@ class Showtime{
             join THEATER \
             using(theater_id) \
             order by (time_start)'
+
+            let stmt2 = 'select movie_name, movie_id from MOVIE \
+            order by (movie_name)'
+            
+            let stmt3 = 'select theater_name, theater_id from THEATER \
+            where theater_status = 1\
+            order by (theater_name)'
+
             let keep = await conn.query(stmt)
+            let keep2 = await conn.query(stmt2)
+            let keep3 = await conn.query(stmt3)
+            keep.push(keep2[0])
+            keep.push(keep3[0])
             await conn.commit()
-            return Promise.resolve(keep[0])
+            return Promise.resolve(keep)
         }catch(err){
             console.log(err)
             await conn.rollback()
