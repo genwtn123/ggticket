@@ -3,8 +3,8 @@ const Joi = require('joi')
 
 
 const loginSchema = Joi.object({
-    username : Joi.required(),
-    password : Joi.required()
+    username : Joi.string().required(),
+    password : Joi.string().required()
 })
 
 exports.login = async (req, res, next) => {
@@ -13,8 +13,7 @@ exports.login = async (req, res, next) => {
         let user = new User(null, req.body.username, req.body.password)
         await user.login()
         req.session.userdata = user
-        console.log("session", req.session)
-        res.status(200).send(user)
+        res.status(200).send("Login success")
     } catch (err) {
         res.send(err)
     }

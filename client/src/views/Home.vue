@@ -32,21 +32,9 @@ import Recommend from "../components/Home_recom.vue";
 import Footer from "../components/Footer.vue";
 
 
-import axios from "../../node_modules/axios";
+
 
 export default {
-  async created() {
-    await axios
-      .get(`http://localhost:12000/login`)
-      .then((response) => {
-        console.log(response.data)
-
-      })
-      .catch((err) => {
-        console.log(err.response);
-        this.$router.push({name:"Login"})
-      });
-  },
   name: "Home",
   components: {
     Mainbar,

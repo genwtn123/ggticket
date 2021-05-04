@@ -53,10 +53,11 @@ class Ticket {
             let stmt6 = 'update TICKET set ticket_price = ? where ticket_id = ?;'
 
             if(this.food_price == undefined){
-                await conn.query(stmt6, [+seat_price[0][0].seat_price, this.ticket_id])
+                await conn.query(stmt6, [seat_price[0][0].seat_price, this.ticket_id])
             }else{
                 await conn.query(stmt6, [food_price[0][0].food_price+seat_price[0][0].seat_price, this.ticket_id])
             }
+            
             
             
             await conn.commit()

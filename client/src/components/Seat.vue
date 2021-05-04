@@ -42,32 +42,89 @@
         <div id="screen">หน้าจอ</div>
         <div class="is-multiline columns" id="space_screen">
           <div class="column is-one-fifths">
-            <p id="alpha">E</p>
-            <p id="alpha">D</p>
-            <p id="alpha">C</p>
-            <p id="alpha">B</p>
-            <p id="alpha">A</p>
+            <template v-for="n in this.keep.theater_size == 'L' ? 8 :  this.keep.theater_size == 'M' ? 6 : 5">
+            <p id="alpha_l" :key="n" v-if="keep.theater_size == 'L'">{{rows[8-n]}}</p>
+            <p id="alpha_m" :key="n" v-if="keep.theater_size == 'M'">{{rows[6-n]}}</p>
+            <p id="alpha_s" :key="n" v-if="keep.theater_size == 'S'">{{rows[5-n]}}</p>
+            </template>
           </div>
           <div class="column is-three-fifths">
             <!-- col 10 -->
+            <template  v-for="seat of this.seat">
             <button
-              id="img_seat_book"
-              v-for="seat of this.seat"
+              id="img_seat_book_s"
               :key="seat.seat_no"
               :disabled="seat.seat_status == 0"
+              v-if="keep.theater_size == 'S'"
               @click="selectseat(seat)"
             >
               <img
                 :src="image_seat"
-                v-show="!seat.selected && seat.seat_status"
+                v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
               />
               <img
                 :src="image_check"
-                v-show="seat.selected && seat.seat_status"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
               />
-              <img :src="image_cantselect" v-show="!seat.seat_status" />
+              <img
+                :src="image_honeymooncheck"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'"
+              />
+              <img :src="image_cantselect" v-show="!seat.seat_status && seat.type_of_seat == 'normal'" />
+              <img :src="image_honeymooncantselect" v-show="!seat.seat_status && seat.type_of_seat == 'honeymoon'" />
+              <img :src="image_honeymoon" v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'" />
             </button>
+
+            <button
+              id="img_seat_book_m"
+              :key="seat.seat_no"
+              :disabled="seat.seat_status == 0"
+              @click="selectseat(seat)"
+              v-if="keep.theater_size == 'M'"
+            >
+              <img
+                :src="image_seat"
+                v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
+              />
+              <img
+                :src="image_check"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
+              />
+              <img
+                :src="image_honeymooncheck"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'"
+              />
+              <img :src="image_cantselect" v-show="!seat.seat_status && seat.type_of_seat == 'normal'" />
+              <img :src="image_honeymooncantselect" v-show="!seat.seat_status && seat.type_of_seat == 'honeymoon'" />
+              <img :src="image_honeymoon" v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'" />
+            </button>
+
+            <button
+              id="img_seat_book_l"
+              :key="seat.seat_no"
+              :disabled="seat.seat_status == 0"
+              @click="selectseat(seat)"
+              v-if="keep.theater_size == 'L'"
+            >
+              <img
+                :src="image_seat"
+                v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
+              />
+              <img
+                :src="image_check"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'normal'"
+              />
+              <img
+                :src="image_honeymooncheck"
+                v-show="seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'"
+              />
+              <img :src="image_cantselect" v-show="!seat.seat_status && seat.type_of_seat == 'normal'" />
+              <img :src="image_honeymooncantselect" v-show="!seat.seat_status && seat.type_of_seat == 'honeymoon'" />
+              <img :src="image_honeymoon" v-show="!seat.selected && seat.seat_status && seat.type_of_seat == 'honeymoon'" />
+            </button>
+            </template>
           </div>
+          
 
           <div class="column is-one-quarter">
             <div id="payment_seat">
@@ -117,6 +174,9 @@ export default {
         "https://cdn3.iconfinder.com/data/icons/movie-entertainment-filled-outline-style/64/13_seat-movie-cinema-chair-theater-512.png",
       image_check: "https://i.imgur.com/Kmbm2CS.png",
       image_cantselect: "https://i.imgur.com/4jJIEp6.png",
+      image_honeymooncantselect:"https://i.imgur.com/0UW6ve7.png",
+      image_honeymoon:"https://cdn4.iconfinder.com/data/icons/movie-41/512/Honeymoon-seat-sofa-movie-Cinema-128.png",
+      image_honeymooncheck:'https://i.imgur.com/SMb3mHw.png',
       keep: this.$store.getters.getshow,
       data: {
         showtime_no: this.$store.getters.getshow.showtime_no,
@@ -124,6 +184,7 @@ export default {
       },
       seat: [],
       selected: [],
+      rows:['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     };
   },
   mounted() {
@@ -171,9 +232,6 @@ export default {
       }else{
         alert("Select seat first")
       }
-      // this.$store.commit("keepseat", this.selected);
-      // this.$store.commit("keepseatprice", this.price);
-      // this.$router.push({name:'Buyfood'})
     },
   },
   computed: {
@@ -215,10 +273,23 @@ export default {
   padding-left: 5%;
   padding-right: 5%;
 }
-#alpha {
+#alpha_l {
+  color: #6f717b;
+  font-size: 30px;
+  margin-top: 8%;
+  padding-bottom: 5px;
+}
+#alpha_m {
+  color: #6f717b;
+  font-size: 35px;
+  margin-top: 11%;
+  padding-bottom: 11px;
+}
+#alpha_s {
   color: #6f717b;
   font-size: 40px;
-  margin-top: 2%;
+  margin-top: 14%;
+  padding-bottom: 15px;
 }
 #space_screen {
   margin-top: 30px;
@@ -240,8 +311,16 @@ export default {
   margin-bottom: 5%;
   margin-top: 100px;
 }
-#img_seat_book {
+#img_seat_book_s {
   width: 10%;
+  margin-top: 2%;
+}
+#img_seat_book_m {
+  width: 8%;
+  margin-top: 2%;
+}
+#img_seat_book_l {
+  width: 6%;
   margin-top: 2%;
 }
 #button_next_seat {

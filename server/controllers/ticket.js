@@ -12,7 +12,12 @@ const validticket = Joi.object({
 exports.customerTicket = async (req, res, next) => {
     try{
         // validticket.validateAsync(req.body, {abortEarly:false})
-        let ticket = new Ticket(null, null, null, req.body.showtime_no, null, true, req.session.userdata.user_id, req.body.seat_no, req.body.food)
+        let realfood = []
+        for(let food of req.body.food){
+            foodz = JSON.parse(food)
+            realfood.push(foodz)
+        }
+        let ticket = new Ticket(null, null, null, req.body.showtime_no, null, true, req.session.userdata.user_id, req.body.seat_no, realfood)
         console.log(ticket)
         await ticket.customerTicket()
         res.send(ticket)

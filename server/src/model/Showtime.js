@@ -72,6 +72,7 @@ class Showtime{
             using (movie_id) \
             join THEATER \
             using(theater_id) \
+            where  time_start > CURDATE() and showtime_status = 1\
             order by (time_start)'
             let keep = await conn.query(stmt)
             await conn.commit()
@@ -100,8 +101,8 @@ class Showtime{
             let stmt2 = 'select * from SEAT \
             join THEATER \
             using(theater_id) \
-            where theater_id = 1 \
-            order by seat_name desc, seat_name asc'
+            where theater_id = ? \
+            order by seat_no'
             let keep2 = await conn.query(stmt2, this.theater_id)
 
             for(let seat of keep2[0]){

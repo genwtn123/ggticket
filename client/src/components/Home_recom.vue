@@ -1,5 +1,5 @@
 <template>
-  <v-fluid>
+  <div>
     <p class="home_head">RECOMMEND MOVIE FOR YOU</p>
     <div class="scrolling-wrapper">
       <div class="card home_card"></div>
@@ -12,7 +12,7 @@
       <div class="card home_card"></div>
       <div class="card home_card"></div>
     </div>
-  </v-fluid>
+  </div>
 </template>
 
 <style>

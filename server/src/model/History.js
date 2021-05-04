@@ -24,7 +24,7 @@ class History {
             join MOVIE \
             using(movie_id) \
             where audience_id = ? \
-            order by ticket_id'
+            order by ticket_id desc'
             let ticket = await conn.query(stmt, [audience_id[0][0].audience_id])
 
             for (let tic of ticket[0]) {

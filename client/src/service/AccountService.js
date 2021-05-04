@@ -35,7 +35,6 @@ class AccountService {
         form.forEach((value, key) => object[key] = value);
         var data = JSON.stringify(object);
         var json = JSON.parse(data);
-        console.log("json",json)
         return await axios.post(login,
             json
         )
@@ -43,7 +42,6 @@ class AccountService {
 
     static async getSession() {
         return await axios.get(login).then(response => {
-            console.log(response)
             return response;
         }).catch(() => {
             return false
