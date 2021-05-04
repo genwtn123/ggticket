@@ -127,11 +127,7 @@ export default {
         this.confirmfood.push({ food_id: foodz.food_id, amount: foodz.amount });
       }
       try {
-        await TicketService.buyticket({
-          showtime_no: this.show.showtime_no,
-          food: this.confirmfood,
-          seat_no: this.confirmseat,
-        });
+        await TicketService.buyticket(this.createForm());
         this.$store.commit("keepmovie", "");
         this.$store.commit("keepshow", "");
         this.$store.commit("keepseat", "");
@@ -144,7 +140,19 @@ export default {
     },
     buyfood(){
       this.$router.push({ name: "Buyfood" });
-    }
+    },
+    createForm() {
+      console.log(this.confirmfood)
+      let form = new FormData();
+      form.append("showtime_no", this.show.showtime_no);
+      for(let foodd of this.confirmfood){
+        form.append("food", JSON.stringify(foodd));
+      }
+      for(let seatt of this.confirmseat){
+        form.append("seat_no", seatt);
+      }
+      return form;
+    },
   },
   computed: {
     total() {

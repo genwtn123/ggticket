@@ -30,8 +30,12 @@ exports.addTheater = async (req, res, next) => {
 }
 
 exports.delTheater = async (req, res, next) => {
-    let theater = new Theater(req.params.id)
     try{
+        if(req.session.userdata.type != "STAFF"){
+            res.send("You are not admin")
+            return
+        }
+        let theater = new Theater(req.params.id)
         await theater.delTheater()
         res.send(`delete Theater ${req.params.id}`)
     }catch(err){

@@ -85,7 +85,6 @@ class User {
                 return Promise.reject("Invalid Username or Password")
             }
 
-            console.log(await bcrypt.compare(this.password, keep[0][0].password))
             if(!await bcrypt.compare(this.password, keep[0][0].password)){
                 return Promise.reject("Invalid Username or Password")
             }
