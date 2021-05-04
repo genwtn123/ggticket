@@ -102,9 +102,8 @@ class Movie {
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try {
-            let stmt = 'SELECT * FROM MOVIE'
+            let stmt = 'SELECT * FROM MOVIE where movie_status <> 0'
             let keep = await conn.query(stmt)
-            console.log(keep[0])
             await conn.commit()
             return Promise.resolve(keep[0])
         } catch (err) {

@@ -46,7 +46,7 @@ const routes = [
         path: '/buyticket',
         name: 'Buyticket',
         component: BuyTicket,
-        meta: { login: true, step: true },
+        meta: { login: true, step: true, food:true },
     },
 
     {
@@ -59,7 +59,7 @@ const routes = [
         path: '/buyfood',
         name: 'Buyfood',
         component: Buyfood,
-        meta: { login: true, step: true },
+        meta: { login: true, step: true, food:true },
     },
     {
         path: '/theaterselect',
@@ -77,7 +77,7 @@ const routes = [
         path: '/seat',
         name: 'Seat',
         component: Seat,
-        meta: { login: true, step: true },
+        meta: { login: true, step: true, seat:true },
     },
     {
         path: '/movie',
@@ -133,6 +133,8 @@ router.beforeEach(async (to, from, next) => {
     try {
         let isLoggedIn = !!await AccountService.getSession()
         let isselectedmovie = !!store.getters.getmovie != ""
+        let isseletedshow = !!store.getters.getshow != ""
+        let isselectedseat = !!store.getters.getseat != ""
         if (to.meta.login && !isLoggedIn) {
             next({ name: 'Login' })
         }
@@ -142,6 +144,22 @@ router.beforeEach(async (to, from, next) => {
         }
 
         if(to.meta.step && !isselectedmovie){
+            next({ name: 'Movie' })
+        }
+
+        if(to.meta.step == undefined){
+            store.commit("keepmovie", "");
+            store.commit("keepshow", "");
+            store.commit("keepseat", "");
+            store.commit("keepfood", "");
+            store.commit("keepseatprice", "");
+        }
+
+        if(to.meta.seat && !isseletedshow){
+            next({ name: 'Movie' })
+        }
+
+        if(to.meta.food && !isselectedseat){
             next({ name: 'Movie' })
         }
     } catch (err) {
