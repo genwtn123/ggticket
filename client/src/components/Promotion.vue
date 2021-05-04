@@ -47,8 +47,6 @@ export default {
    ,
   data() {
     return {
-      image_pro:
-        "https://www.ryt9.com/img/files/20200805/iq1ae0ceafc9324bf358ca899a26c3831c.jpg",
       advertisement: []
     };
   },
