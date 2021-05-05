@@ -21,6 +21,7 @@ exports.getFood = async (req, res, next) => {
 exports.createFood = async (req, res, next) => {
     try{
         await validfood.validateAsync(req.body, {abortEarly: false})
+        console.log(req.body)
         let food = new Food(null, req.body.food_name, req.file.path, req.body.food_price, true, req.body.staff_id)
         await food.createFood()
         res.send(food)

@@ -2,11 +2,9 @@
   <v-app>
     <v-main fluid class="bg">
         <Adminbar/>
-    <v-container >
         <div class="">
           <Buyfood/>
         </div>
-    </v-container>
     </v-main>
   </v-app>
 </template>
