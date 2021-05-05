@@ -205,13 +205,13 @@
               v-for="index in seat_w"
               :key="'s'+index"
             >
-              <span class="pt-3 pr-6">{{rows[index]}}</span>
+              <span class="pt-3 pr-6">{{rows[(honey_w + seat_w) - index ]}}</span>
               <span
                 style="color: white; font-size: 12px;"
                 v-for="seat in want_seat"
                 :key="seat.seat_no"
               >
-                <span v-if="seat.seat_name.substring(0, 1) == rows[index]" style="width:100%" @click="editSeat(seat)">
+                <span v-if="seat.seat_name.substring(0, 1) == rows[(honey_w + seat_w) - index]" style="width:100%" @click="editSeat(seat)">
                   <img
                     v-if="seat.seat_status"
                     class="seat_image"
@@ -234,13 +234,13 @@
               v-for="index in honey_w"
               :key="'h'+index"
             >
-              <span class="pt-3 pr-6" >{{rows[index + seat_w]}}</span>
+              <span class="pt-3 pr-6" >{{rows[honey_w  - index]}}</span>
               <span
                 style="color: white; font-size: 12px;"
                 v-for="seat in want_seat"
                 :key="seat.seat_no"
               >
-                <span v-if="seat.seat_name.substring(0, 1) == rows[index + seat_w]" style="width:100%" @click="editSeat(seat)">
+                <span v-if="seat.seat_name.substring(0, 1) == rows[honey_w  - index]" style="width:100%" @click="editSeat(seat)">
                   <img
                     v-if="seat.seat_status"
                     class="seat_image"
@@ -382,7 +382,7 @@ export default {
       seat_l: 0,
       honey_w: 0,
       honey_l: 0,
-      rows: [0, "A", "B", "C", "D", "E", "F", "G", "H"],
+      rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
       save_seat: {},
       showtime: [],
       all_seat: [],
@@ -423,7 +423,7 @@ export default {
       });
 
       if (theater.theater_size == "S") {
-        this.seat_w = 4;
+        this.seat_w = 3;
         this.seat_l = 10;
         this.honey_w = 2;
         this.honey_l = 10;
