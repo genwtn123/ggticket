@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Showtime = 'http://localhost:12000/showtime';
+const Showtime = 'http://localhost:12000/showtime/a';
 const addShowtime = 'http://localhost:12000/showtime/add';
 
 class ShowtimeAdmin {
@@ -18,5 +18,7 @@ class ShowtimeAdmin {
         return await axios.post(addShowtime, json)
 
     }
+
+
 }
 export default ShowtimeAdmin

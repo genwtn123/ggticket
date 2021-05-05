@@ -17,7 +17,7 @@
     <hr />
     <div class="pt-6">
       <div class="buttons are-medium">
-        <v-btn id="button_date" color="black" dark> Date </v-btn>
+        <v-btn id="button_date" color="black" class="mb-3" dark> Date </v-btn>
         <v-btn
           id="button_day"
           color="black"
@@ -25,14 +25,15 @@
           v-for="date in dates"
           :key="date"
           @click="choose_date = date"
+          class="mb-3"
         >
-          {{ date.substring(8, 10) }}-{{ month[parseInt(date.substring(5, 7))] }}-{{
-            date.substring(0, 4)
-          }}
+          {{ date.substring(8, 10) }}-{{
+            month[parseInt(date.substring(5, 7))]
+          }}-{{ date.substring(0, 4) }}
         </v-btn>
       </div>
 
-      <div class="is-multiline columns is-variable is-2 mt-5">
+      <div class="is-multiline columns is-variable is-2 mt-1">
         <div id="topic" class="column is-one-quarter"></div>
         <div id="topic" class="column">
           <p>Movie</p>
@@ -52,11 +53,15 @@
           <div
             id="border"
             class="is-multiline columns is-variable is-2"
-            @click="edit_isopen = true"
+            @click="edit_isopen = [true, showtime]"
             style="height: 180px"
           >
             <div class="column is-one-quarter">
-              <img id="img" v-bind:src="movie_image" alt="Placeholder image" />
+              <img
+                id="img"
+                v-bind:src="showtime.movie_image"
+                alt="Placeholder image"
+              />
             </div>
             <div class="column">
               <p class="shecdule_admin_card_detail">
@@ -107,7 +112,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="add_isopen = flase"
+            @click="add_isopen = false"
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
@@ -123,6 +128,7 @@
                 v-model="picker_addDate"
                 header-color="#fd7014"
                 color="#fd7014"
+                :min="today"
               ></v-date-picker>
             </div>
 
@@ -134,7 +140,7 @@
               <p class="profile_modal_txt py-4">Time Start :</p>
               <p class="profile_modal_txt py-4">Time End :</p>
               <p class="profile_modal_txt py-4">Theater :</p>
-              <p class="profile_modal_txt py-4">Language :</p>
+              <!-- <p class="profile_modal_txt py-4">Language :</p> -->
             </div>
 
             <div class="column is-4 pt-6">
@@ -176,18 +182,18 @@
                 class="pt-3"
               ></v-select>
 
-              <v-text-field
+              <!-- <v-text-field
                 v-model="add_language"
                 label="language"
                 rounded
                 dense
                 solo
-              ></v-text-field>
+              ></v-text-field> -->
 
-              <label class="checkbox" style="color: #9d9fa3">
+              <!-- <label class="checkbox" style="color: #9d9fa3">
                 <input type="checkbox" v-model="add_status" />
                 Status
-              </label>
+              </label> -->
             </div>
           </div>
         </section>
@@ -215,7 +221,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = flase"
+              @click="add_isopen = false"
             >
               CANCEL
             </button>
@@ -226,7 +232,7 @@
     <!-- add modal -->
 
     <!-- edit modal -->
-    <div class="modal" :class="{ 'is-active': edit_isopen }">
+    <div class="modal" :class="{ 'is-active': edit_isopen[0] }">
       <div class="modal-background"></div>
       <div class="modal-card modal-card_admin" style="width: 65%">
         <header
@@ -239,7 +245,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = flase"
+            @click="edit_isopen = [false, '', '']"
           ></button>
         </header>
 
@@ -253,7 +259,7 @@
           <div class="columns">
             <div class="column is-5">
               <v-date-picker
-                v-model="picker"
+                v-model="picker_editDate"
                 header-color="#fd7014"
                 color="#fd7014"
               ></v-date-picker>
@@ -267,12 +273,12 @@
               <p class="profile_modal_txt py-4">Time Start :</p>
               <p class="profile_modal_txt py-4">Time End :</p>
               <p class="profile_modal_txt py-4">Theater :</p>
-              <p class="profile_modal_txt py-4">Language :</p>
+              <!-- <p class="profile_modal_txt py-4">Language :</p> -->
             </div>
 
             <div class="column is-4 pt-6">
               <v-select
-                v-model="movie"
+                v-model="edit_movie"
                 :items="all_movie"
                 label="movie"
                 required
@@ -287,7 +293,7 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" />
+                <input type="time" min="" max="" v-model="edit_timeStart"/>
               </v-banner>
 
               <v-banner
@@ -295,11 +301,11 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" />
+                <input type="time" min="" max="" v-model="edit_timeEnd"/>
               </v-banner>
 
               <v-select
-                v-model="theater"
+                v-model="edit_theater"
                 :items="all_theater"
                 label="theater"
                 required
@@ -309,13 +315,13 @@
                 class="pt-3"
               ></v-select>
 
-              <v-text-field
+              <!-- <v-text-field
                 v-model="language"
                 label="language"
                 rounded
                 dense
                 solo
-              ></v-text-field>
+              ></v-text-field> -->
             </div>
           </div>
         </section>
@@ -342,7 +348,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = true"
+              @click="delete_isopen = [true]"
             >
               DELETE
             </button>
@@ -366,12 +372,12 @@
           <button
             class="delete"
             aria-label="close"
-            @click="delete_isopen = flase"
+            @click="delete_isopen = false"
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
-            Are you sure that you want to delete ?
+            Are you sure that you want to delete <p style="color:red">" Showtime_no {{edit_isopen[1].showtime_no}} " ? </p>
           </div>
         </section>
         <footer
@@ -386,6 +392,7 @@
                 color: white;
               "
               class="button mx-3 px-6"
+              @click="delShowtime()"
             >
               OK
             </button>
@@ -396,7 +403,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = flase"
+              @click="delete_isopen = false"
             >
               CANCEL
             </button>
@@ -417,12 +424,8 @@ export default {
   data() {
     return {
       add_isopen: false,
-      edit_isopen: false,
+      edit_isopen: [false, ''],
       delete_isopen: false,
-      picker_addDate: new Date().toISOString().substr(0, 10),
-      add_movie: "",
-      add_theater: "",
-      add_language: "",
       all_movie: [],
       all_theater: [],
       showtimes: [],
@@ -442,11 +445,24 @@ export default {
         "Nov",
         "Dec",
       ],
+      picker_addDate: new Date().toISOString().substr(0, 10),
+      add_movie: "",
+      add_theater: "",
+      // add_language: "",
       choose_date: 0,
       add_timeStart: 0,
       add_timeEnd: 0,
-      add_status: false,
+      add_status: true,
       all: [],
+      new: [],
+      today: "",
+      picker_editDate: new Date().toISOString().substr(0, 10),
+      edit_movie: "",
+      edit_theater: "",
+      // edit_language: "",
+      edit_timeStart: 0,
+      edit_timeEnd: 0,
+      edit_status: false,
     };
   },
   methods: {
@@ -469,6 +485,9 @@ export default {
         keep.data[3].forEach((theater) => {
           this.all_theater.push(theater.theater_name);
         });
+
+        var today = new Date();
+        this.today = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
       } catch (err) {
         console.log(err);
       }
@@ -481,27 +500,97 @@ export default {
       let mid = "";
       let tid = "";
       this.all[2].forEach((movie) => {
-        if (movie.movie_name == this.add_movie) mid = movie.movie_id;
+        if (movie.movie_name == this.add_movie) {
+          mid = movie.movie_id;
+          this.new.push(movie.movie_language);
+          this.new.push(movie.movie_length);
+          this.new.push(movie.movie_name);
+          this.new.push(movie.movie_type);
+          this.new.push(movie.movie_image);
+        }
       });
       this.all[3].forEach((theater) => {
-        if (theater.theater_name == this.add_theater) tid = theater.theater_id;
+        if (theater.theater_name == this.add_theater) {
+          tid = theater.theater_id;
+          this.new.push(theater.theater_name);
+        }
       });
-
       form.append("time_start", start);
       form.append("time_finish", end);
-      form.append("showtime_status", this.add_status);
+      form.append("showtime_status", this.add_status ? 1 : 0);
       form.append("movie_id", mid);
       form.append("staff_id", 1);
       form.append("theater_id", tid);
+      this.new.push(start);
+      this.new.push(end);
+      this.new.push(this.add_status);
       console.log(form);
       return form;
     },
     async addShowtime() {
-      var result = await ShowtimeAdmin.addShowtime(this.createForm());
-      console.log("res", result.status);
-      console.log("success by vuejs");
-      this.clearForm();
+      if (
+        this.add_timeStart == "" ||
+        this.add_timeEnd == "" ||
+        this.add_theater == "" ||
+        this.add_movie == "" ||
+        this.picker_addDate == ""
+      ) {
+        alert("pls put all information");
+      } else if (this.add_timeEnd >= this.add_timeStart) {
+        var result = await ShowtimeAdmin.addShowtime(this.createForm());
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        let val = this.new;
+        this.showtimes.push({
+          movie_language: val[0],
+          movie_length: val[1],
+          movie_name: val[2],
+          movie_type: val[3],
+          movie_image: val[4],
+          theater_name: val[5],
+          time_finish: val[7],
+          time_start: val[6],
+          showtime_status: val[8],
+        });
+        let check = false
+        if (!this.dates.includes(this.picker_addDate)) {
+          this.dates.forEach((element, index) => {
+            if(element > this.picker_addDate && index == 0){
+              this.dates.splice(0, 0, this.picker_addDate);
+              check = true;
+            }
+            else if (element > this.picker_addDate && this.dates[index - 1] < this.picker_addDate) {
+              this.dates.splice(index, 0, this.picker_addDate);
+              check = true;
+            }
+          });
+        }
+
+        if(check == false){
+          this.dates.push(this.picker_addDate)
+        }
+        console.log(this.dates);
+        console.log(this.showtimes)
+        this.add_movie = "";
+        this.add_theater = "";
+        // this.add_language = "";
+        this.add_timeStart = 0;
+        this.add_timeEnd = 0;
+        this.add_status = true;
+        this.add_isopen = false;
+        this.picker_addDate = "";
+        this.new = [];
+      } else {
+        alert(
+          "Time End must be greater or equal with Time start \n Your time Strat: " +
+            this.add_timeStart +
+            "\n Your time end: " +
+            this.add_timeEnd
+        );
+      }
     },
+  
   },
 };
 </script>

@@ -74,11 +74,34 @@ class Showtime{
             using(theater_id) \
             where  time_start > CURDATE() and showtime_status = 1\
             order by (time_start)'
+            let keep = await conn.query(stmt)
+            await conn.commit()
+            return Promise.resolve(keep[0])
+        }catch(err){
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        }finally{
+            conn.release()
+        }
+    }
 
-            let stmt2 = 'select movie_name, movie_id from MOVIE \
+    async getShowtime2(){
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try{
+            let stmt = 'select * from SHOWTIME \
+            join MOVIE \
+            using (movie_id) \
+            join THEATER \
+            using(theater_id) \
+            where  time_start > CURDATE() and showtime_status = 1\
+            order by (time_start)'
+
+            let stmt2 = 'select * from MOVIE \
             order by (movie_name)'
             
-            let stmt3 = 'select theater_name, theater_id from THEATER \
+            let stmt3 = 'select * from THEATER \
             where theater_status = 1\
             order by (theater_name)'
 

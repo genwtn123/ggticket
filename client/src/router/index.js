@@ -140,15 +140,15 @@ router.beforeEach(async (to, from, next) => {
         let isselectedmovie = !!store.getters.getmovie != ""
         let isseletedshow = !!store.getters.getshow != ""
         let isselectedseat = !!store.getters.getseat != ""
-        if (isLoggedIn) {
-            let keep = await AccountService.getSession()
-            console.log(keep.data.type)
-            console.log(isLoggedIn)
-            let isAdmin = !!(keep.data.type == "STAFF")
-            if (to.meta.admin && !isAdmin) {
-                next({ name: 'Home' })
-            }
-        }
+        // if (isLoggedIn) {
+        //     let keep = await AccountService.getSession()
+        //     console.log(keep.data.type)
+        //     console.log(isLoggedIn)
+        //     let isAdmin = !!(keep.data.type == "STAFF")
+        //     if (to.meta.admin && !isAdmin) {
+        //         next({ name: 'Home' })
+        //     }
+        // }
         if (to.meta.login && !isLoggedIn) {
             next({ name: 'Login' })
         }

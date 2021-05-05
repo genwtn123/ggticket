@@ -84,7 +84,7 @@
 
             <div class="column pt-6 is-7">
               <v-text-field
-                v-model="name"
+                v-model="add_name"
                 label="name"
                 rounded
                 dense
@@ -92,7 +92,7 @@
               ></v-text-field>
 
               <v-select
-                v-model="size"
+                v-model="add_size"
                 :items="all_size"
                 label="size"
                 required
@@ -117,6 +117,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="addTheater"
             >
               ADD
             </button>
@@ -163,7 +164,7 @@
             Edit Theater
           </p>
           <div class="columns">
-            <div class="column pt-3 is-3 pl-6 ml-5">
+            <!-- <div class="column pt-3 is-3 pl-6 ml-5">
               <div class="columns" style="width: 350px">
                 <p style="color: white" class="column is-4">
                   A
@@ -222,7 +223,7 @@
                 </p>
                 <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
               </div>
-            </div>
+            </div> -->
 
             <div
               class="column is-2"
@@ -232,7 +233,7 @@
               <p class="profile_modal_txt py-4">Size :</p>
             </div>
 
-            <div class="column is-6 pt-6">
+            <div class="column is-9 pt-6">
               <v-text-field
                 v-model="name"
                 label="name"
@@ -359,6 +360,9 @@ export default {
       topen: false,
       checkbox: true,
       theaters: [],
+      add_name: "",
+      add_size: "",
+      new: []
     };
   },
   mounted() {
@@ -375,7 +379,30 @@ export default {
       }
     },
 
-    
+    createForm: function () {
+      let form = new FormData();
+      form.append("theater_name", this.add_name);
+      form.append("theater_size", this.add_size);
+      this.new.push(this.add_name);
+      this.new.push(this.add_size);
+      console.log(form);
+      return form;
+    },
+
+    async addTheater(){
+      if(this.add_name != "" && this.add_size != ""){
+        var result = await TheaterAdmin.addTheater(this.createForm());
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        this.theaters.push({"theater_name": this.add_name, "theater_size": this.add_size})
+        this.add_isopen = false
+        this.add_name = ""
+        this.add_size = ""
+        }else{
+          alert("Pls fill all")
+        }
+    }
 
   },
 };
