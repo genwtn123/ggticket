@@ -17,6 +17,28 @@ exports.getTheater = async (req, res, next) => {
     }
 }
 
+exports.getTheater2 = async (req, res, next) => {
+    try{
+        let theater = new Theater()
+        let keep = await theater.getTheater2()
+        console.log("theater",await theater.getTheater2())
+        res.send(keep)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+exports.editSeat = async (req, res, next) => {
+    try {
+        await valideditSeat.validateAsync(req.body, { abortEarly: false })
+        let seat = new Seat(req.params.id, null, null, req.body.seat_status, null, null)
+        await seat.editSeat()
+        res.send(seat)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 exports.addTheater = async (req, res, next) => {
     try{
         await validtheater.validateAsync(req.body, {abortEarly: false})
@@ -49,6 +71,17 @@ exports.editTheater = async (req, res, next) => {
         let theater = new Theater(req.params.id, null, null, req.body.theater_status)
         await theater.editTheater()
         res.send(`edit status Theater ${req.params.id} to ${req.body.theater_status}`)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+exports.editTheater2 = async (req, res, next) => {
+    try{
+        // await validtheater.validateAsync(req.body, {abortEarly: false})
+        let theater = new Theater(req.params.id, req.body.theater_size, req.body.theater_name, req.body.theater_status)
+        await theater.editTheater2()
+        res.send(` ${req.body.theater_status} ${req.body.theater_size} ${req.body.theater_name}`)
     }catch(err){
         console.log(err)
     }

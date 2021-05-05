@@ -17,23 +17,25 @@
     <div v-for="theater in theaters" :key="theater.theater_id">
       <div class="columns is-2 atheater_box my-6">
         <div class="atheater_box_head column is-8">
-          Theater {{theater.theater_name}}
+          Theater {{ theater.theater_name }}
           <span class="atheater_box_sub"
             >size
-            <span style="color: #ffffff">{{theater.theater_size}}</span>
+            <span style="color: #ffffff">{{ theater.theater_size }}</span>
           </span>
         </div>
         <div class="column">
           <v-btn
-            v-if="topen"
-            @click="topen = !topen"
+            v-model="theater.theater_status"
+            v-if="theater.theater_status"
+            @click="edit_status(theater)"
             class="atheater_btn mr-6"
             color="#29FEA5"
             >OPEN</v-btn
           >
           <v-btn
-            v-if="!topen"
-            @click="topen = !topen"
+            v-model="theater.theater_status"
+            v-if="!theater.theater_status"
+            @click="edit_status(theater)"
             class="atheater_btn mr-6"
             color="#FE2929"
             >CLOSE</v-btn
@@ -41,7 +43,7 @@
           <v-btn
             class="atheater_btn"
             color="#FD7014"
-            @click="edit_isopen = true"
+            @click="edit_modal(theater)"
             >EDIT</v-btn
           >
         </div>
@@ -51,7 +53,7 @@
     <!-- add modal -->
     <div class="modal" :class="{ 'is-active': add_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card modal-card_admin" style="">
+      <div class="modal-card modal-card_admin">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -62,7 +64,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="add_isopen = flase"
+            @click="add_isopen = false"
           ></button>
         </header>
 
@@ -128,7 +130,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = flase"
+              @click="add_isopen = false"
             >
               CANCEL
             </button>
@@ -141,7 +143,7 @@
     <!-- edit modal -->
     <div class="modal" :class="{ 'is-active': edit_isopen }">
       <div class="modal-background"></div>
-      <div class="modal-card modal-card_admin">
+      <div class="modal-card modal-card_admin" style="width: 80% !important">
         <header
           class="modal-card-head has-background-black"
           style="border-style: hidden"
@@ -152,7 +154,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = flase"
+            @click="edit_isopen = false; want_seat=[];"
           ></button>
         </header>
 
@@ -163,79 +165,19 @@
           >
             Edit Theater
           </p>
+
           <div class="columns">
-            <!-- <div class="column pt-3 is-3 pl-6 ml-5">
-              <div class="columns" style="width: 350px">
-                <p style="color: white" class="column is-4">
-                  A
-                  <img
-                    class="seat_image"
-                    v-bind:src="image_seat"
-                    alt="Placeholder image"
-                  />
-                </p>
-                <v-checkbox v-model="checkbox" class="column"></v-checkbox>
-              </div>
-
-              <div class="columns" style="width: 350px">
-                <p style="color: white" class="column is-4">
-                  B
-                  <img class="seat_image"
-                    v-bind:src="image_seat"
-                    alt="Placeholder image"
-                  />
-                </p>
-                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
-              </div>
-
-              <div class="columns" style="width: 350px">
-                <p style="color: white" class="column is-4">
-                  C
-                  <img
-                    class="seat_image"
-                    v-bind:src="image_seat"
-                    alt="Placeholder image"
-                  />
-                </p>
-                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
-              </div>
-
-              <div class="columns" style="width: 350px">
-                <p style="color: white" class="column is-4">
-                  D
-                  <img
-                    class="seat_image"
-                    v-bind:src="image_seat"
-                    alt="Placeholder image"
-                  />
-                </p>
-                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
-              </div>
-
-              <div class="columns" style="width: 350px">
-                <p style="color: white" class="column is-4">
-                  E
-                  <img
-                    class="seat_image"
-                    v-bind:src="image_seat"
-                    alt="Placeholder image"
-                  />
-                </p>
-                <v-checkbox v-model="checkbox" class="column is-1"></v-checkbox>
-              </div>
-            </div> -->
-
             <div
-              class="column is-2"
-              style="text-align: right; padding-top: 3.6%"
+              class="column is-3"
+              style="text-align: right; padding-top: 2.6%"
             >
               <p class="profile_modal_txt py-2 pb-6">Name :</p>
               <p class="profile_modal_txt py-4">Size :</p>
             </div>
 
-            <div class="column is-9 pt-6">
+            <div class="column is-6 pt-6">
               <v-text-field
-                v-model="name"
+                v-model="val.theater_name"
                 label="name"
                 rounded
                 dense
@@ -243,7 +185,8 @@
               ></v-text-field>
 
               <v-select
-                v-model="size"
+                :disabled="true"
+                v-model="val.theater_size"
                 :items="all_size"
                 label="size"
                 required
@@ -253,6 +196,66 @@
                 class="pt-3"
               ></v-select>
             </div>
+          </div>
+
+          <div class="pt-3 is-3">
+            <div
+              class="columns is-centered"
+              style="font-size: 25px; color: white"
+              v-for="index in seat_w"
+              :key="'s'+index"
+            >
+              <span class="pt-3 pr-6">{{rows[index]}}</span>
+              <span
+                style="color: white; font-size: 12px;"
+                v-for="seat in want_seat"
+                :key="seat.seat_no"
+              >
+                <span v-if="seat.seat_name.substring(0, 1) == rows[index]" style="width:100%" @click="editSeat(seat)">
+                  <img
+                    v-if="seat.seat_status"
+                    class="seat_image"
+                    v-bind:src="image_seat"
+                    
+                  />
+                  <img
+                    v-if="!seat.seat_status"
+                    class="seat_image"
+                    v-bind:src="seat_mark"
+                  />
+                </span>
+                
+              </span>
+            </div>
+
+            <div
+              class="columns is-centered"
+              style="font-size: 25px; color: white"
+              v-for="index in honey_w"
+              :key="'h'+index"
+            >
+              <span class="pt-3 pr-6" >{{rows[index + seat_w]}}</span>
+              <span
+                style="color: white; font-size: 12px;"
+                v-for="seat in want_seat"
+                :key="seat.seat_no"
+              >
+                <span v-if="seat.seat_name.substring(0, 1) == rows[index + seat_w]" style="width:100%" @click="editSeat(seat)">
+                  <img
+                    v-if="seat.seat_status"
+                    class="seat_image"
+                    v-bind:src="image_honeymoon"
+                    
+                  />
+                  <img
+                    v-if="!seat.seat_status"
+                    class="seat_image"
+                    v-bind:src="honeymoon_mark"
+                  />
+                </span>
+              </span>
+            </div>
+          <p></p>
           </div>
         </section>
 
@@ -268,6 +271,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="edit()"
             >
               EDIT
             </button>
@@ -302,12 +306,15 @@
           <button
             class="delete"
             aria-label="close"
-            @click="delete_isopen = flase"
+            @click="delete_isopen = false"
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
-            Are you sure that you want to delete ?
+            Are you sure that you want to delete
+            <p></p>
+            Theater :
+            <span style="color: red"> " {{ save.theater_name }} " </span> ?
           </div>
         </section>
         <footer
@@ -322,6 +329,7 @@
                 color: white;
               "
               class="button mx-3 px-6"
+              @click="delTheather"
             >
               OK
             </button>
@@ -332,7 +340,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = flase"
+              @click="delete_isopen = false"
             >
               CANCEL
             </button>
@@ -353,30 +361,137 @@ export default {
         "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
       image_seat:
         "https://cdn3.iconfinder.com/data/icons/movie-entertainment-filled-outline-style/64/13_seat-movie-cinema-chair-theater-512.png",
+      image_honeymoon:
+        "https://cdn4.iconfinder.com/data/icons/movie-41/512/Honeymoon-seat-sofa-movie-Cinema-128.png",
+      honeymoon_mark: "https://sv1.picz.in.th/images/2021/05/06/AmfNWb.png",
+      seat_mark: "https://sv1.picz.in.th/images/2021/05/06/AmfBKf.png",
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
       all_size: ["S", "M", "L"],
-      topen: false,
       checkbox: true,
       theaters: [],
       add_name: "",
       add_size: "",
-      new: []
+      edit_name: "",
+      edit_size: "",
+      new: [],
+      val: [],
+      save: [],
+      seat_w: 0,
+      seat_l: 0,
+      honey_w: 0,
+      honey_l: 0,
+      rows: [0, "A", "B", "C", "D", "E", "F", "G", "H"],
+      save_seat: {},
+      showtime: [],
+      all_seat: [],
+      want_seat: [],
     };
   },
   mounted() {
     this.getTheater();
   },
   methods: {
-    async getTheater(){
+    async getTheater() {
       try {
         let keep = await TheaterAdmin.getTheater();
         console.log(keep);
-        this.theaters = keep.data
+        this.theaters = keep.data[0];
+        keep.data[2].forEach((item) => {
+          this.showtime.push(item.theater_id);
+        });
+        this.all_seat = keep.data[3];
       } catch (err) {
         console.log(err);
       }
+    },
+
+    edit_modal(theater) {
+      this.edit_isopen = true;
+      this.save = theater;
+      this.val = {
+        theater_id: theater.theater_id,
+        theater_name: theater.theater_name,
+        theater_size: theater.theater_size,
+        theater_status: theater.theater_status,
+      };
+      this.name = theater.theater_name;
+
+      this.all_seat.forEach((seat) => {
+        seat.theater_id == this.val.theater_id ? this.want_seat.push(seat) : 0;
+      });
+
+      if (theater.theater_size == "S") {
+        this.seat_w = 4;
+        this.seat_l = 10;
+        this.honey_w = 2;
+        this.honey_l = 10;
+      } else if (theater.theater_size == "M") {
+        this.seat_w = 4;
+        this.seat_l = 12;
+        this.honey_w = 2;
+        this.honey_l = 12;
+      } else if (theater.theater_size == "L") {
+        this.seat_w = 6;
+        this.seat_l = 16;
+        this.honey_w = 2;
+        this.honey_l = 16;
+      }
+
+    },
+
+    createEditForm: function () {
+      let form = new FormData();
+      form.append("theater_id", this.val.theater_id);
+      form.append("theater_status", this.val.theater_status ? 1 : 0);
+      form.append("theater_name", this.val.theater_name);
+      form.append("theater_size", this.val.theater_size);
+      console.log(form);
+      return form;
+    },
+
+    createStatusForm: function (theater) {
+      let form = new FormData();
+      form.append("theater_id", theater.theater_id);
+      form.append("theater_status", theater.theater_status ? 1 : 0);
+      form.append("theater_name", theater.theater_name);
+      form.append("theater_size", theater.theater_size);
+      console.log(form);
+      return form;
+    },
+
+    async edit() {
+      var result = await TheaterAdmin.editTheater2(
+        this.createEditForm(),
+        this.val.theater_id
+      );
+      console.log("res", result.status);
+      console.log("success by vuejs");
+      alert("Success");
+
+      this.theaters.forEach((theater, index) => {
+        if (this.val.theater_id == theater.theater_id)
+          this.theaters.splice(index, 1, this.val);
+      });
+      this.want_seat = [];
+      this.edit_isopen = false;
+    },
+
+    async edit_status(theater) {
+      theater.theater_status = !theater.theater_status;
+      var result = await TheaterAdmin.editTheater2(
+        this.createStatusForm(theater),
+        theater.theater_id
+      );
+      console.log("res", result.status);
+      console.log("success by vuejs");
+
+      this.theaters.forEach((theater, index) => {
+        if (this.val.theater_id == theater.theater_id)
+          this.theaters.splice(index, 1, this.val);
+      });
+      this.edit_isopen = false;
     },
 
     createForm: function () {
@@ -389,21 +504,61 @@ export default {
       return form;
     },
 
-    async addTheater(){
-      if(this.add_name != "" && this.add_size != ""){
+    async addTheater() {
+      if (this.add_name != "" && this.add_size != "") {
         var result = await TheaterAdmin.addTheater(this.createForm());
         console.log("res", result.status);
         console.log("success by vuejs");
         alert("Success");
-        this.theaters.push({"theater_name": this.add_name, "theater_size": this.add_size})
-        this.add_isopen = false
-        this.add_name = ""
-        this.add_size = ""
-        }else{
-          alert("Pls fill all")
-        }
-    }
+        this.theaters.push({
+          theater_name: this.add_name,
+          theater_size: this.add_size,
+          theater_status: 1,
+        });
+        this.add_isopen = false;
+        this.add_name = "";
+        this.add_size = "";
+        this.getTheater();
+      } else {
+        alert("Pls fill all");
+      }
+    },
 
+    async delTheather() {
+      if (!this.showtime.includes(this.val.theater_id)) {
+        await TheaterAdmin.delTheater(this.val.theater_id);
+        this.delete_isopen = false;
+        this.edit_isopen = false;
+        this.theaters.forEach((item, index) => {
+          if (item.theater_id == this.val.theater_id)
+            this.theaters.splice(index, 1);
+        });
+      } else {
+        alert(
+          "Foreign Key alert! \n You must delete showtimes that use this theater first"
+        );
+        this.delete_isopen = false;
+      }
+    },
+
+    async editSeat(seat){
+      seat.seat_status = !seat.seat_status;
+      var result = await TheaterAdmin.editSeat(
+        this.createSeatForm(seat),
+        seat.seat_no
+      );
+      console.log("res", result.status);
+      console.log("success by vuejs");
+      this.edit_isopen = false;
+    },
+
+    createSeatForm: function (seat) {
+      let form = new FormData();
+      form.append("seat_no", seat.seat_no);
+      form.append("seat_status", seat.seat_status);
+      console.log(form);
+      return form;
+    }
   },
 };
 </script>
@@ -437,7 +592,7 @@ export default {
 }
 
 .seat_image {
-  width: 50px;
+  width: 60px;
 }
 
 .logo_card {

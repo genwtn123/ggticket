@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const Showtime = 'http://localhost:12000/showtime/a';
 const addShowtime = 'http://localhost:12000/showtime/add';
+const delShowtime = 'http://localhost:12000/showtime/delete/';
 
 class ShowtimeAdmin {
     static async getShowtime() {
@@ -19,6 +20,9 @@ class ShowtimeAdmin {
 
     }
 
+    static async delShowtime(id) {
+        return await axios.delete(delShowtime+id)
+    }
 
 }
 export default ShowtimeAdmin

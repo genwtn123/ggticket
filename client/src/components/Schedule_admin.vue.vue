@@ -53,8 +53,8 @@
           <div
             id="border"
             class="is-multiline columns is-variable is-2"
-            @click="edit_isopen = [true, showtime]"
             style="height: 180px"
+            @click="delete_isopen = [true, showtime]"
           >
             <div class="column is-one-quarter">
               <img
@@ -232,7 +232,7 @@
     <!-- add modal -->
 
     <!-- edit modal -->
-    <div class="modal" :class="{ 'is-active': edit_isopen[0] }">
+    <div class="modal" :class="{ 'is-active': edit_isopen}">
       <div class="modal-background"></div>
       <div class="modal-card modal-card_admin" style="width: 65%">
         <header
@@ -245,7 +245,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = [false, '', '']"
+            @click="edit_isopen = false"
           ></button>
         </header>
 
@@ -278,7 +278,7 @@
 
             <div class="column is-4 pt-6">
               <v-select
-                v-model="edit_movie"
+                v-model="val"
                 :items="all_movie"
                 label="movie"
                 required
@@ -359,7 +359,7 @@
     <!-- edit modal -->
 
     <!-- delete modal -->
-    <div class="modal" :class="{ 'is-active': delete_isopen }">
+    <div class="modal" :class="{ 'is-active': delete_isopen[0] }">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header
@@ -372,12 +372,12 @@
           <button
             class="delete"
             aria-label="close"
-            @click="delete_isopen = false"
+            @click="delete_isopen = [false, '']"
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
-            Are you sure that you want to delete <p style="color:red">" Showtime_no {{edit_isopen[1].showtime_no}} " ? </p>
+            Are you sure that you want to delete <p style="color:red">" Showtime_no {{delete_isopen[1].showtime_no}} " ? </p>
           </div>
         </section>
         <footer
@@ -403,7 +403,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = false"
+              @click="delete_isopen = [false, '']"
             >
               CANCEL
             </button>
@@ -424,8 +424,8 @@ export default {
   data() {
     return {
       add_isopen: false,
-      edit_isopen: [false, ''],
-      delete_isopen: false,
+      edit_isopen: false,
+      delete_isopen: [false, ''],
       all_movie: [],
       all_theater: [],
       showtimes: [],
@@ -463,6 +463,9 @@ export default {
       edit_timeStart: 0,
       edit_timeEnd: 0,
       edit_status: false,
+      val: [],
+      save: [],
+      name: ""
     };
   },
   methods: {
@@ -581,6 +584,7 @@ export default {
         this.add_isopen = false;
         this.picker_addDate = "";
         this.new = [];
+        this.getShowtime()
       } else {
         alert(
           "Time End must be greater or equal with Time start \n Your time Strat: " +
@@ -590,6 +594,35 @@ export default {
         );
       }
     },
+
+//     edit_modal(showtime){
+//       this.edit_isopen = true
+//       this.save = showtime
+//       console.log(showtime)
+//       this.val = {"movie_id": showtime.movie_id, "movie_image": showtime.movie_image, "movie_language": showtime.movie_language, 
+//  "movie_length": showtime.movie_length, "movie_name": showtime.movie_name, "movie_releasetime": showtime.movie_releasetime, "movie_status": showtime.movie_status, "movie_type": showtime.movie_type,
+//   "showtime_no": showtime.showtime_no, "showtime_status": showtime.showtime_status, "staff_id": showtime.staff_id, "theater_id": showtime.theater_id, "theater_name": showtime.theater_name, 
+//   "theater_size": showtime.theater_size, "theater_status": showtime.theater_status, "time_finish": showtime.time_finish, "time_start": showtime.time_start, "viewer": showtime.viewer}
+
+
+//       this.name = showtime.showtime_no
+//     },
+
+    edit(){
+      this.showtimes.forEach((showtime, index) => {
+          if(this.val.showtime_no == showtime.showtime_no)
+          this.showtimes.splice(index, 1, this.val)
+      });
+      this.edit_isopen = false
+    },
+
+    async delShowtime() {
+      await ShowtimeAdmin.delShowtime(this.delete_isopen[1].showtime_no);
+      this.delete_isopen = [false, ''];
+      this.edit_isopen = false;
+      this.dates = []  
+      this.getShowtime()
+    }
   
   },
 };
