@@ -129,6 +129,14 @@ class Movie {
             conn.release()
         }
     }
+
+    // selectRecomMovie(){
+    //     const conn = await pool.getConnection()
+    //     await conn.beginTransaction();
+    //     try{
+    //         let stmt = 'select *'
+    //     }
+    // }
 }
 
 module.exports = Movie

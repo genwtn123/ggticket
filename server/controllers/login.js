@@ -33,8 +33,43 @@ exports.logout = function (req, res) {
     if (store.sessions) {
         for (var sid in store.sessions) {
             store.destroy(sid, function () {
-                res.send("Logout");
             });
         }
+        res.send("Logout");
+    }
+}
+
+exports.getUserInfo = async (req, res, next) => {
+    try{
+    let user = new User(req.session.userdata.user_id)
+    let keep = await user.getUserInfo()
+    res.send(keep)
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }
+}
+
+exports.addimage = async (req, res, next) => {
+    try{
+        let user = new User(req.session.userdata.user_id, null, null, null, null, null, null, null, req.file.path)
+        console.log("file", req.file.path)
+        await user.addImage()
+        res.send("ez")
+    }catch(err){
+        console.log(err)
+        res.send(err)
+    }   
+}
+
+exports.changePassword = async (req, res, next) => {
+    try{
+        let user = new User(req.session.userdata.user_id, null, req.body.password, null, null, null, null, null, null, req.body.newpassword)
+        console.log(user, "user")
+        await user.changePassword()
+        res.send("Change password success!")
+    }catch(err){
+        console.log(err)
+        res.send(err)
     }
 }

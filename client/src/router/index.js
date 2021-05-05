@@ -46,50 +46,50 @@ const routes = [
         path: '/buyticket',
         name: 'Buyticket',
         component: BuyTicket,
-        meta: { login: true, step: true, food: true },
+        meta: { login: true, step: true, food: true, customer: true },
     },
 
     {
         path: '/history',
         name: 'History',
         component: History,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/buyfood',
         name: 'Buyfood',
         component: Buyfood,
-        meta: { login: true, step: true, food: true },
+        meta: { login: true, step: true, food: true, customer: true },
     },
     {
         path: '/theaterselect',
         name: 'Theater',
         component: Theater,
-        meta: { login: true, step: true },
+        meta: { login: true, step: true, customer: true },
     },
     {
         path: '/promotion',
         name: 'Promotion',
         component: Promotion,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/seat',
         name: 'Seat',
         component: Seat,
-        meta: { login: true, step: true, seat: true },
+        meta: { login: true, step: true, seat: true, customer: true },
     },
     {
         path: '/movie',
         name: 'Movie',
         component: Movie,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/movieschedule',
         name: 'MovieSchedule',
         component: MovieSchedule,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/afood',
@@ -147,6 +147,9 @@ router.beforeEach(async (to, from, next) => {
             let isAdmin = !!(keep.data.type == "STAFF")
             if (to.meta.admin && !isAdmin) {
                 next({ name: 'Home' })
+            }
+            if (to.meta.customer && isAdmin) {
+                next({ name: "Home" })
             }
         }
         if (to.meta.login && !isLoggedIn) {

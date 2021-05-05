@@ -9,10 +9,10 @@
 
       <div class="container is-max-desktop">
         <div class="buttons are-medium">
-          <v-btn id="button_date" color="black" dark v-bind="attrs"> Date </v-btn>
-          <v-btn id="button_day" color="black" dark v-bind="attrs"> 1-April-2021 </v-btn>
-          <v-btn id="button_day" color="black" dark v-bind="attrs"> 2-April-2021 </v-btn>
-          <v-btn id="button_day" color="black" dark v-bind="attrs"> 3-April-2021 </v-btn>
+          <v-btn id="button_date" color="black" dark> Date </v-btn>
+          <v-btn id="button_day" color="black" dark> 1-April-2021 </v-btn>
+          <v-btn id="button_day" color="black" dark> 2-April-2021 </v-btn>
+          <v-btn id="button_day" color="black" dark> 3-April-2021 </v-btn>
         </div>
 
         <div class="is-multiline columns is-variable is-2 mt-5">
