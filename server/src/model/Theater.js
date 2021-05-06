@@ -172,23 +172,6 @@ class Theater {
             conn.release()
         }
     }
-
-    async editSeat() {
-        const conn = await pool.getConnection()
-        await conn.beginTransaction();
-        try {
-            let stmt = 'update SEAT set seat_status= ? where seat_no = ?'
-            let keep = await conn.query(stmt, [this.seat_status, this.seat_no])
-            await conn.commit()
-            return Promise.resolve()
-        } catch (err) {
-            console.log(err)
-            await conn.rollback()
-            return Promise.reject()
-        } finally {
-            conn.release()
-        }
-    }
 }
 
 module.exports = Theater

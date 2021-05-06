@@ -31,8 +31,8 @@ exports.getTheater2 = async (req, res, next) => {
 
 exports.editSeat = async (req, res, next) => {
     try {
-        let seat = new Seat(req.params.id, req.body.type_of_seat,  req.body.seat_name, req.body.seat_status, req.body.seat_price, req.body.theater_id)
-        await seat.editSeat()
+        let seat = new Seat(req.params.id, null,  null, req.body.seat_status, null, req.body.theater_id)
+        await seat.editSeat2()
         res.send(seat)
     } catch (err) {
         console.log(err)
