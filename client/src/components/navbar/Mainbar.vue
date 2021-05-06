@@ -13,23 +13,28 @@
 
     <div class="navbar-menu">
       <div class="navbar-start">
-      <router-link to="/movie" class="pr-5 navbar-item nav_font">ภาพยนต์</router-link>
-      <router-link to="/movieschedule" class="pr-5 navbar-item nav_font">ตารางภาพยนต์</router-link>
-      <router-link to="/promotion" class="pr-5 navbar-item nav_font">promotion</router-link>
+        <router-link to="/movie" class="pr-5 navbar-item nav_font"
+          >ภาพยนต์</router-link
+        >
+        <router-link to="/movieschedule" class="pr-5 navbar-item nav_font"
+          >ตารางภาพยนต์</router-link
+        >
+        <router-link to="/promotion" class="pr-5 navbar-item nav_font"
+          >promotion</router-link
+        >
 
-      <router-link to="/history" class="pr-5 navbar-item nav_font">History</router-link>
-
+        <router-link to="/history" class="pr-5 navbar-item nav_font"
+          >History</router-link
+        >
       </div>
 
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="field is-grouped">
             <v-avatar
-              style="text-align: left"
-              color="warning lighten"
-              size="40"
+
             >
-              <!-- <img src="" alt="" srcset=""> -->
+            <v-img :src="imagePath(this.image)" size="70"></v-img>
             </v-avatar>
 
             <v-menu left bottom>
@@ -40,7 +45,7 @@
               </template>
 
               <v-list>
-                <v-list-item>
+                <v-list-item @click="showmodal()">
                   <v-list-item-title>Profile</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="logout">
@@ -52,25 +57,58 @@
         </div>
       </div>
     </div>
+        <Profile/>
   </nav>
 </template>
 
 
 <script>
 import AccountService from "../../service/AccountService";
+import Profile from "../profile_modal"
 export default {
   name: "Mainbar",
-  components: {},
+  components: {
+    Profile
+  },
   data: () => ({
     username: "",
     password: "",
     error: null,
+    image:""
   }),
+  mounted() {
+    this.getimage();
+  },
+  created(){
+    this.$root.$refs.mainbar = this
+  },
   methods: {
     async logout() {
       await AccountService.Logout();
       this.$router.push({ name: "Login" });
     },
+    async getimage() {
+      try {
+        let keep = await AccountService.getUsserInfo();
+        this.data = keep.data[0];
+        this.image = this.data.user_image;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    showmodal(){
+      this.$root.$refs.modal.changemodal()
+    },
+    update(){
+      this.getimage()
+    }
   },
 };
 </script>

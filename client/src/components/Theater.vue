@@ -127,6 +127,7 @@ export default {
   },
   methods: {
     async getTheater() {
+      console.log(this.currentTime())
       // if(this.$store.getters.getmovie == ""){
       //   this.$router.push({name:'Movie'})
       // }
@@ -175,7 +176,7 @@ export default {
     },
     currentTime() {
       let today = new Date();
-      let time = today.getHours() + ":" + today.getMinutes();
+      let time = (today.getHours() > 9 ? today.getHours() : `0${today.getHours()}`) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : `0${today.getMinutes()}`)
       return time;
     },
     currentDate() {

@@ -4,6 +4,8 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import axios from 'axios'
 import store from './plugins/vuex'
+import SweetModal from 'sweet-modal-vue/src/plugin.js'
+Vue.use(SweetModal)
 
 Vue.config.productionTip = false
 axios.defaults.withCredentials = true
