@@ -17,6 +17,10 @@ exports.getFood = async (req, res, next) => {
 }
 
 exports.createFood = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validfood.validateAsync(req.body, {abortEarly: false})
 
@@ -34,6 +38,10 @@ exports.createFood = async (req, res, next) => {
 }
 
 exports.editFood = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validfood.validateAsync(req.body, {abortEarly: false})
         let food = new Food(req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  null, req.session.userdata.user_id)

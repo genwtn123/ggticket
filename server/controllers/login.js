@@ -1,7 +1,6 @@
 const User = require('../src/model/User')
 const Joi = require('joi')
 
-
 const loginSchema = Joi.object({
     username : Joi.string().required(),
     password : Joi.string().required()
@@ -51,6 +50,10 @@ exports.getUserInfo = async (req, res, next) => {
 }
 
 exports.addimage = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         let user = new User(req.session.userdata.user_id, null, null, null, null, null, null, null, req.file.path)
         console.log("file", req.file.path)

@@ -14,4 +14,14 @@ var storage = multer.diskStorage({
   },
 });
 
-module.exports = multer({ storage: storage });
+module.exports = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+      let valid_ext = ['.jfif', '.jpg', '.png']
+      if (!valid_ext.includes(path.extname(file.originalname))) {
+          req.fileValidationError = 'File extention in invalid'
+        return cb(null, false, req.fileValidationError);
+      }
+      cb(null, true);
+  }
+})

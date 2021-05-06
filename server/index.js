@@ -36,13 +36,14 @@ const sess = {
 }
 app.use(session(sess));
 // app.use(express.static('static'))
-app.use("/static", express.static(path.join(__dirname, "static")));
-// app.use('/files', express.static('files'));
-app.use(express.json())
 app.use(cors({
     origin:true,
     credentials:true
 }))
+app.use("/static", express.static(path.join(__dirname, "static")));
+// app.use('/files', express.static('files'));
+app.use(express.json())
+
 
 
 app.use((req, res, next) => {

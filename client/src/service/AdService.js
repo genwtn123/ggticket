@@ -18,8 +18,8 @@ class AdService {
         console.log(form);
         return await axios.put(editad+'/'+id, form)
     }
-    static async delad(index){
-        return await axios.delete(delad, index)
+    static async delad(id){
+        return await axios.delete(delad+'/'+id)
 
 }
 }

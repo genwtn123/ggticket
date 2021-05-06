@@ -17,18 +17,23 @@
     <hr />
 
     <div class="is-multiline columns">
-      <div v-for="ad in advertisement"
+      <div
+        v-for="ad in advertisement"
         :key="ad.ad_id"
         class="column is-one-quarter mt-5"
       >
         <div class="card admin_card mx-6 my-6">
           <figure class="image">
-            <img style="height: 250px" :src="imagePath(ad.ad_image)" alt="Placeholder image" />
+            <img
+              style="height: 250px"
+              :src="imagePath(ad.ad_image)"
+              alt="Placeholder image"
+            />
           </figure>
           <div class="card-content" id="card_body_admin">
-            <div style="font-size: 17px">{{ad.ad_name}}</div>
+            <div style="font-size: 17px">{{ ad.ad_name }}</div>
             <div style="font-size: 15px; color: #520c0c">
-              {{ad.ad_detail}}
+              {{ ad.ad_detail }}
             </div>
           </div>
           <footer class="card-footer" style="background-color: white">
@@ -62,11 +67,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="addc"
-          ></button>
+          <button class="delete" aria-label="close" @click="addc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -84,32 +85,36 @@
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="addform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="15"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="title"
-                label="title"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="title"
+                  label="title"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!title || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="detail"
-                label="detail"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
+                <v-text-field
+                  v-model="detail"
+                  label="detail"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!detail || 'This field is required']"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -120,7 +125,7 @@
         >
           <div style="margin: auto">
             <button
-             @click="createad"
+              @click="createad"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -158,11 +163,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="editc"
-          ></button>
+          <button class="delete" aria-label="close" @click="editc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -180,32 +181,36 @@
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="editform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="15"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="title"
-                label="tile"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="title"
+                  label="tile"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!title || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="detail"
-                label="detail"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
+                <v-text-field
+                  v-model="detail"
+                  label="detail"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!detail || 'This field is required']"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -216,7 +221,7 @@
         >
           <div style="margin: auto">
             <button
-            @click="editad"
+              @click="editad"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -254,11 +259,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="deletec"
-          ></button>
+          <button class="delete" aria-label="close" @click="deletec"></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
@@ -308,12 +309,12 @@
 
 <script>
 import AdService from "../service/AdService";
-import axios from "axios";
+import axios from 'axios'
+
 export default {
-   mounted(){
+  mounted() {
     this.getad();
-  }
-   ,
+  },
   data() {
     return {
       image:
@@ -325,18 +326,14 @@ export default {
       keep_index: 0,
       title: "",
       detail: "",
-      pic: ""
+      pic: null,
     };
   },
   methods: {
-    removead() {
-      axios
-        .delete(`http://localhost:12000/ad/delete/${this.keep_index}`)
-        .then(() => {
-          this.getad();
-          this.delete_isopen = false;
-        })
-        .catch((err) => console.log(err));
+    async removead() {
+      await AdService.delad(this.keep_index);
+      this.delete_isopen = false;
+      this.getad();
     },
     createAddForm: function () {
       let form = new FormData();
@@ -353,73 +350,91 @@ export default {
       return form;
     },
     editc() {
+      this.$refs.editform.resetValidation()
       this.edit_isopen = false;
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
     },
     deletec() {
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
       this.delete_isopen = false;
     },
     addc() {
+      this.$refs.addform.resetValidation()
       this.add_isopen = false;
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
     },
     // (null, req.body.ad_name, req.body.ad_detail, req.file.path, req.body.staff_id)
-    edit(index){
-      this.edit_isopen = true
-      this.keep_index = index
+    async edit(index) {
+      this.edit_isopen = true;
+      this.keep_index = index;
+      for (var ad of this.advertisement) {
+        if (ad.ad_id == index) {
+          this.title = ad.ad_name;
+          this.detail = ad.ad_detail;
+                          let config = {responseType:'blob'}
+          let result = await axios.get('http://localhost:12000/'+ad.ad_image, config)
+          this.pic = new File([result.data], "Click to change picture")
+        }
+      }
     },
-    remove(index){
-      this.delete_isopen = true
-      this.keep_index = index
+    remove(index) {
+      this.delete_isopen = true;
+      this.keep_index = index;
     },
     async createad() {
-      try {
-        var result = await AdService.createad(this.createAddForm());
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.getad();
-        this.title = "";
-        this.detail = "";
-        this.pic = "";
-        this.add_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.addform.validate()) {
+        try {
+          var result = await AdService.createad(this.createAddForm());
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.$refs.addform.resetValidation()
+          this.$refs.editform.resetValidation()
+          this.getad();
+          this.title = "";
+          this.detail = "";
+          this.pic = null;
+          this.add_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async editad() {
-      try {
-        var result = await AdService.editad(
-          this.createEditForm(),
-          this.keep_index
-        );
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.title = "";
-        this.detail = "";
-        this.pic = "";
-        this.getad();
-        this.edit_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.editform.validate()) {
+        try {
+          var result = await AdService.editad(
+            this.createEditForm(),
+            this.keep_index
+          );
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          this.$refs.addform.resetValidation()
+          this.$refs.editform.resetValidation()
+          alert("Success");
+          this.title = "";
+          this.detail = "";
+          this.pic = null;
+          this.getad();
+          this.edit_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
-    async getad(){
-      try{
+    async getad() {
+      try {
         let keep = await AdService.getad();
         console.log(keep);
-        this.advertisement = keep.data
-      }
-      catch(err){
-        console.log(err)
+        this.advertisement = keep.data;
+      } catch (err) {
+        console.log(err);
       }
     },
     imagePath(file_path) {

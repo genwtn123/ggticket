@@ -23,8 +23,8 @@ class FoodService {
         console.log(form);
         return await axios.put(editFood+'/'+id, form)
     }
-    static async delFood(index){
-        return await axios.delete(delFood, index)
+    static async delFood(id){
+        return await axios.delete(delFood+'/'+id)
     }
 
 

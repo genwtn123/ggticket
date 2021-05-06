@@ -10,7 +10,7 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="isopen"
         />
       </div>
     </div>
@@ -82,31 +82,36 @@
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="form">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="15"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="name"
-                label="name"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="name"
+                  label="name"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!name || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="price"
+                  label="price"
+                  rounded
+                  dense
+                  solo
+                  :rules="foodrule"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -173,31 +178,36 @@
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="editform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="50"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="name"
-                label="name"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="name"
+                  label="name"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!name || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="price"
+                  label="price"
+                  rounded
+                  dense
+                  solo
+                  :rules="foodrule"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -290,7 +300,8 @@
 
 <script>
 import FoodService from "../service/FoodService";
-import axios from "axios";
+import axios from 'axios';
+
 export default {
   mounted() {
     this.getFood();
@@ -306,62 +317,51 @@ export default {
       keep_index: 0,
       name: "",
       price: "",
-      pic: "",
+      pic: null,
+      foodrule: [
+        (v) => !!v || "This field is required",
+        (v) => /[0-9]+/.test(v) || "Please input number",
+      ],
     };
   },
   methods: {
-    // async keepphoto(e){
-    //   console.log(e)
-    //    this.pic = e.target.files[0];
-    // },
-    // createfood(){
-    //   // null, req.body.food_name, req.file.path, req.body.food_price, true, req.body.staff_id)
-    //   axios.post("http://localhost:12000/food/create",
-    //   {food_name: this.name, food_image: this.pic, food_price:this.price, staff_id:1}).then(()=> this.add_isopen = false)
-    //   .catch((err)=> console.log(err))
-    // },
-    // editfood(){
-    //   // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id).
-    //   axios.put(`http://localhost:12000/food/edit/${this.keep_index}`,{food_name: this.name, food_image: this.pic, food_price:this.price, staff_id:1}).then(()=> this.edit_isopen = false)
-    //   .catch((err)=> console.log(err))
-    // },
-    removefood() {
-      axios
-        .delete(`http://localhost:12000/food/delete/${this.keep_index}`)
-        .then(() => {
-          this.getFood();
-          this.delete_isopen = false;
-        })
-        .catch((err) => console.log(err));
+    async removefood() {
+      await FoodService.delFood(this.keep_index);
+      this.delete_isopen = false;
+      this.getFood();
     },
-    // async removefood(){
-    //   try{
-
-    //   } catch(err) {
-    //     console.log(err)
-    //   }
-    // },
     editc() {
+      this.$refs.editform.resetValidation();
       this.edit_isopen = false;
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
     },
     deletec() {
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
       this.delete_isopen = false;
     },
     addc() {
+      this.$refs.form.resetValidation();
       this.add_isopen = false;
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
     },
-    edit(index) {
+    async edit(index) {
       this.edit_isopen = true;
       this.keep_index = index;
+      for (var food of this.food) {
+        if (food.food_id == index) {
+          let config = {responseType:'blob'}
+          let result = await axios.get('http://localhost:12000/'+food.food_image, config)
+          this.pic = new File([result.data], "Click to change picture")
+          this.name = food.food_name;
+          this.price = food.food_price;
+        }
+      }
     },
     remove(index) {
       this.delete_isopen = true;
@@ -385,37 +385,43 @@ export default {
     //     var result = await FoodService.createFood()
     // },
     async editFood() {
-      try {
-        // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id
-        var result = await FoodService.editFood(
-          this.createEditForm(),
-          this.keep_index
-        );
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.name = "";
-        this.price = "";
-        this.pic = "";
-        this.getFood();
-        this.edit_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.editform.validate()) {
+        try {
+          // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id
+          var result = await FoodService.editFood(
+            this.createEditForm(),
+            this.keep_index
+          );
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.name = "";
+          this.price = "";
+          this.pic = null;
+          this.getFood();
+          this.edit_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async createFood() {
-      try {
-        var result = await FoodService.createFood(this.createAddForm());
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.getFood();
-        this.name = "";
-        this.price = "";
-        this.pic = "";
-        this.add_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.form.validate()) {
+        try {
+          var result = await FoodService.createFood(this.createAddForm());
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.$refs.form.resetValidation();
+          this.$refs.editform.resetValidation();
+          this.getFood();
+          this.name = "";
+          this.price = "";
+          this.pic = null;
+          this.add_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async getFood() {
@@ -434,6 +440,10 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
+    isopen() {
+      this.add_isopen = true;
+      this.$refs.form.resetValidation();
+    },
   },
 };
 </script>
@@ -442,7 +452,7 @@ export default {
 .admin_card {
   background-color: #fd7014 !important;
   color: #ffffff !important;
-/* max-height: 400px; */
+  /* max-height: 400px; */
 }
 
 .modal-card_admin {

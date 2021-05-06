@@ -17,6 +17,10 @@ exports.getAd = async (req, res, next) =>{
 }
 
 exports.createAd = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await AdSchema.validateAsync(req.body, { abortEarly: false })
         let ad = new Ad(null, req.body.ad_name, req.body.ad_detail, req.file.path, null,  req.session.userdata.user_id)
@@ -29,6 +33,10 @@ exports.createAd = async (req, res, next) => {
 }
 
 exports.editAd = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await AdSchema.validateAsync(req.body, { abortEarly: false })
         let ad = new Ad(req.params.ad_id, req.body.ad_name, req.body.ad_detail, req.file.path, null, req.session.userdata.user_id)

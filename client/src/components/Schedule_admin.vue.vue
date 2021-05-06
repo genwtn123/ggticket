@@ -146,6 +146,7 @@
             </div>
 
             <div class="column is-4 pt-6">
+              <v-form ref="form">
               <v-select
                 v-model="add_movie"
                 :items="all_movie_name"
@@ -209,6 +210,7 @@
                 <input type="checkbox" v-model="add_status" />
                 Status
               </label> -->
+              </v-form>
             </div>
           </div>
         </section>
@@ -587,16 +589,7 @@ export default {
       return form;
     },
     async addShowtime() {
-      if (
-        this.add_timeStart == "" ||
-        this.add_timeEnd == "" ||
-        this.add_theater == "" ||
-        this.add_movie == "" ||
-        this.picker_addDate == ""
-      ) {
-        console.log(this.add_timeStart > this.add_timeEnd, "ss");
-        alert("pls put all information");
-      } else if (this.add_timeEnd > this.add_timeStart) {
+      if(this.$refs.form.validate() && this.add_timeStart < this.add_timeEnd){
         var result = await ShowtimeAdmin.addShowtime(this.createForm());
         console.log("res", result);
         if (result.data.details == undefined) {
@@ -646,13 +639,6 @@ export default {
         } else {
           alert(result.data.details.message);
         }
-      } else {
-        alert(
-          "Time End must be greater with Time start \n Your time Strat: " +
-            this.add_timeStart +
-            "\n Your time end: " +
-            this.add_timeEnd
-        );
       }
     },
     imagePath(file_path) {
