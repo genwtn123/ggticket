@@ -1,4 +1,5 @@
 const Theater = require('../src/model/Theater')
+const Seat = require('../src/model/Seat')
 const Joi = require('joi')
 
 const validtheater = Joi.object({
@@ -30,8 +31,7 @@ exports.getTheater2 = async (req, res, next) => {
 
 exports.editSeat = async (req, res, next) => {
     try {
-        await valideditSeat.validateAsync(req.body, { abortEarly: false })
-        let seat = new Seat(req.params.id, null, null, req.body.seat_status, null, null)
+        let seat = new Seat(req.params.id, req.body.type_of_seat,  req.body.seat_name, req.body.seat_status, req.body.seat_price, req.body.theater_id)
         await seat.editSeat()
         res.send(seat)
     } catch (err) {

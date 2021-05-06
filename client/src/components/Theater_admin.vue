@@ -154,7 +154,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = false; want_seat=[];"
+            @click="edit_isopen = false; want_seat=[]; getTheater()"
           ></button>
         </header>
 
@@ -549,13 +549,16 @@ export default {
       );
       console.log("res", result.status);
       console.log("success by vuejs");
-      this.edit_isopen = false;
     },
 
     createSeatForm: function (seat) {
       let form = new FormData();
       form.append("seat_no", seat.seat_no);
-      form.append("seat_status", seat.seat_status);
+      form.append("seat_status", seat.seat_status ? 1:0);
+      form.append("theater_id", seat.theater_id);
+      form.append("seat_name", seat.seat_name);
+      form.append("type_of_seat", seat.type_of_seat);
+      form.append("seat_price", seat.seat_price);
       console.log(form);
       return form;
     }

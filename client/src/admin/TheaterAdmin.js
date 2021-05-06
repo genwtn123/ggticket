@@ -5,7 +5,7 @@ const addTheater = 'http://localhost:12000/theater/add';
 const delTheater = 'http://localhost:12000/theater/delete/';
 const editTheater2 = 'http://localhost:12000/theater/edit/a/';
 const editTheater = 'http://localhost:12000/theater/edit/';
-const editSeat = 'http://localhost:12000/theater/edit/s/';
+const editSeat = 'http://localhost:12000/theater/seat/s/';
 
 class TheaterAdmin {
     static async getTheater() {

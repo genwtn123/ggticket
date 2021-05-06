@@ -32,7 +32,7 @@ class Theater {
         try {
             let stmt = 'SELECT * FROM THEATER'
             let stmt2 = 'SELECT DISTINCT theater_id FROM SHOWTIME'
-            let stmt3 = 'SELECT seat_no, seat_name, seat_status, theater_id FROM SEAT'
+            let stmt3 = 'SELECT * FROM SEAT'
             let keep = await conn.query(stmt)
             let keep2 = await conn.query(stmt2)
             let keep3 = await conn.query(stmt3)
