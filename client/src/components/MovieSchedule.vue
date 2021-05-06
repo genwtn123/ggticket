@@ -9,8 +9,8 @@
 
       <div class="container is-max-desktop">
         <div class="buttons are-medium">
-          <v-btn id="button_date" color="black" dark v-bind="attrs" @click="defaultDate()"> All </v-btn>
-          <v-btn id="button_day" color="black" dark v-bind="attrs" v-for="date in dates" :key="date" @click="keepdate(date.substring(0, 10))"> {{date.substring(8, 10)}}-{{date.substring(5, 7)}}-{{date.substring(0, 4)}} </v-btn>
+          <v-btn id="button_date" color="black" dark  @click="defaultDate()"> All </v-btn>
+          <v-btn id="button_day" color="black" dark  v-for="date in dates" :key="date" @click="keepdate(date.substring(0, 10))"> {{date.substring(8, 10)}}-{{date.substring(5, 7)}}-{{date.substring(0, 4)}} </v-btn>
         </div>
 
         <div class="is-multiline columns is-variable is-2 mt-5">
