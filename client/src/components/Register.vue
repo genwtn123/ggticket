@@ -127,6 +127,16 @@
         REGISTER
       </button>
     </v-form>
+    <sweet-modal icon="success" ref="modal">
+        Change Password Success!
+        <!-- <v-row>
+          <v-col>
+            <v-btn color="success" class="mt-5"
+              >Ok</v-btn
+            ></v-col
+          >
+        </v-row> -->
+      </sweet-modal>
   </v-banner>
 </template>
 

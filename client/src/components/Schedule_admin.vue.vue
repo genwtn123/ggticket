@@ -158,6 +158,7 @@
                 class="pt-3 pb-2"
               ></v-select>
 
+
               <v-text-field
                 label="Time start"
                 required
@@ -182,7 +183,7 @@
                 :rules="[() => !!add_timeEnd || 'This field is required']"
                 v-model="add_timeEnd"
               ></v-text-field>
-              
+             
 
               <v-select
                 v-model="add_theater"
@@ -485,10 +486,12 @@ export default {
       edit_timeEnd: 0,
       edit_status: false,
       val: [],
+
       // save: [],
       // name: "",
       errorMessages: '',
       formHasErrors: false,
+
     };
   },
 
@@ -511,6 +514,9 @@ export default {
         let keep3 = await MovieService.getMovie();
         this.all = keep.data;
         this.showtimes = keep.data;
+        this.showtimes.sort((a, b) => {
+          return new Date(a.time_start) - new Date(b.time_start);
+        });
         this.showtimes.forEach((showtime) => {
           let d = showtime.time_start.substring(0, 10);
           !this.dates.includes(d) ? this.dates.push(d) : 0;
@@ -588,6 +594,7 @@ export default {
         this.add_movie == "" ||
         this.picker_addDate == ""
       ) {
+        console.log(this.add_timeStart > this.add_timeEnd, "ss");
         alert("pls put all information");
       } else if (this.add_timeEnd > this.add_timeStart) {
         var result = await ShowtimeAdmin.addShowtime(this.createForm());
@@ -685,6 +692,7 @@ export default {
     },
 
   },
+
 };
 </script>
 

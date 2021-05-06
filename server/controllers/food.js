@@ -1,6 +1,5 @@
 const Food = require('../src/model/Food')
 const Joi = require('joi')
-const { response } = require('express')
 
 const validfood = Joi.object({
     food_name : Joi.string().required(),
@@ -30,6 +29,7 @@ exports.createFood = async (req, res, next) => {
         res.send(food)
     }catch(err){
         console.log(err)
+        res.sendStatus(400)
     }
 }
 
@@ -41,6 +41,7 @@ exports.editFood = async (req, res, next) => {
         res.send(food)
     }catch(err){
         console.log(err)
+        res.sendStatus(400)
     }
 }
 
