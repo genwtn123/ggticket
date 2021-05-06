@@ -53,6 +53,7 @@ class TheaterAdmin {
     }
 
     static async delTheater(id) {
+        console.log(id)
         return await axios.delete(delTheater+id)
     }
 

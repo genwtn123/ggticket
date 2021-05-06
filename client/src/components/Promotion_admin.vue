@@ -15,42 +15,33 @@
       </div>
     </div>
     <hr />
-    <div class="pt-6">
-      <div
-        class="columns"
-        style="padding-left: 10%"
-        v-for="index in 2"
-        :key="index"
+
+    <div class="is-multiline columns">
+      <div v-for="ad in advertisement"
+        :key="ad.ad_id"
+        class="column is-one-quarter mt-5"
       >
-        <div
-          class="card admin_card mx-6 my-6"
-          style="width: 19%; height: 425px"
-          v-for="index in 4"
-          :key="index"
-        >
+        <div class="card admin_card mx-6 my-6">
           <figure class="image">
-            <img style="height: 250px" :src="image" alt="Placeholder image" />
+            <img style="height: 250px" :src="imagePath(ad.ad_image)" alt="Placeholder image" />
           </figure>
-          <div class="card-content">
-            <div style="font-size: 17px">ซื้อตั๋วราคาพิเศษ 80 บาท</div>
-            <p style="font-size: 13px">
-              เฉพาะวันเสาร ์ และวันอาทิตย์ สำหรับสมาชิก
-            </p>
+          <div class="card-content" id="card_body_admin">
+            <div style="font-size: 17px">{{ad.ad_name}}</div>
             <div style="font-size: 15px; color: #520c0c">
-              จำนวนจำกัด 100สิทธิ์
+              {{ad.ad_detail}}
             </div>
           </div>
           <footer class="card-footer" style="background-color: white">
             <div
               style="width: 50%; color: #fd7014"
-              @click="edit_isopen = true"
+              @click="edit(ad.ad_id)"
               class="card-footer-item"
             >
               Edit
             </div>
             <div
               style="width: 50%; color: #fd7014"
-              @click="delete_isopen = true"
+              @click="remove(ad.ad_id)"
               class="card-footer-item"
             >
               Delete
@@ -74,7 +65,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="add_isopen = flase"
+            @click="addc"
           ></button>
         </header>
 
@@ -90,11 +81,11 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Title :</p>
               <p class="profile_modal_txt py-4">Detail :</p>
-              <p class="profile_modal_txt py-4">Quantity :</p>
             </div>
 
             <div class="column pr-6 is-8">
               <v-file-input
+                v-model="pic"
                 truncate-length="15"
                 label="picture"
                 rounded
@@ -119,13 +110,6 @@
                 solo
               ></v-text-field>
 
-              <v-text-field
-                v-model="quantity"
-                label="quantity"
-                rounded
-                dense
-                solo
-              ></v-text-field>
             </div>
           </div>
         </section>
@@ -136,6 +120,7 @@
         >
           <div style="margin: auto">
             <button
+             @click="createad"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -152,7 +137,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = flase"
+              @click="addc"
             >
               CANCEL
             </button>
@@ -176,7 +161,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = flase"
+            @click="editc"
           ></button>
         </header>
 
@@ -192,11 +177,11 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Title :</p>
               <p class="profile_modal_txt py-4">Detail :</p>
-              <p class="profile_modal_txt py-4">Quantity :</p>
             </div>
 
             <div class="column pr-6 is-8">
               <v-file-input
+                v-model="pic"
                 truncate-length="15"
                 label="picture"
                 rounded
@@ -206,7 +191,7 @@
               </v-file-input>
 
               <v-text-field
-                v-model="tile"
+                v-model="title"
                 label="tile"
                 rounded
                 dense
@@ -221,13 +206,6 @@
                 solo
               ></v-text-field>
 
-              <v-text-field
-                v-model="quantity"
-                label="quantity"
-                rounded
-                dense
-                solo
-              ></v-text-field>
             </div>
           </div>
         </section>
@@ -238,6 +216,7 @@
         >
           <div style="margin: auto">
             <button
+            @click="editad"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -254,7 +233,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="edit_isopen = flase"
+              @click="editc"
             >
               CANCEL
             </button>
@@ -278,7 +257,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="delete_isopen = flase"
+            @click="deletec"
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
@@ -292,6 +271,7 @@
         >
           <div style="margin: auto">
             <button
+              @click="removead"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -308,7 +288,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = flase"
+              @click="deletec"
             >
               CANCEL
             </button>
@@ -320,8 +300,20 @@
   </v-container>
 </template>
 
+<style scoped>
+#card_body_admin {
+  height: 150px;
+}
+</style>
+
 <script>
+import AdService from "../service/AdService";
+import axios from "axios";
 export default {
+   mounted(){
+    this.getad();
+  }
+   ,
   data() {
     return {
       image:
@@ -329,9 +321,115 @@ export default {
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
+      advertisement: [],
+      keep_index: 0,
+      title: "",
+      detail: "",
+      pic: ""
     };
   },
-  methods: {},
+  methods: {
+    removead() {
+      axios
+        .delete(`http://localhost:12000/ad/delete/${this.keep_index}`)
+        .then(() => {
+          this.getad();
+          this.delete_isopen = false;
+        })
+        .catch((err) => console.log(err));
+    },
+    createAddForm: function () {
+      let form = new FormData();
+      form.append("ad_name", this.title);
+      form.append("ad_detail", this.detail);
+      form.append("ad_image", this.pic);
+      return form;
+    },
+    createEditForm: function () {
+      let form = new FormData();
+      form.append("ad_name", this.title);
+      form.append("ad_detail", this.detail);
+      form.append("ad_image", this.pic);
+      return form;
+    },
+    editc() {
+      this.edit_isopen = false;
+      this.title = "";
+      this.detail = "";
+      this.pic = "";
+    },
+    deletec() {
+      this.title = "";
+      this.detail = "";
+      this.pic = "";
+      this.delete_isopen = false;
+    },
+    addc() {
+      this.add_isopen = false;
+      this.title = "";
+      this.detail = "";
+      this.pic = "";
+    },
+    // (null, req.body.ad_name, req.body.ad_detail, req.file.path, req.body.staff_id)
+    edit(index){
+      this.edit_isopen = true
+      this.keep_index = index
+    },
+    remove(index){
+      this.delete_isopen = true
+      this.keep_index = index
+    },
+    async createad() {
+      try {
+        var result = await AdService.createad(this.createAddForm());
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        this.getad();
+        this.title = "";
+        this.detail = "";
+        this.pic = "";
+        this.add_isopen = false;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async editad() {
+      try {
+        var result = await AdService.editad(
+          this.createEditForm(),
+          this.keep_index
+        );
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        this.title = "";
+        this.detail = "";
+        this.pic = "";
+        this.getad();
+        this.edit_isopen = false;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getad(){
+      try{
+        let keep = await AdService.getad();
+        console.log(keep);
+        this.advertisement = keep.data
+      }
+      catch(err){
+        console.log(err)
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+  },
 };
 </script>
 

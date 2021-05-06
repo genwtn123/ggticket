@@ -59,7 +59,7 @@
             <div class="column is-one-quarter">
               <img
                 id="img"
-                v-bind:src="showtime.movie_image"
+                v-bind:src="imagePath(showtime.movie_image)"
                 alt="Placeholder image"
               />
             </div>
@@ -146,7 +146,7 @@
             <div class="column is-4 pt-6">
               <v-select
                 v-model="add_movie"
-                :items="all_movie"
+                :items="all_movie_name"
                 label="movie"
                 required
                 rounded
@@ -173,7 +173,7 @@
 
               <v-select
                 v-model="add_theater"
-                :items="all_theater"
+                :items="all_theater_name"
                 label="theater"
                 required
                 rounded
@@ -232,7 +232,7 @@
     <!-- add modal -->
 
     <!-- edit modal -->
-    <div class="modal" :class="{ 'is-active': edit_isopen}">
+    <div class="modal" :class="{ 'is-active': edit_isopen }">
       <div class="modal-background"></div>
       <div class="modal-card modal-card_admin" style="width: 65%">
         <header
@@ -293,7 +293,7 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" v-model="edit_timeStart"/>
+                <input type="time" min="" max="" v-model="edit_timeStart" />
               </v-banner>
 
               <v-banner
@@ -301,7 +301,7 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" v-model="edit_timeEnd"/>
+                <input type="time" min="" max="" v-model="edit_timeEnd" />
               </v-banner>
 
               <v-select
@@ -377,7 +377,10 @@
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
-            Are you sure that you want to delete <p style="color:red">" Showtime_no {{delete_isopen[1].showtime_no}} " ? </p>
+            Are you sure that you want to delete
+            <p style="color: red">
+              " Showtime_no {{ delete_isopen[1].showtime_no }} " ?
+            </p>
           </div>
         </section>
         <footer
@@ -417,6 +420,8 @@
 
 <script>
 import ShowtimeAdmin from "../admin/ShowtimeAdmin";
+import MovieService from '../service/MovieService';
+import TheaterService from '../service/TheaterService';
 export default {
   mounted() {
     this.getShowtime();
@@ -425,9 +430,11 @@ export default {
     return {
       add_isopen: false,
       edit_isopen: false,
-      delete_isopen: [false, ''],
+      delete_isopen: [false, ""],
       all_movie: [],
+      all_movie_name:[],
       all_theater: [],
+      all_theater_name:[],
       showtimes: [],
       dates: [],
       month: [
@@ -465,32 +472,45 @@ export default {
       edit_status: false,
       val: [],
       save: [],
-      name: ""
+      name: "",
     };
   },
   methods: {
     async getShowtime() {
       try {
         let keep = await ShowtimeAdmin.getShowtime();
-        console.log(keep);
+        let keep2 = await TheaterService.getAllTheater();
+        let keep3 = await MovieService.getMovie()
         this.all = keep.data;
-        this.showtimes = keep.data[0];
+        this.showtimes = keep.data;
         this.showtimes.forEach((showtime) => {
           let d = showtime.time_start.substring(0, 10);
           !this.dates.includes(d) ? this.dates.push(d) : 0;
           this.choose_date = this.dates[0];
         });
 
-        keep.data[2].forEach((movie) => {
-          this.all_movie.push(movie.movie_name);
+        keep3.data.forEach((movie) => {
+          this.all_movie.push(movie);
+        });
+        keep3.data.forEach((movie) => {
+          this.all_movie_name.push(movie.movie_name);
         });
 
-        keep.data[3].forEach((theater) => {
-          this.all_theater.push(theater.theater_name);
+        keep2.data.forEach((theater) => {
+            this.all_theater_name.push(theater.theater_name);
         });
+
+        keep2.data.forEach((theater) => {
+          this.all_theater.push(theater);
+        })
 
         var today = new Date();
-        this.today = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
+        this.today =
+          today.getFullYear() +
+          "-" +
+          String(today.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(today.getDate()).padStart(2, "0");
       } catch (err) {
         console.log(err);
       }
@@ -502,7 +522,7 @@ export default {
       let end = this.picker_addDate + " " + this.add_timeEnd + ":00";
       let mid = "";
       let tid = "";
-      this.all[2].forEach((movie) => {
+      this.all_movie.forEach((movie) => {
         if (movie.movie_name == this.add_movie) {
           mid = movie.movie_id;
           this.new.push(movie.movie_language);
@@ -512,9 +532,11 @@ export default {
           this.new.push(movie.movie_image);
         }
       });
-      this.all[3].forEach((theater) => {
+      this.all_theater.forEach((theater) => {
+        console.log(theater.theater_name,this.add_theater)
         if (theater.theater_name == this.add_theater) {
           tid = theater.theater_id;
+          console.log(tid, "tid")
           this.new.push(theater.theater_name);
         }
       });
@@ -523,7 +545,7 @@ export default {
       form.append("showtime_status", this.add_status ? 1 : 0);
       form.append("movie_id", mid);
       form.append("staff_id", 1);
-      form.append("theater_id", tid);
+      form.append("theater_id", parseInt(tid));
       this.new.push(start);
       this.new.push(end);
       this.new.push(this.add_status);
@@ -539,52 +561,56 @@ export default {
         this.picker_addDate == ""
       ) {
         alert("pls put all information");
-      } else if (this.add_timeEnd >= this.add_timeStart) {
+      } else if (this.add_timeEnd > this.add_timeStart) {
         var result = await ShowtimeAdmin.addShowtime(this.createForm());
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        let val = this.new;
-        this.showtimes.push({
-          movie_language: val[0],
-          movie_length: val[1],
-          movie_name: val[2],
-          movie_type: val[3],
-          movie_image: val[4],
-          theater_name: val[5],
-          time_finish: val[7],
-          time_start: val[6],
-          showtime_status: val[8],
-        });
-        let check = false
-        if (!this.dates.includes(this.picker_addDate)) {
-          this.dates.forEach((element, index) => {
-            if(element > this.picker_addDate && index == 0){
-              this.dates.splice(0, 0, this.picker_addDate);
-              check = true;
-            }
-            else if (element > this.picker_addDate && this.dates[index - 1] < this.picker_addDate) {
-              this.dates.splice(index, 0, this.picker_addDate);
-              check = true;
-            }
-          });
-        }
+        console.log("res", result);
+        if (result.data.details == undefined) {
+          alert("Success");
+          this.getShowtime();
+          // let val = this.new;
+          // this.showtimes.push({
+          //   movie_language: val[0],
+          //   movie_length: val[1],
+          //   movie_name: val[2],
+          //   movie_type: val[3],
+          //   movie_image: val[4],
+          //   theater_name: val[5],
+          //   time_finish: val[7],
+          //   time_start: val[6],
+          //   showtime_status: val[8],
+          // });
+          // let check = false
+          // if (!this.dates.includes(this.picker_addDate)) {
+          //   this.dates.forEach((element, index) => {
+          //     if(element > this.picker_addDate && index == 0){
+          //       this.dates.splice(0, 0, this.picker_addDate);
+          //       check = true;
+          //     }
+          //     else if (element > this.picker_addDate && this.dates[index - 1] < this.picker_addDate) {
+          //       this.dates.splice(index, 0, this.picker_addDate);
+          //       check = true;
+          //     }
+          //   });
+          // }
 
-        if(check == false){
-          this.dates.push(this.picker_addDate)
+          // if(check == false){
+          //   this.dates.push(this.picker_addDate)
+          // }
+          // console.log(this.dates);
+          // console.log(this.showtimes)
+          this.add_movie = "";
+          this.add_theater = "";
+          // this.add_language = "";
+          this.add_timeStart = 0;
+          this.add_timeEnd = 0;
+          this.add_status = true;
+          this.add_isopen = false;
+          this.picker_addDate = new Date().toISOString().substr(0, 10);
+          this.new = [];
+          this.getShowtime();
+        } else {
+          alert(result.data.details.message);
         }
-        console.log(this.dates);
-        console.log(this.showtimes)
-        this.add_movie = "";
-        this.add_theater = "";
-        // this.add_language = "";
-        this.add_timeStart = 0;
-        this.add_timeEnd = 0;
-        this.add_status = true;
-        this.add_isopen = false;
-        this.picker_addDate = "";
-        this.new = [];
-        this.getShowtime()
       } else {
         alert(
           "Time End must be greater or equal with Time start \n Your time Strat: " +
@@ -594,36 +620,41 @@ export default {
         );
       }
     },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
 
-//     edit_modal(showtime){
-//       this.edit_isopen = true
-//       this.save = showtime
-//       console.log(showtime)
-//       this.val = {"movie_id": showtime.movie_id, "movie_image": showtime.movie_image, "movie_language": showtime.movie_language, 
-//  "movie_length": showtime.movie_length, "movie_name": showtime.movie_name, "movie_releasetime": showtime.movie_releasetime, "movie_status": showtime.movie_status, "movie_type": showtime.movie_type,
-//   "showtime_no": showtime.showtime_no, "showtime_status": showtime.showtime_status, "staff_id": showtime.staff_id, "theater_id": showtime.theater_id, "theater_name": showtime.theater_name, 
-//   "theater_size": showtime.theater_size, "theater_status": showtime.theater_status, "time_finish": showtime.time_finish, "time_start": showtime.time_start, "viewer": showtime.viewer}
+    //     edit_modal(showtime){
+    //       this.edit_isopen = true
+    //       this.save = showtime
+    //       console.log(showtime)
+    //       this.val = {"movie_id": showtime.movie_id, "movie_image": showtime.movie_image, "movie_language": showtime.movie_language,
+    //  "movie_length": showtime.movie_length, "movie_name": showtime.movie_name, "movie_releasetime": showtime.movie_releasetime, "movie_status": showtime.movie_status, "movie_type": showtime.movie_type,
+    //   "showtime_no": showtime.showtime_no, "showtime_status": showtime.showtime_status, "staff_id": showtime.staff_id, "theater_id": showtime.theater_id, "theater_name": showtime.theater_name,
+    //   "theater_size": showtime.theater_size, "theater_status": showtime.theater_status, "time_finish": showtime.time_finish, "time_start": showtime.time_start, "viewer": showtime.viewer}
 
+    //       this.name = showtime.showtime_no
+    //     },
 
-//       this.name = showtime.showtime_no
-//     },
-
-    edit(){
+    edit() {
       this.showtimes.forEach((showtime, index) => {
-          if(this.val.showtime_no == showtime.showtime_no)
-          this.showtimes.splice(index, 1, this.val)
+        if (this.val.showtime_no == showtime.showtime_no)
+          this.showtimes.splice(index, 1, this.val);
       });
-      this.edit_isopen = false
+      this.edit_isopen = false;
     },
 
     async delShowtime() {
       await ShowtimeAdmin.delShowtime(this.delete_isopen[1].showtime_no);
-      this.delete_isopen = [false, ''];
+      this.delete_isopen = [false, ""];
       this.edit_isopen = false;
-      this.dates = []  
-      this.getShowtime()
-    }
-  
+      this.dates = [];
+      this.getShowtime();
+    },
   },
 };
 </script>

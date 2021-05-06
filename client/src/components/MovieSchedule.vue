@@ -9,10 +9,10 @@
 
       <div class="container is-max-desktop">
         <div class="buttons are-medium">
-          <v-btn id="button_date" color="black" dark> Date </v-btn>
-          <v-btn id="button_day" color="black" dark> 1-April-2021 </v-btn>
-          <v-btn id="button_day" color="black" dark> 2-April-2021 </v-btn>
-          <v-btn id="button_day" color="black" dark> 3-April-2021 </v-btn>
+
+          <v-btn id="button_date" color="black" dark  @click="defaultDate()"> All </v-btn>
+          <v-btn id="button_day" color="black" dark  v-for="date in dates" :key="date" @click="keepdate(date.substring(0, 10))"> {{date.substring(8, 10)}}-{{date.substring(5, 7)}}-{{date.substring(0, 4)}} </v-btn>
+
         </div>
 
         <div class="is-multiline columns is-variable is-2 mt-5">
@@ -30,128 +30,91 @@
             <p>Languge</p>
           </div>
         </div>
-
-        <div id="border" class="is-multiline columns is-variable is-2" style="height: 180px">
-          <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
-          </div>
-          <div id="detail" class="column">
-            <p>Spongebob Movie</p>
-          </div>
-          <div id="detail" class="column">
-            <p>1</p>
-          </div>
-          <div id="detail" class="column">
-            <p>09:00-11:00</p>
-          </div>
-          <div id="detail" class="column">
-            <p>TH</p>
-          </div>
-        </div>
-        <div id="bot_set" class="is-multiline columns">
-          <p id="detail_bot_topic">Category</p>
-
-          <p id="detail_bot_info">Cartoon</p>
-
-          <p id="detail_bot_topic">Movie length</p>
-
-          <p id="detail_bot_info">140 นาที</p>
-        </div>
-
+        <div v-for="show in showtime"
+        :key="show.movie_id" v-show="checkdate(show.time_start.substring(0,10))">
         <div id="border" class="is-multiline columns is-variable is-2">
           <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
+            <img :src="imagePath(show.movie_image)" id="img" alt="Placeholder image" />
           </div>
           <div id="detail" class="column">
-            <p>Spongebob Movie</p>
+            <p>{{show.movie_name}}</p>
           </div>
           <div id="detail" class="column">
-            <p>2</p>
+            <p>{{show.theater_name}}</p>
           </div>
           <div id="detail" class="column">
-            <p>09:00-11:00</p>
+            <p>{{show.time_start.substring(11, 16)}}-{{show.time_finish.substring(11, 16)}}</p>
           </div>
           <div id="detail" class="column">
-            <p>ENG</p>
+            <p>{{show.movie_language}}</p>
           </div>
         </div>
         <div id="bot_set" class="is-multiline columns">
           <p id="detail_bot_topic">Category</p>
 
-          <p id="detail_bot_info">Cartoon</p>
+          <p id="detail_bot_info">{{show.movie_type}}</p>
 
           <p id="detail_bot_topic">Movie length</p>
 
-          <p id="detail_bot_info">140 นาที</p>
+          <p id="detail_bot_info">{{show.movie_length}} นาที</p>
         </div>
-
-        <div id="border" class="is-multiline columns is-variable is-2">
-          <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
-          </div>
-          <div id="detail" class="column">
-            <p>Spongebob Movie</p>
-          </div>
-          <div id="detail" class="column">
-            <p>3</p>
-          </div>
-          <div id="detail" class="column">
-            <p>11:00-13:00</p>
-          </div>
-          <div id="detail" class="column">
-            <p>ENG</p>
-          </div>
         </div>
-        <div id="bot_set" class="is-multiline columns">
-          <p id="detail_bot_topic">Category</p>
+        
 
-          <p id="detail_bot_info">Cartoon</p>
 
-          <p id="detail_bot_topic">Movie length</p>
-
-          <p id="detail_bot_info">140 นาที</p>
-        </div>
-
-        <div id="border" class="is-multiline columns is-variable is-2 mb-5">
-          <div class="column is-one-quarter">
-            <img id="img" v-bind:src="image" alt="Placeholder image" />
-          </div>
-          <div id="detail" class="column">
-            <p>Spongebob Movie</p>
-          </div>
-          <div id="detail" class="column">
-            <p>4</p>
-          </div>
-          <div id="detail" class="column">
-            <p>09:-11:00</p>
-          </div>
-          <div id="detail" class="column">
-            <p>TH</p>
-          </div>
-        </div>
-        <div id="bot_set" class="is-multiline columns">
-          <p id="detail_bot_topic">Category</p>
-
-          <p id="detail_bot_info">Cartoon</p>
-
-          <p id="detail_bot_topic">Movie length</p>
-
-          <p id="detail_bot_info">140 นาที</p>
-        </div>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Showtime from "../service/ShowtimeService";
 export default {
+  mounted(){
+    this.getshowtime();
+  }
+   ,
   data() {
     return {
-      image:
-        "https://m.media-amazon.com/images/M/MV5BOGYxYzZkMWQtNjJkMy00NTlkLWExNWMtOTNhMTg4MDcxNmU3XkEyXkFqcGdeQXVyMDk5Mzc5MQ@@._V1_.jpg",
+      showtime : [],
+      dates : [],
+      selectdate : "",
+      check: ""
     };
   },
-  methods: {},
+  methods: {
+    async getshowtime(){
+      try{
+        let keep = await Showtime.getshowtime();
+        console.log(keep);
+        this.showtime = keep.data
+        this.showtime.forEach(showtime => {
+          let d = showtime.time_start.substring(0, 10)
+          !this.dates.includes(d) ? this.dates.push(d) : 0
+          this.choose_date = this.dates[0]
+        });
+      }
+      catch(err){
+        console.log(err)
+      }
+    },imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },defaultDate() {
+      this.selectdate = "";
+    },
+    keepdate(date) {
+      this.selectdate = date;
+    },
+    checkdate(date) {
+      this.check = date
+      return date === this.selectdate || this.selectdate === "";
+    },
+  },
 };
 </script>
 

@@ -135,14 +135,12 @@
   text-align: left;
   color: #9d9fa3;
 }
-
 .regis_box {
   background: #21262e !important;
   margin-top: 2% !important;
   width: 80%;
   margin: auto;
 }
-
 .rvl {
   border-left: 2px solid #21262e;
   padding-right: 2%;

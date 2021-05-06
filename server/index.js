@@ -50,10 +50,16 @@ app.use((req, res, next) => {
     // console.log(req.session.userdata)
     next()
 })
-
+app.use('/login', loginRouter)
 app.use('/test', testRouter)
 app.use('/register', registerRouter)
-app.use('/login', loginRouter)
+
+app.all('/*', (req, res, next)=>{
+    if(req.session.userdata){
+        return next()
+    }
+    res.status(400).send("Please Login")
+})
 app.use('/ad', adRouter)
 app.use('/ticket', ticketRouter)
 app.use('/movie', movieRouter)

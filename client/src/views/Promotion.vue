@@ -2,9 +2,7 @@
   <div>
       <v-app>
         <Mainbar/>
-        <div class="">
           <Promotion/>
-        </div>
       </v-app>
   </div>
 </template>

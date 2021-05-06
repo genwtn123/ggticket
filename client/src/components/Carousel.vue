@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async getAd() {
-      let keep = await AdService.getAd();
+      let keep = await AdService.getad();
       for (let ad of keep.data) {
         if (this.ad.length < 5) {
           this.ad.push(ad);
