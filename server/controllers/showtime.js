@@ -80,7 +80,7 @@ exports.delShowtime = async (req, res, next) => {
 exports.editShowtime = async (req, res, next) => {
     try {
         await validshowtime.validateAsync(req.body, { abortEarly: false })
-        let showtime = new Showtime(req.params.id, req.body.time_start, req.body.time_finish, req.body.movie_id, req.body.staff_id)
+        let showtime = new Showtime(req.params.id, req.body.time_start, req.body.time_finish,null, req.body.movie_id, req.body.staff_id)
         await showtime.editShowtime()
         res.send(showtime)
     } catch (err) {
