@@ -146,7 +146,7 @@
             <div class="column is-4 pt-6">
               <v-select
                 v-model="add_movie"
-                :items="all_movie"
+                :items="all_movie_name"
                 label="movie"
                 required
                 rounded
@@ -420,6 +420,7 @@
 
 <script>
 import ShowtimeAdmin from "../admin/ShowtimeAdmin";
+import MovieService from '../service/MovieService';
 import TheaterService from '../service/TheaterService';
 export default {
   mounted() {
@@ -431,6 +432,7 @@ export default {
       edit_isopen: false,
       delete_isopen: [false, ""],
       all_movie: [],
+      all_movie_name:[],
       all_theater: [],
       all_theater_name:[],
       showtimes: [],
@@ -478,6 +480,7 @@ export default {
       try {
         let keep = await ShowtimeAdmin.getShowtime();
         let keep2 = await TheaterService.getAllTheater();
+        let keep3 = await MovieService.getMovie()
         this.all = keep.data;
         this.showtimes = keep.data;
         this.showtimes.forEach((showtime) => {
@@ -486,8 +489,11 @@ export default {
           this.choose_date = this.dates[0];
         });
 
-        keep.data.forEach((movie) => {
-          this.all_movie.push(movie.movie_name);
+        keep3.data.forEach((movie) => {
+          this.all_movie.push(movie);
+        });
+        keep3.data.forEach((movie) => {
+          this.all_movie_name.push(movie.movie_name);
         });
 
         keep2.data.forEach((theater) => {
@@ -516,7 +522,7 @@ export default {
       let end = this.picker_addDate + " " + this.add_timeEnd + ":00";
       let mid = "";
       let tid = "";
-      this.all.forEach((movie) => {
+      this.all_movie.forEach((movie) => {
         if (movie.movie_name == this.add_movie) {
           mid = movie.movie_id;
           this.new.push(movie.movie_language);
