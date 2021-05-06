@@ -93,7 +93,7 @@ export default {
       try {
         let keep = await AccountService.Login(this.createForm());
         this.$router.push({ name: "Home" });
-        this.error = keep.data != "Login success" ? keep.data : null
+        this.error = keep.data == "Invalid Username or Password" ? keep.data : null
       } catch (err) {
         console.log(err);
       }

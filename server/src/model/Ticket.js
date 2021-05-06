@@ -10,7 +10,7 @@ class Ticket {
         this.ticket_status = ticket_status
         this.user_id = user_id
         this.seat_no = seat_no
-        this.food= food
+        this.food = food
     }
 
     async customerTicket() {
@@ -52,14 +52,14 @@ class Ticket {
 
             let stmt6 = 'update TICKET set ticket_price = ? where ticket_id = ?;'
 
-            if(this.food_price == undefined){
+            if (this.food_price == undefined) {
                 await conn.query(stmt6, [seat_price[0][0].seat_price, this.ticket_id])
-            }else{
-                await conn.query(stmt6, [food_price[0][0].food_price+seat_price[0][0].seat_price, this.ticket_id])
+            } else {
+                await conn.query(stmt6, [food_price[0][0].food_price + seat_price[0][0].seat_price, this.ticket_id])
             }
-            
-            
-            
+
+
+
             await conn.commit()
             return Promise.resolve()
         } catch (err) {
@@ -82,24 +82,34 @@ class Ticket {
             join TICKET \
             using (showtime_no) \
             where audience_id = ( \
-            select audience_id from USER \
+            select audience_id from AUDIENCE \
             where user_id = ? \
             )) \
             group by(movie_type) \
             order by `COUNT` desc;'
             let keep = await conn.query(stmt, [this.user_id])
             let list = []
-            for (let mov of keep[0]) {
-                let stmt2 = 'select * from MOVIE where movie_type = ?'
-                let keep2 = await conn.query(stmt2, [mov.movie_type])
-                if (list.length < 9) {
-                    list.push(keep2[0])
+            if (keep[0].length != 0) {
+                for (let mov of keep[0]) {
+                    let stmt2 = 'select * from MOVIE where movie_type = ? and movie_status <> 0'
+                    let keep2 = await conn.query(stmt2, [mov.movie_type])
+                    if (list.length < 9) {
+                        list.push(keep2[0])
+                    }
+                }
+            }else{
+                let stmtmov = 'select * from MOVIE where movie_status <> 0'
+                let keepmovie = await conn.query(stmtmov)
+                for(let mov of keepmovie[0]){
+                    if (list.length < 9) {
+                        list.push(mov)
+                    }
                 }
             }
             console.log(list)
             console.log(keep[0])
             await conn.commit()
-            return Promise.resolve(keep[0])
+            return Promise.resolve(list)
         } catch (err) {
             console.log(err)
             await conn.rollback()

@@ -1,8 +1,13 @@
 <template>
   <v-banner elevation="24" class="regis_box">
-    <form @submit="createAccount" method="POST">
+    <v-form ref="form" @submit="createAccount" method="POST">
       <div
-        style="font-size: 45px; color: #FD7014; padding-top: 5%; padding-bottom:4%;"
+        style="
+          font-size: 45px;
+          color: #fd7014;
+          padding-top: 5%;
+          padding-bottom: 4%;
+        "
       >
         REGISTER
       </div>
@@ -12,13 +17,13 @@
           <div class="pt-2 label_regis pb-4">
             Username
             <v-text-field
-              hide-details="auto"
               v-model="username"
               label="username"
               required
               rounded
               dense
               solo
+              :rules="usernamerule"
               class="pt-3"
             ></v-text-field>
           </div>
@@ -26,13 +31,13 @@
           <div class="pt-2 label_regis pb-4">
             Firstname
             <v-text-field
-              hide-details="auto"
               v-model="user_fname"
               label="firstname"
               required
               rounded
               dense
               solo
+              :rules="fnamerule"
               class="pt-3"
             ></v-text-field>
           </div>
@@ -46,11 +51,12 @@
               rounded
               dense
               solo
+              :rules="telrule"
               class="pt-3"
             ></v-text-field>
           </div>
 
-          <div class="label_regis">
+          <!-- <div class="label_regis">
             Type
             <v-select
               v-model="type"
@@ -62,13 +68,13 @@
               solo
               class="pt-3"
             ></v-select>
-          </div>
+          </div> -->
         </div>
 
         <div class="rvl"></div>
 
         <div class="column px-6">
-          <div class="pt-2 label_regis">
+          <div class="pt-2 label_regis pb-4">
             Password
             <v-text-field
               v-model="password"
@@ -78,11 +84,12 @@
               rounded
               dense
               solo
+              :rules="passwordrule"
               class="pt-3"
             ></v-text-field>
           </div>
 
-          <div class="label_regis">
+          <div class="pt-2 label_regis pb-4">
             Lastname
             <v-text-field
               v-model="user_lname"
@@ -91,11 +98,12 @@
               rounded
               dense
               solo
+              :rules="lnamerule"
               class="pt-3"
             ></v-text-field>
           </div>
 
-          <div class="label_regis">
+          <div class="pt-2 label_regis">
             E-mail
             <v-text-field
               v-model="user_email"
@@ -104,19 +112,8 @@
               rounded
               dense
               solo
+              :rules="emailrule"
               class="pt-3"
-            ></v-text-field>
-          </div>
-
-          <div class="label_regis">
-            Code
-            <v-text-field
-              v-model="admin_code"
-              label="code"
-              rounded
-              dense
-              solo
-              class="pt-2"
             ></v-text-field>
           </div>
         </div>
@@ -124,12 +121,12 @@
       <!-- If using vue-router -->
       <button
         class="button is-info mb-6"
-        style="background: #fd7014; color: #ffffff;"
+        style="background: #fd7014; color: #ffffff"
         type="submit"
       >
         REGISTER
       </button>
-    </form>
+    </v-form>
   </v-banner>
 </template>
 
@@ -159,16 +156,44 @@ export default {
   name: "Register",
   data() {
     return {
-      username:'',
-      password:'',
-      user_fname:'',
-      user_lname:'',
-      user_email:'',
-      user_tel:'',
-      type:"",
-      item:['Staff', 'Audience'],
-      admin_code:''
-    }
+      username: "",
+      password: "",
+      user_fname: "",
+      user_lname: "",
+      user_email: "",
+      user_tel: "",
+      type: "",
+      item: ["Staff", "Audience"],
+      admin_code: "",
+      usernamerule: [
+        (v) => !!v || "Username is required",
+        (v) => v.length >= 5 || "username length",
+        (v) => v.length <= 20 || "username length",
+      ],
+      fnamerule: [
+        (v) => !!v || "Firstname is required",
+        (v) => v.length <= 50 || "fname length",
+      ],
+      telrule: [
+        (v) => !!v || "Tel is required",
+        (v) => /^0[0-9]{9}$/.test(v) || "pass",
+      ],
+      passwordrule: [
+        (v) => !!v || "Password is required",
+        (v) => v.length >= 8 || "Password must be more than 8",
+        (v) =>
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v) ||
+          "password",
+      ],
+      lnamerule: [
+        (v) => !!v || "Lastname is required",
+        (v) => v.length <= 50 || "lname length",
+      ],
+      emailrule: [
+        (v) => !!v || "Email is required",
+        (v) => /^\w+@\w+\.\w+$/.test(v) || "kwaii",
+      ],
+    };
   },
   props: ["msg"],
   methods: {
@@ -180,22 +205,23 @@ export default {
       form.append("user_lname", this.user_lname);
       form.append("user_tel", this.user_tel);
       form.append("user_email", this.user_email);
-      form.append("type", this.type);
+      form.append("type", "Audience");
       return form;
     },
     async createAccount(e) {
-      if (this.admin_code == "a13579" || this.type == "Audience") {
-        e.preventDefault();
-        var result = await AccountService.createAccount(this.createForm());
-        console.log("res", result.status);
-        if (result.status == 200) {
-          console.log("success by vuejs");
-          this.clearForm();
-        } else {
-          alert("err");
-        }
+      e.preventDefault();
+            this.$refs.form.validate();
+      try{
+      var result = await AccountService.createAccount(this.createForm());
+      if (result.status == 200) {
+        console.log("success by vuejs");
+        this.clearForm();
+        this.$router.push({ name: "Login" });
       } else {
-        alert("try again");
+        alert(result.data == "Email Duplicate" ? result.data : result.data.details.message);
+      }
+      }catch(err){
+        console.log(err)
       }
     },
     clearForm: function () {

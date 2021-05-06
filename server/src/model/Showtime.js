@@ -72,7 +72,7 @@ class Showtime{
             using (movie_id) \
             join THEATER \
             using(theater_id) \
-            where  time_start > CURDATE() and showtime_status = 1\
+            where  time_start > NOW() and showtime_status = 1\
             order by (time_start)'
             let keep = await conn.query(stmt)
             await conn.commit()
@@ -106,12 +106,8 @@ class Showtime{
             order by (theater_name)'
 
             let keep = await conn.query(stmt)
-            let keep2 = await conn.query(stmt2)
-            let keep3 = await conn.query(stmt3)
-            keep.push(keep2[0])
-            keep.push(keep3[0])
             await conn.commit()
-            return Promise.resolve(keep)
+            return Promise.resolve(keep[0])
         }catch(err){
             console.log(err)
             await conn.rollback()
