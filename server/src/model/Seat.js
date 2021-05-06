@@ -10,6 +10,7 @@ class Seat{
         this.theater_id = theater_id
     }
 
+
     async addSeat(){
         const conn = await pool.getConnection()
         await conn.beginTransaction();
