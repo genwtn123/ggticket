@@ -120,7 +120,7 @@
         >
           <div style="margin: auto">
             <button
-             @click="createad"
+             @click="createAd"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -216,7 +216,7 @@
         >
           <div style="margin: auto">
             <button
-            @click="editad"
+            @click="editAd"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -271,7 +271,7 @@
         >
           <div style="margin: auto">
             <button
-              @click="removead"
+              @click="delAd"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -302,10 +302,9 @@
 
 <script>
 import AdService from "../service/AdService";
-import axios from "axios";
 export default {
    mounted(){
-    this.getad();
+    this.getAd();
   }
    ,
   data() {
@@ -319,19 +318,10 @@ export default {
       keep_index: 0,
       title: "",
       detail: "",
-      pic: ""
+      pic: null
     };
   },
   methods: {
-    removead() {
-      axios
-        .delete(`http://localhost:12000/ad/delete/${this.keep_index}`)
-        .then(() => {
-          this.getad();
-          this.delete_isopen = false;
-        })
-        .catch((err) => console.log(err));
-    },
     createAddForm: function () {
       let form = new FormData();
       form.append("ad_name", this.title);
@@ -350,47 +340,54 @@ export default {
       this.edit_isopen = false;
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
     },
     deletec() {
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
       this.delete_isopen = false;
     },
     addc() {
       this.add_isopen = false;
       this.title = "";
       this.detail = "";
-      this.pic = "";
+      this.pic = null;
     },
     // (null, req.body.ad_name, req.body.ad_detail, req.file.path, req.body.staff_id)
     edit(index){
-      this.edit_isopen = true
-      this.keep_index = index
+      this.keep_index = index;
+      this.getAd();
+      for (var ad of this.advertisement) {
+        if (ad.ad_id == index) {
+          this.title = ad.ad_name;
+          this.detail = ad.ad_detail;
+        }
+      }
+      this.edit_isopen = true;
     },
     remove(index){
       this.delete_isopen = true
       this.keep_index = index
     },
-    async createad() {
+    async createAd() {
       try {
-        var result = await AdService.createad(this.createAddForm());
+        var result = await AdService.createAd(this.createAddForm());
         console.log("res", result.status);
         console.log("success by vuejs");
         alert("Success");
-        this.getad();
+        this.getAd();
         this.title = "";
         this.detail = "";
-        this.pic = "";
+        this.pic = null;
         this.add_isopen = false;
       } catch (err) {
         console.log(err);
       }
     },
-    async editad() {
+    async editAd() {
       try {
-        var result = await AdService.editad(
+        var result = await AdService.editAd(
           this.createEditForm(),
           this.keep_index
         );
@@ -399,22 +396,27 @@ export default {
         alert("Success");
         this.title = "";
         this.detail = "";
-        this.pic = "";
-        this.getad();
+        this.pic = null;
+        this.getAd();
         this.edit_isopen = false;
       } catch (err) {
         console.log(err);
       }
     },
-    async getad(){
+    async getAd(){
       try{
-        let keep = await AdService.getad();
+        let keep = await AdService.getAd();
         console.log(keep);
         this.advertisement = keep.data
       }
       catch(err){
         console.log(err)
       }
+    },
+    async delAd() {
+      await AdService.delAd(this.keep_index);
+      this.delete_isopen = false;
+      this.getAd ();
     },
     imagePath(file_path) {
       if (file_path) {

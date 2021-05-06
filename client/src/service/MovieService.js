@@ -1,25 +1,25 @@
 import axios from 'axios';
 
-const getmovie = 'http://localhost:12000/movie';
-const createmovie = 'http://localhost:12000/movie/add';
-const editmovie = 'http://localhost:12000/movie/edit';
-const delmovie = 'http://localhost:12000/movie/delete';
+const getMovie = 'http://localhost:12000/movie';
+const createMovie = 'http://localhost:12000/movie/add';
+const editMovie = 'http://localhost:12000/movie/edit';
+const delMovie = 'http://localhost:12000/movie/delete';
 
 
 class MovieService {
     static async getMovie() {
-        return  await axios.get(getmovie)
+        return  await axios.get(getMovie)
     }
-    static async createmovie(form) {
+    static async createMovie(form) {
         console.log(form)
-        return await axios.post(createmovie, form)
+        return await axios.post(createMovie, form)
     }
-    static async editmovie(form, id) {
+    static async editMovie(form, id) {
         console.log(form);
-        return await axios.put(editmovie+'/'+id, form)
+        return await axios.put(editMovie+'/'+id, form)
     }
-    static async delmovie(index){
-        return await axios.delete(delmovie, index)
+    static async delMovie(id){
+        return await axios.delete(delMovie+'/'+id)
     }
 }
 export default MovieService

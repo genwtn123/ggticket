@@ -1,24 +1,24 @@
 import axios from 'axios';
 
-const getad = 'http://localhost:12000/ad';
-const createad ='http://localhost:12000/ad/create';
-const editad ='http://localhost:12000/ad/edit';
-const delad = 'http://localhost:12000/ad/delete';
+const getAd = 'http://localhost:12000/ad';
+const createAd ='http://localhost:12000/ad/create';
+const editAd ='http://localhost:12000/ad/edit';
+const delAd = 'http://localhost:12000/ad/delete';
 
 class AdService {
-    static async getad() {
-        return  await axios.get(getad)
+    static async getAd() {
+        return  await axios.get(getAd)
     }
-    static async createad(form) {
+    static async createAd(form) {
         console.log(form)
-        return await axios.post(createad, form)
+        return await axios.post(createAd, form)
     }
-    static async editad(form, id) {
+    static async editAd(form, id) {
         console.log(form);
-        return await axios.put(editad+'/'+id, form)
+        return await axios.put(editAd+'/'+id, form)
     }
-    static async delad(index){
-        return await axios.delete(delad, index)
+    static async delAd(id){
+        return await axios.delete(delAd+'/'+id)
     }
 
 }

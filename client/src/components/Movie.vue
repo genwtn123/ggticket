@@ -21,7 +21,7 @@
                     <div class="media-content">
                       <p id="title " class="whitefontz">{{movie.movie_name}}</p>
                       <p class="whitefont">Available on : {{movie.movie_releasetime}}</p>
-                      <p class="whitefont">Type : {{movie.movie_type}}</p>
+                      <p class="whitefont">Category : {{movie.movie_type}}</p>
                     </div>
                   </div>
                 </div>

@@ -259,7 +259,7 @@
         >
           <div style="margin: auto">
             <button
-              @click="removefood"
+              @click="delFood"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -290,7 +290,6 @@
 
 <script>
 import FoodService from "../service/FoodService";
-import axios from "axios";
 export default {
   mounted() {
     this.getFood();
@@ -306,7 +305,7 @@ export default {
       keep_index: 0,
       name: "",
       price: "",
-      pic: "",
+      pic: null,
     };
   },
   methods: {
@@ -325,15 +324,7 @@ export default {
     //   axios.put(`http://localhost:12000/food/edit/${this.keep_index}`,{food_name: this.name, food_image: this.pic, food_price:this.price, staff_id:1}).then(()=> this.edit_isopen = false)
     //   .catch((err)=> console.log(err))
     // },
-    removefood() {
-      axios
-        .delete(`http://localhost:12000/food/delete/${this.keep_index}`)
-        .then(() => {
-          this.getFood();
-          this.delete_isopen = false;
-        })
-        .catch((err) => console.log(err));
-    },
+
     // async removefood(){
     //   try{
 
@@ -345,23 +336,30 @@ export default {
       this.edit_isopen = false;
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
     },
     deletec() {
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
       this.delete_isopen = false;
     },
     addc() {
       this.add_isopen = false;
       this.name = "";
       this.price = "";
-      this.pic = "";
+      this.pic = null;
     },
     edit(index) {
-      this.edit_isopen = true;
       this.keep_index = index;
+      this.getFood();
+      for (var food of this.food) {
+        if (food.food_id == index) {
+          this.name = food.food_name;
+          this.price = food.food_price;
+        }
+      }
+      this.edit_isopen = true;
     },
     remove(index) {
       this.delete_isopen = true;
@@ -396,7 +394,7 @@ export default {
         alert("Success");
         this.name = "";
         this.price = "";
-        this.pic = "";
+        this.pic = null;
         this.getFood();
         this.edit_isopen = false;
       } catch (err) {
@@ -412,7 +410,7 @@ export default {
         this.getFood();
         this.name = "";
         this.price = "";
-        this.pic = "";
+        this.pic = null;
         this.add_isopen = false;
       } catch (err) {
         console.log(err);
@@ -426,6 +424,11 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    async delFood() {
+      await FoodService.delFood(this.keep_index);
+      this.delete_isopen = false;
+      this.getFood ();
     },
     imagePath(file_path) {
       if (file_path) {
