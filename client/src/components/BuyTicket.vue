@@ -73,25 +73,50 @@
             <p id="text_ticket_info" class="date_ticket">
               เลือกซื้ออาหารและเครื่องดื่มเพิ่ม
             </p>
-            <v-btn id="button_payment" color="#ff7810" dark @click="buyfood()">Click here</v-btn>
+            <v-btn id="button_payment" color="#ff7810" dark @click="buyfood()"
+              >Click here</v-btn
+            >
           </div>
         </div>
 
         <div id="box_bot" class="column">
           <p id="total_t">ราคารวม</p>
           <p id="total_m">{{ this.total }} บาท</p>
-          <v-btn id="button_payment" color="#ff7810" dark @click="buyticket()"
+          <v-btn id="button_payment" color="#ff7810" dark @click="confirm()"
             >ชำระเงิน</v-btn
           >
         </div>
       </div>
+      <sweet-modal icon="success" ref="modal">
+        Success!
+        <v-row>
+          <v-col> <v-btn color="success" class="mt-5" @click="close()">Ok</v-btn></v-col>
+          
+          </v-row>
+      </sweet-modal>
+      <sweet-modal ref="confirm" title="Confirm" width="30%">
+        <v-row>
+          <v-col cols="6">
+            <v-btn color="primary" @click="success">Confirm</v-btn>
+          </v-col>
+          <v-col cols="6"
+            ><v-btn color="error" @click="$refs.confirm.close()"
+              >Cancel</v-btn
+            ></v-col
+          >
+        </v-row>
+      </sweet-modal>
     </div>
   </div>
 </template>
 
 <script>
 import TicketService from "../service/TicketService";
+import { SweetModal } from "../../node_modules/sweet-modal-vue";
 export default {
+  component: {
+    SweetModal,
+  },
   data() {
     return {
       image_movie:
@@ -106,10 +131,10 @@ export default {
       confirmfood: [],
     };
   },
-  mounted(){
-// if(this.$store.getters.getmovie == ""){
-//         this.$router.push({name:'Movie'})
-//       }
+  mounted() {
+    // if(this.$store.getters.getmovie == ""){
+    //         this.$router.push({name:'Movie'})
+    //       }
   },
   methods: {
     imagePath(file_path) {
@@ -127,24 +152,43 @@ export default {
         this.confirmfood.push({ food_id: foodz.food_id, amount: foodz.amount });
       }
       try {
-        await TicketService.buyticket({
-          showtime_no: this.show.showtime_no,
-          food: this.confirmfood,
-          seat_no: this.confirmseat,
-        });
+        await TicketService.buyticket(this.createForm());
         this.$store.commit("keepmovie", "");
         this.$store.commit("keepshow", "");
         this.$store.commit("keepseat", "");
         this.$store.commit("keepfood", "");
         this.$store.commit("keepseatprice", "");
-        this.$router.push({ name: "Home" });
       } catch (err) {
         console.log(err);
       }
     },
-    buyfood(){
+    buyfood() {
       this.$router.push({ name: "Buyfood" });
-    }
+    },
+    createForm() {
+      let form = new FormData();
+      form.append("showtime_no", this.show.showtime_no);
+      if (this.confirmfood.length != 0) {
+        for (let foodd of this.confirmfood) {
+          form.append("food", JSON.stringify(foodd));
+        }
+      }
+      for (let seatt of this.confirmseat) {
+        form.append("seat_no", seatt);
+      }
+      return form;
+    },
+    confirm() {
+      this.$refs.confirm.open();
+    },
+    async success() {
+      this.$refs.confirm.close();
+      await this.$refs.modal.open();
+      await this.buyticket();
+    },
+    close() {
+      this.$router.push({name:"Home"})
+    },
   },
   computed: {
     total() {

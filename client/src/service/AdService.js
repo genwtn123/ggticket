@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const getad = 'http://localhost:12000/ad';
 const createad ='http://localhost:12000/ad/create';
 const editad ='http://localhost:12000/ad/edit';
@@ -19,7 +20,6 @@ class AdService {
     }
     static async delad(index){
         return await axios.delete(delad, index)
-    }
 
 }
 export default AdService

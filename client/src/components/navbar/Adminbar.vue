@@ -34,10 +34,8 @@
         <div class="navbar-item">
           <div class="field is-grouped">
             <v-avatar
-              style="text-align: left"
-              color="warning lighten"
-              size="40"
             >
+            <v-img :src="imagePath(this.image)" size="70"></v-img>
               <!-- <img src="" alt="" srcset=""> -->
             </v-avatar>
 
@@ -49,7 +47,7 @@
               </template>
 
               <v-list>
-                <v-list-item>
+                <v-list-item @click="showmodal()">
                   <v-list-item-title>Profile</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="logout">
@@ -61,31 +59,61 @@
         </div>
       </div>
     </div>
+    <Profile/>
   </nav>
-
 </template>
 
 
 <script>
 import AccountService from "../../service/AccountService";
-
+import Profile from "../profile_modal"
 export default {
-  props: {
-
-  },
+  props: {},
   name: "Mainbar",
-  components: {},
+  components: {
+   Profile
+  },
   data: () => ({
     username: "",
     password: "",
     error: null,
     logo: "../assets/Logo.png",
+    image: "",
+    show:false
   }),
+  created(){
+    this.$root.$refs.adminbar = this
+  },
+  mounted() {
+    this.getimage();
+  },
   methods: {
     async logout() {
       await AccountService.Logout();
       this.$router.push({ name: "Login" });
     },
+    async getimage() {
+      try {
+        let keep = await AccountService.getUsserInfo();
+        this.data = keep.data[0];
+        this.image = this.data.user_image;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    showmodal(){
+      this.$root.$refs.modal.changemodal()
+    },
+    update(){
+      this.getimage()
+    }
   },
 };
 </script>
