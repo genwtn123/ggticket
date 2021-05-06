@@ -11,6 +11,7 @@ const validshowtime = Joi.object({
     movie_id: Joi.number().integer().required(),
     staff_id: Joi.number().integer().required(),
     theater_id: Joi.number().integer().required(),
+    showtime_status: Joi.number().integer().required(),
 }).external(async (obj, helpers) => {
     let stmt = 'select time_start, time_finish from SHOWTIME \
              where theater_id = ?'
@@ -49,6 +50,16 @@ exports.getShowtime = async (req, res, next) => {
     try {
         let showtime = new Showtime
         let keep = await showtime.getShowtime()
+        res.send(keep)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+exports.getShowtime2 = async (req, res, next) => {
+    try {
+        let showtime = new Showtime
+        let keep = await showtime.getShowtime2()
         res.send(keep)
     } catch (err) {
         console.log(err)

@@ -26,6 +26,29 @@ class Theater {
         }
     }
 
+    async getTheater2() {
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try {
+            let stmt = 'SELECT * FROM THEATER'
+            let stmt2 = 'SELECT DISTINCT theater_id FROM SHOWTIME'
+            let stmt3 = 'SELECT * FROM SEAT'
+            let keep = await conn.query(stmt)
+            let keep2 = await conn.query(stmt2)
+            let keep3 = await conn.query(stmt3)
+            keep.push(keep2[0])
+            keep.push(keep3[0])
+            await conn.commit()
+            return Promise.resolve(keep)
+        } catch (err) {
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        } finally {
+            conn.release()
+        }
+    }
+
 
     async addTheater() {
         const conn = await pool.getConnection()
@@ -100,7 +123,9 @@ class Theater {
         const conn = await pool.getConnection()
         await conn.beginTransaction();
         try {
+            let stmt2 = 'delete from SEAT where theater_id=?'
             let stmt = 'delete from THEATER where theater_id=?;'
+            let keep2 = await conn.query(stmt2, [this.theater_id])
             let keep = await conn.query(stmt, [this.theater_id])
             await conn.commit()
             return Promise.resolve()
@@ -119,6 +144,41 @@ class Theater {
         try {
             let stmt = 'update THEATER set theater_status= ? where theater_id = ?'
             let keep = await conn.query(stmt, [this.theater_status, this.theater_id])
+            await conn.commit()
+            return Promise.resolve()
+        } catch (err) {
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        } finally {
+            conn.release()
+        }
+    }
+
+    async editTheater2() {
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try {
+            let stmt = 'update THEATER set theater_status= ?, theater_name= ?, theater_size= ?  where theater_id = ?'
+            let keep = await conn.query(stmt, [this.theater_status, this.theater_name, this.theater_size, this.theater_id])
+            
+            await conn.commit()
+            return Promise.resolve()
+        } catch (err) {
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        } finally {
+            conn.release()
+        }
+    }
+
+    async editSeat() {
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try {
+            let stmt = 'update SEAT set seat_status= ? where seat_no = ?'
+            let keep = await conn.query(stmt, [this.seat_status, this.seat_no])
             await conn.commit()
             return Promise.resolve()
         } catch (err) {
