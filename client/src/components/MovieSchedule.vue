@@ -31,7 +31,7 @@
           </div>
         </div>
         <div v-for="show in showtime"
-        :key="show.movie_id" v-show="checkdate(show.time_start.substring(0,10))">
+        :key="show.showtime_no" v-show="checkdate(show.time_start.substring(0,10))">
         <div id="border" class="is-multiline columns is-variable is-2">
           <div class="column is-one-quarter">
             <img :src="imagePath(show.movie_image)" id="img" alt="Placeholder image" />
@@ -87,13 +87,16 @@ export default {
     async getshowtime(){
       try{
         let keep = await Showtime.getshowtime();
-        console.log(keep);
         this.showtime = keep.data
+        this.showtime.sort((a, b)=>{
+          return new Date(a.time_start) - new Date(b.time_start)
+        })
         this.showtime.forEach(showtime => {
           let d = showtime.time_start.substring(0, 10)
           !this.dates.includes(d) ? this.dates.push(d) : 0
           this.choose_date = this.dates[0]
         });
+
       }
       catch(err){
         console.log(err)

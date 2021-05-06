@@ -77,8 +77,8 @@ class Showtime {
             using (movie_id) \
             join THEATER \
             using(theater_id) \
-            where  time_start > NOW() and showtime_status = 1 and showtheater = 1\
-            order by (time_start)'
+            where  time_start > CURDATE() and showtime_status = 1 and showtheater = 1\
+            order by theater_name, (time_start)'
             let keep = await conn.query(stmt)
             await conn.commit()
             return Promise.resolve(keep[0])
@@ -100,7 +100,7 @@ class Showtime {
             using (movie_id) \
             join THEATER \
             using(theater_id) \
-            where  time_start > NOW() and showtime_status = 1 and showtheater = 1\
+            where  time_start > CURDATE() and showtime_status = 1 and showtheater = 1\
             order by theater_name, (time_start) '
 
             let stmt2 = 'select * from MOVIE \

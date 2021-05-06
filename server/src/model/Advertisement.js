@@ -38,6 +38,9 @@ class Advertisement{
             using(user_id) \
             where user_id = ?'
             let staff = await conn.query(stmt2, [this.user_id])
+            if(!staff[0].length){
+                return Promise.reject("You are not admin")
+            }
             this.staff_id = staff[0][0].staff_id
 
             let stmt = 'insert into ADVERTISEMENT (ad_name, ad_detail, ad_image, staff_id) values(?, ?, ?, ?);'
@@ -63,7 +66,9 @@ class Advertisement{
             using(user_id) \
             where user_id = ?'
             let staff = await conn.query(stmt2, [this.user_id])
-            console.log(this.user_id)
+            if(!staff[0].length){
+                return Promise.reject("You are not admin")
+            }
             this.staff_id = staff[0][0].staff_id
 
             let stmt = 'update ADVERTISEMENT set ad_name = ?, ad_detail = ?, ad_image = ?, staff_id = ? where ad_id = ?;'

@@ -93,6 +93,7 @@
               rounded
               dense
               solo
+              ref="form"
               :rules="passwordrule"
             ></v-text-field>
             <v-alert type="error" v-if="this.error != null">{{this.error}}</v-alert>
@@ -259,6 +260,7 @@ export default {
           this.oldpassword = "";
           this.newpassword = "";
           this.error = null
+          this.$refs.form.reset()
         }else{
           this.error=keep.data
         }

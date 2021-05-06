@@ -16,7 +16,7 @@ class MovieService {
     }
 
     static async createmovie(form) {
-        console.log(form)
+        console.log("sss")
         return await axios.post(createmovie, form)
     }
     static async editmovie(form, id) {

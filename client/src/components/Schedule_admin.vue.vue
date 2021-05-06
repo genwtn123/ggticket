@@ -168,7 +168,13 @@
                 class="input_box mb-6"
                 style="text-align: left"
               >
-                <input type="time" min="" max="" v-model="add_timeEnd" />
+                <input
+                  type="time"
+                  min=""
+                  max=""
+                  v-model="add_timeEnd"
+                  v-on:input="validatetime()"
+                />
               </v-banner>
 
               <v-select
@@ -420,8 +426,8 @@
 
 <script>
 import ShowtimeAdmin from "../admin/ShowtimeAdmin";
-import MovieService from '../service/MovieService';
-import TheaterService from '../service/TheaterService';
+import MovieService from "../service/MovieService";
+import TheaterService from "../service/TheaterService";
 export default {
   mounted() {
     this.getShowtime();
@@ -432,9 +438,9 @@ export default {
       edit_isopen: false,
       delete_isopen: [false, ""],
       all_movie: [],
-      all_movie_name:[],
+      all_movie_name: [],
       all_theater: [],
-      all_theater_name:[],
+      all_theater_name: [],
       showtimes: [],
       dates: [],
       month: [
@@ -473,6 +479,7 @@ export default {
       val: [],
       save: [],
       name: "",
+      start_rule: [(v) => !!(v > this.add_timeStart) || "Password is required"],
     };
   },
   methods: {
@@ -480,9 +487,12 @@ export default {
       try {
         let keep = await ShowtimeAdmin.getShowtime();
         let keep2 = await TheaterService.getAllTheater();
-        let keep3 = await MovieService.getMovie()
+        let keep3 = await MovieService.getMovie();
         this.all = keep.data;
         this.showtimes = keep.data;
+        this.showtimes.sort((a, b) => {
+          return new Date(a.time_start) - new Date(b.time_start);
+        });
         this.showtimes.forEach((showtime) => {
           let d = showtime.time_start.substring(0, 10);
           !this.dates.includes(d) ? this.dates.push(d) : 0;
@@ -497,12 +507,12 @@ export default {
         });
 
         keep2.data.forEach((theater) => {
-            this.all_theater_name.push(theater.theater_name);
+          this.all_theater_name.push(theater.theater_name);
         });
 
         keep2.data.forEach((theater) => {
           this.all_theater.push(theater);
-        })
+        });
 
         var today = new Date();
         this.today =
@@ -533,10 +543,10 @@ export default {
         }
       });
       this.all_theater.forEach((theater) => {
-        console.log(theater.theater_name,this.add_theater)
+        console.log(theater.theater_name, this.add_theater);
         if (theater.theater_name == this.add_theater) {
           tid = theater.theater_id;
-          console.log(tid, "tid")
+          console.log(tid, "tid");
           this.new.push(theater.theater_name);
         }
       });
@@ -560,6 +570,7 @@ export default {
         this.add_movie == "" ||
         this.picker_addDate == ""
       ) {
+        console.log(this.add_timeStart > this.add_timeEnd, "ss");
         alert("pls put all information");
       } else if (this.add_timeEnd > this.add_timeStart) {
         var result = await ShowtimeAdmin.addShowtime(this.createForm());
@@ -655,7 +666,11 @@ export default {
       this.dates = [];
       this.getShowtime();
     },
+    validatetime(){
+    console.log('er')
+  }
   },
+
 };
 </script>
 
