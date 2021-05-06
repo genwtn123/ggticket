@@ -525,20 +525,24 @@ export default {
     },
 
     async delTheather() {
-      if (!this.showtime.includes(this.val.theater_id)) {
-        await TheaterAdmin.delTheater(this.val.theater_id);
-        this.delete_isopen = false;
+      // if (!this.showtime.includes(this.val.theater_id)) {
+      //   await TheaterAdmin.delTheater(this.val.theater_id);
+      //   this.delete_isopen = false;
+      //   this.edit_isopen = false;
+      //   this.theaters.forEach((item, index) => {
+      //     if (item.theater_id == this.val.theater_id)
+      //       this.theaters.splice(index, 1);
+      //   });
+      // } else {
+      //   alert(
+      //     "Foreign Key alert! \n You must delete showtimes that use this theater first"
+      //   );
+      //   this.delete_isopen = false;
+      // }
+      await TheaterAdmin.delTheater(this.val.theater_id);
+      this.delete_isopen = false;
         this.edit_isopen = false;
-        this.theaters.forEach((item, index) => {
-          if (item.theater_id == this.val.theater_id)
-            this.theaters.splice(index, 1);
-        });
-      } else {
-        alert(
-          "Foreign Key alert! \n You must delete showtimes that use this theater first"
-        );
-        this.delete_isopen = false;
-      }
+      this.getTheater ();
     },
 
     async editSeat(seat){
