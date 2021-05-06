@@ -14,19 +14,19 @@
     <div class="navbar-menu">
       <div class="navbar-start">
         <router-link to="/amovie" class="pr-5 navbar-item nav_font"
-          >AMovie</router-link
+          >Movie</router-link
         >
         <router-link to="/aschedule" class="pr-5 navbar-item nav_font"
-          >Aschedule</router-link
+          >Schedule</router-link
         >
         <router-link to="/afood" class="pr-5 navbar-item nav_font"
-          >Afood</router-link
+          >Food</router-link
         >
         <router-link to="/atheater" class="pr-5 navbar-item nav_font"
-          >Atheater</router-link
+          >Theater</router-link
         >
         <router-link to="/apromo" class="pr-5 navbar-item nav_font"
-          >Apromotion</router-link
+          >Promotion</router-link
         >
       </div>
 

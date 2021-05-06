@@ -8,21 +8,21 @@
       <div class="is-multiline columns is-variable is-2 ml-9 mr-9">
         
         
-        <div class="column is-one-third mt-5">
+        <div v-for="ad in advertisement"
+        :key="ad.ad_id"  class="column is-one-third mt-5">
           <div id="card_pro" class="card">
             <div id="card_img_pro" class="card-image">
               <figure class="image is-1by1">
-                <img v-bind:src="image_pro" alt="Placeholder image" />
+                <img :src="imagePath(ad.ad_image)" alt="Placeholder image" />
               </figure>
             </div>
             <div id="card_body_pro" class="card-content">
               <div id="food" class="media">
                 <div class="media-content">
                   <p id="detail_pro " class="whitefont">
-                    ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                    จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
+                    {{ad.ad_name}}
                   </p>
-                  <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
+                  <p id="condition" class="whitefont">{{ad.ad_detail}}</p>
                 </div>
               </div>
             </div>
@@ -30,91 +30,52 @@
         </div>
       
       
-        <div class="column is-one-third mt-5">
-        <div id="card_pro" class="card">
-          <div id="card_img_pro" class="card-image">
-            <figure class="image is-1by1">
-              <img v-bind:src="image_pro" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div id="card_body_pro" class="card-content">
-            <div id="food" class="media">
-              <div class="media-content">
-                <p id="detail_pro " class="whitefont">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
-                </p>
-                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="column is-one-third mt-5">
-        <div id="card_pro" class="card">
-          <div id="card_img_pro" class="card-image">
-            <figure class="image is-1by1">
-              <img v-bind:src="image_pro" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div id="card_body_pro" class="card-content">
-            <div id="food" class="media">
-              <div class="media-content">
-                <p id="detail_pro " class="whitefont">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
-                </p>
-                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="column is-one-third mt-5">
-        <div id="card_pro" class="card">
-          <div id="card_img_pro" class="card-image">
-            <figure class="image is-1by1">
-              <img v-bind:src="image_pro" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div id="card_body_pro" class="card-content">
-            <div id="food" class="media">
-              <div class="media-content">
-                <p id="detail_pro " class="whitefont">
-                  ดูหนังราคาพิเศษ 80 บาทเฉพาะวันหยุดเสาร์ อาทิตย์
-                  จำกัดสิทธิ์สำหรับสมาชิกเท่านั้น
-                </p>
-                <p id="condition" class="whitefont">จำนวนจำกัด 100 สิทธิ์</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        
       
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
+import AdService from "../service/AdService";
 export default {
+  mounted(){
+    this.getad();
+  }
+   ,
   data() {
     return {
-      image_pro:
-        "https://www.ryt9.com/img/files/20200805/iq1ae0ceafc9324bf358ca899a26c3831c.jpg",
+      advertisement: []
     };
   },
   methods: {
-    
-  },
+    async getad(){
+      try{
+        let keep = await AdService.getad();
+        console.log(keep);
+        this.advertisement = keep.data
+      }
+      catch(err){
+        console.log(err)
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+  }
 };
 </script>
 
 <style>
+.v-application--wrap{
+  background: #121212;
+}
 #condition {
   color: #121212;
   font-size: 20px;

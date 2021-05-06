@@ -13,6 +13,10 @@ const validmovie = Joi.object({
 
 
 exports.addMovie = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validmovie.validateAsync(req.body, {abortEarly: false})
         let movie = new Movie(null, req.body.movie_name, req.body.movie_type, 0, req.body.movie_length, req.file.path, req.body.movie_status, null, req.body.movie_releasetime, req.body.movie_language, req.session.userdata.user_id)
@@ -39,6 +43,10 @@ exports.delMovie = async (req, res, next) => {
 }
 
 exports.editMovie = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validmovie.validateAsync(req.body, {abortEarly: false})
         let movie = new Movie(req.params.id, req.body.movie_name, req.body.movie_type, null, req.body.movie_length, req.file.path, req.body.movie_status, null, req.body.movie_releasetime, req.body.movie_language, req.session.userdata.user_id)
@@ -53,7 +61,6 @@ exports.getMovie = async (req, res, next) => {
     try{
         let movie = new Movie()
         let keep = await movie.getMovie()
-        console.log("movie",await movie.getMovie())
         res.send(keep)
     }catch(err){
         console.log(err)

@@ -127,6 +127,16 @@
         REGISTER
       </button>
     </v-form>
+    <sweet-modal icon="success" ref="modal">
+        Change Password Success!
+        <!-- <v-row>
+          <v-col>
+            <v-btn color="success" class="mt-5"
+              >Ok</v-btn
+            ></v-col
+          >
+        </v-row> -->
+      </sweet-modal>
   </v-banner>
 </template>
 
@@ -135,14 +145,12 @@
   text-align: left;
   color: #9d9fa3;
 }
-
 .regis_box {
   background: #21262e !important;
   margin-top: 2% !important;
   width: 80%;
   margin: auto;
 }
-
 .rvl {
   border-left: 2px solid #21262e;
   padding-right: 2%;
@@ -191,7 +199,7 @@ export default {
       ],
       emailrule: [
         (v) => !!v || "Email is required",
-        (v) => /^\w+@\w+\.\w+$/.test(v) || "kwaii",
+        (v) => /^\w+@\w+\.\w+$/.test(v) || "invalid email",
       ],
     };
   },
@@ -210,7 +218,9 @@ export default {
     },
     async createAccount(e) {
       e.preventDefault();
-            this.$refs.form.validate();
+      if(this.$refs.form.validate()){
+
+
       try{
       var result = await AccountService.createAccount(this.createForm());
       if (result.status == 200) {
@@ -222,6 +232,7 @@ export default {
       }
       }catch(err){
         console.log(err)
+      }
       }
     },
     clearForm: function () {

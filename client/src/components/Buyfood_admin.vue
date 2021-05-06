@@ -10,32 +10,40 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="isopen"
         />
       </div>
     </div>
     <hr />
-    <div class="pt-6">
-      <div class="columns pl-6" v-for="index in 2" :key="index">
-        <div class="card admin_card mx-6 my-6" v-for="index in 5" :key="index">
+    <div class="is-multiline columns">
+      <div
+        v-for="food in food"
+        :key="food.food_id"
+        class="column is-one-quarter mt-5"
+      >
+        <div class="card admin_card mx-6 my-6">
           <figure class="image">
-            <img :src="image" alt="Placeholder image" />
+            <img
+              v-bind:src="imagePath(food.food_image)"
+              style="height: 250px"
+              alt="Placeholder image"
+            />
           </figure>
           <div class="card-content">
-            <div style="font-size: 18px">Popcorn Salted Caramel Lemon</div>
-            <div style="font-size: 23px">200บาท</div>
+            <div style="font-size: 18px">{{ food.food_name }}</div>
+            <div style="font-size: 23px">{{ food.food_price }} บาท</div>
           </div>
           <footer class="card-footer" style="background-color: white">
             <div
               style="width: 50%; color: #fd7014"
-              @click="edit_isopen = true"
+              @click="edit(food.food_id)"
               class="card-footer-item"
             >
               Edit
             </div>
             <div
               style="width: 50%; color: #fd7014"
-              @click="delete_isopen = true"
+              @click="remove(food.food_id)"
               class="card-footer-item"
             >
               Delete
@@ -56,11 +64,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="add_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="addc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -75,42 +79,39 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Name :</p>
               <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="form">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="15"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="name"
-                label="name"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="name"
+                  label="name"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!name || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="price"
+                  label="price"
+                  rounded
+                  dense
+                  solo
+                  :rules="foodrule"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -127,6 +128,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="createFood"
             >
               ADD
             </button>
@@ -137,7 +139,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = flase"
+              @click="addc"
             >
               CANCEL
             </button>
@@ -158,11 +160,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="edit_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="editc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -177,42 +175,39 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Name :</p>
               <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
             </div>
 
             <div class="column pr-6 is-8">
-              <v-file-input
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="editform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="50"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="name"
-                label="name"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="name"
+                  label="name"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!name || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="price"
-                label="price"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="price"
+                  label="price"
+                  rounded
+                  dense
+                  solo
+                  :rules="foodrule"
+                ></v-text-field>
+              </v-form>
             </div>
           </div>
         </section>
@@ -229,6 +224,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="editFood"
             >
               EDIT
             </button>
@@ -239,7 +235,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="edit_isopen = flase"
+              @click="editc"
             >
               CANCEL
             </button>
@@ -260,11 +256,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="delete_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="deletec"></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
@@ -277,6 +269,7 @@
         >
           <div style="margin: auto">
             <button
+              @click="removefood"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -293,7 +286,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = flase"
+              @click="deletec"
             >
               CANCEL
             </button>
@@ -306,7 +299,13 @@
 </template>
 
 <script>
+import FoodService from "../service/FoodService";
+import axios from 'axios';
+
 export default {
+  mounted() {
+    this.getFood();
+  },
   data() {
     return {
       image:
@@ -314,21 +313,149 @@ export default {
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
+      food: [],
+      keep_index: 0,
+      name: "",
+      price: "",
+      pic: null,
+      foodrule: [
+        (v) => !!v || "This field is required",
+        (v) => /[0-9]+/.test(v) || "Please input number",
+      ],
     };
   },
-  methods: {},
+  methods: {
+    async removefood() {
+      await FoodService.delFood(this.keep_index);
+      this.delete_isopen = false;
+      this.getFood();
+    },
+    editc() {
+      this.$refs.editform.resetValidation();
+      this.edit_isopen = false;
+      this.name = "";
+      this.price = "";
+      this.pic = null;
+    },
+    deletec() {
+      this.name = "";
+      this.price = "";
+      this.pic = null;
+      this.delete_isopen = false;
+    },
+    addc() {
+      this.$refs.form.resetValidation();
+      this.add_isopen = false;
+      this.name = "";
+      this.price = "";
+      this.pic = null;
+    },
+    async edit(index) {
+      this.edit_isopen = true;
+      this.keep_index = index;
+      for (var food of this.food) {
+        if (food.food_id == index) {
+          let config = {responseType:'blob'}
+          let result = await axios.get('http://localhost:12000/'+food.food_image, config)
+          this.pic = new File([result.data], "Click to change picture")
+          this.name = food.food_name;
+          this.price = food.food_price;
+        }
+      }
+    },
+    remove(index) {
+      this.delete_isopen = true;
+      this.keep_index = index;
+    },
+    createEditForm: function () {
+      let form = new FormData();
+      form.append("food_name", this.name);
+      form.append("food_image", this.pic);
+      form.append("food_price", this.price);
+      return form;
+    },
+    createAddForm: function () {
+      let form = new FormData();
+      form.append("food_name", this.name);
+      form.append("food_image", this.pic);
+      form.append("food_price", this.price);
+      return form;
+    },
+    // async createFood(){
+    //     var result = await FoodService.createFood()
+    // },
+    async editFood() {
+      if (this.$refs.editform.validate()) {
+        try {
+          // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id
+          var result = await FoodService.editFood(
+            this.createEditForm(),
+            this.keep_index
+          );
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.name = "";
+          this.price = "";
+          this.pic = null;
+          this.getFood();
+          this.edit_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+    async createFood() {
+      if (this.$refs.form.validate()) {
+        try {
+          var result = await FoodService.createFood(this.createAddForm());
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.$refs.form.resetValidation();
+          this.$refs.editform.resetValidation();
+          this.getFood();
+          this.name = "";
+          this.price = "";
+          this.pic = null;
+          this.add_isopen = false;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+    async getFood() {
+      try {
+        let keep = await FoodService.getFood();
+        console.log(keep);
+        this.food = keep.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    isopen() {
+      this.add_isopen = true;
+      this.$refs.form.resetValidation();
+    },
+  },
 };
 </script>
 
 <style>
 .admin_card {
-  width: 15%;
-  height: 375px;
   background-color: #fd7014 !important;
   color: #ffffff !important;
+  /* max-height: 400px; */
 }
 
-.modal-card_admin{
+.modal-card_admin {
   width: 50%;
 }
 </style>

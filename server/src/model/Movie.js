@@ -24,7 +24,9 @@ class Movie {
             using(user_id) \
             where user_id = ?'
             let staff = await conn.query(stmt2, [this.user_id])
-            console.log(this.user_id)
+            if(!staff[0].length){
+                return Promise.reject("You are not admin")
+            }
             this.staff_id = staff[0][0].staff_id
 
             let stmt = 'insert into MOVIE (movie_name, movie_type, viewer, movie_length, movie_image, movie_status, staff_id, movie_releasetime, movie_language) values(?, ?, ?, ?, ?, ?, ?, ?, ?);'
@@ -46,35 +48,17 @@ class Movie {
         await conn.beginTransaction();
         try {
 
-            let sel = 'select showtime_no from SHOWTIME where movie_id = ?;'
-            let showtime = await conn.query(sel, [this.movie_id])
-            // let sel2 = 'select  ticket_id from TICKET where showtime_no = ?;'
-            // let ticket = await conn.query(sel2, [showtime[0][0].showtime_no])
-
-            // let sel3 = 'delete from PAYMENT where ticket_id in ?'
-            // await conn.query(sel3, [ticket[0][0].ticket_id])
-
-            if (showtime[0].length > 0) {
-                for (let k of showtime[0]) {
-                    console.log("show", k.showtime_no)
-                    let sel2 = 'select  ticket_id from TICKET where showtime_no = ?;'
-                    let ticket = await conn.query(sel2, [k.showtime_no])
-                    console.log("t", ticket[0])
-                    if (ticket[0].length > 0) {
-                        let sel3 = 'delete from PAYMENT where ticket_id = ?;'
-                        await conn.query(sel3, [ticket[0][0].ticket_id])
-                        let smt = 'delete from TICKET where showtime_no = ?;'
-                        await conn.query(smt, [k.showtime_no])
-                    }
-                }
-
-            }
             // let stmt3 = 'update THEATER set movie_id = ? where movie_id = ?'
             // await conn.query(stmt3, [null, this.movie_id])
+            try{
             let stmt = 'delete from SHOWTIME where movie_id = ?;'
             await conn.query(stmt, [this.movie_id])
             let stmt2 = 'delete from MOVIE where movie_id = ?;'
             await conn.query(stmt2, [this.movie_id])
+            }catch(err){
+                let stmt3 = 'UPDATE MOVIE set movie_status = 0 where movie_id = ?'
+            await conn.query(stmt3, [this.movie_id])
+            }
 
             await conn.commit()
             return Promise.resolve()
@@ -130,13 +114,6 @@ class Movie {
         }
     }
 
-    // selectRecomMovie(){
-    //     const conn = await pool.getConnection()
-    //     await conn.beginTransaction();
-    //     try{
-    //         let stmt = 'select *'
-    //     }
-    // }
 }
 
 module.exports = Movie

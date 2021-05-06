@@ -1,6 +1,5 @@
 const Food = require('../src/model/Food')
 const Joi = require('joi')
-const { response } = require('express')
 
 const validfood = Joi.object({
     food_name : Joi.string().required(),
@@ -18,17 +17,31 @@ exports.getFood = async (req, res, next) => {
 }
 
 exports.createFood = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validfood.validateAsync(req.body, {abortEarly: false})
+
+//         console.log(req.body)
+//         let food = new Food(null, req.body.food_name, req.file.path, req.body.food_price, true, req.body.staff_id)
+
         let food = new Food(null, req.body.food_name, req.file.path, req.body.food_price, true, null, req.session.userdata.user_id)
+
         await food.createFood()
         res.send(food)
     }catch(err){
         console.log(err)
+        res.sendStatus(400)
     }
 }
 
 exports.editFood = async (req, res, next) => {
+    if (req.fileValidationError) {
+        res.status(400).send(req.fileValidationError);
+        return;
+      }
     try{
         await validfood.validateAsync(req.body, {abortEarly: false})
         let food = new Food(req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  null, req.session.userdata.user_id)
@@ -36,6 +49,7 @@ exports.editFood = async (req, res, next) => {
         res.send(food)
     }catch(err){
         console.log(err)
+        res.sendStatus(400)
     }
 }
 

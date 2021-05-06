@@ -10,6 +10,7 @@ class Seat{
         this.theater_id = theater_id
     }
 
+
     async addSeat(){
         const conn = await pool.getConnection()
         await conn.beginTransaction();
@@ -34,6 +35,23 @@ class Seat{
         try{
             let stmt = 'update SEAT set type_of_seat=?, theater_id=?, seat_price =? where seat_no=?'
             let keep = await conn.query(stmt, [this.type_of_seat, this.theater_id, this.seat_price, this.seat_no])
+            await conn.commit()
+            return Promise.resolve()
+        }catch(err){
+            console.log(err)
+            await conn.rollback()
+            return Promise.reject()
+        }finally{
+            conn.release()
+        }
+    }
+
+    async editSeat2(){
+        const conn = await pool.getConnection()
+        await conn.beginTransaction();
+        try{
+            let stmt = 'update SEAT set seat_status=? where seat_no=?'
+            let keep = await conn.query(stmt, [this.seat_status, this.seat_no])
             await conn.commit()
             return Promise.resolve()
         }catch(err){
