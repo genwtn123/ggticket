@@ -112,7 +112,9 @@
           <button
             class="delete"
             aria-label="close"
-            @click="add_isopen = false"
+            @click="
+              add_isopen = false;
+            "
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
@@ -136,9 +138,9 @@
               class="column is-2"
               style="text-align: right; padding-top: 3.6%"
             >
-              <p class="profile_modal_txt py-2">Movie :</p>
-              <p class="profile_modal_txt py-4">Time Start :</p>
-              <p class="profile_modal_txt py-4">Time End :</p>
+              <p class="profile_modal_txt py-3">Movie :</p>
+              <p class="profile_modal_txt py-5">Time Start :</p>
+              <p class="profile_modal_txt py-6">Time End :</p>
               <p class="profile_modal_txt py-4">Theater :</p>
               <!-- <p class="profile_modal_txt py-4">Language :</p> -->
             </div>
@@ -148,28 +150,39 @@
                 v-model="add_movie"
                 :items="all_movie_name"
                 label="movie"
+                :rules="[() => !!add_movie || 'This field is required']"
                 required
                 rounded
                 dense
                 solo
-                class="pt-3"
+                class="pt-3 pb-2"
               ></v-select>
 
-              <v-banner
-                elevation="18"
-                class="input_box mb-6"
-                style="text-align: left"
-              >
-                <input type="time" min="" max="" v-model="add_timeStart" />
-              </v-banner>
-
-              <v-banner
-                elevation="18"
-                class="input_box mb-6"
-                style="text-align: left"
-              >
-                <input type="time" min="" max="" v-model="add_timeEnd" />
-              </v-banner>
+              <v-text-field
+                label="Time start"
+                required
+                rounded
+                dense
+                solo
+                type="time"
+                suffix="PST"
+                v-model="add_timeStart"
+                :rules="[() => !!add_timeStart || 'This field is required']"
+              ></v-text-field>
+              <span style="color:red; font-size:13px" v-if="add_timeEnd < add_timeStart">Time end must be greater than time start</span>
+              <div v-else class="pb-3"></div>
+              <v-text-field
+                label="Time End"
+                required
+                rounded
+                dense
+                solo
+                type="time"
+                suffix="PST"
+                :rules="[() => !!add_timeEnd || 'This field is required']"
+                v-model="add_timeEnd"
+              ></v-text-field>
+              
 
               <v-select
                 v-model="add_theater"
@@ -180,6 +193,7 @@
                 dense
                 solo
                 class="pt-3"
+                :rules="[() => !!add_theater || 'This field is required']"
               ></v-select>
 
               <!-- <v-text-field
@@ -221,7 +235,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = false"
+              @click="add_isopen = false;"
             >
               CANCEL
             </button>
@@ -420,8 +434,8 @@
 
 <script>
 import ShowtimeAdmin from "../admin/ShowtimeAdmin";
-import MovieService from '../service/MovieService';
-import TheaterService from '../service/TheaterService';
+import MovieService from "../service/MovieService";
+import TheaterService from "../service/TheaterService";
 export default {
   mounted() {
     this.getShowtime();
@@ -432,9 +446,9 @@ export default {
       edit_isopen: false,
       delete_isopen: [false, ""],
       all_movie: [],
-      all_movie_name:[],
+      all_movie_name: [],
       all_theater: [],
-      all_theater_name:[],
+      all_theater_name: [],
       showtimes: [],
       dates: [],
       month: [
@@ -471,16 +485,30 @@ export default {
       edit_timeEnd: 0,
       edit_status: false,
       val: [],
-      save: [],
-      name: "",
+      // save: [],
+      // name: "",
+      errorMessages: '',
+      formHasErrors: false,
     };
   },
+
+  // computed: {
+  //     form () {
+  //       return {
+  //         movie: this.add_movie,
+  //         time_start: this.add_timeStart,
+  //         time_end: this.add_timeEnd,
+  //         theater: this.add_theater,
+  //       }
+  //     }
+  //   },
+
   methods: {
     async getShowtime() {
       try {
         let keep = await ShowtimeAdmin.getShowtime();
         let keep2 = await TheaterService.getAllTheater();
-        let keep3 = await MovieService.getMovie()
+        let keep3 = await MovieService.getMovie();
         this.all = keep.data;
         this.showtimes = keep.data;
         this.showtimes.forEach((showtime) => {
@@ -497,12 +525,12 @@ export default {
         });
 
         keep2.data.forEach((theater) => {
-            this.all_theater_name.push(theater.theater_name);
+          this.all_theater_name.push(theater.theater_name);
         });
 
         keep2.data.forEach((theater) => {
           this.all_theater.push(theater);
-        })
+        });
 
         var today = new Date();
         this.today =
@@ -533,10 +561,10 @@ export default {
         }
       });
       this.all_theater.forEach((theater) => {
-        console.log(theater.theater_name,this.add_theater)
+        console.log(theater.theater_name, this.add_theater);
         if (theater.theater_name == this.add_theater) {
           tid = theater.theater_id;
-          console.log(tid, "tid")
+          console.log(tid, "tid");
           this.new.push(theater.theater_name);
         }
       });
@@ -613,7 +641,7 @@ export default {
         }
       } else {
         alert(
-          "Time End must be greater or equal with Time start \n Your time Strat: " +
+          "Time End must be greater with Time start \n Your time Strat: " +
             this.add_timeStart +
             "\n Your time end: " +
             this.add_timeEnd
@@ -655,6 +683,7 @@ export default {
       this.dates = [];
       this.getShowtime();
     },
+
   },
 };
 </script>
