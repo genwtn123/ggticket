@@ -15,27 +15,35 @@
       </div>
     </div>
     <hr />
-    <div class="pt-6">
-      <div class="columns pl-6" v-for="index in 2" :key="index">
-        <div class="card admin_card mx-6 my-6" v-for="index in 5" :key="index">
+    <div class="is-multiline columns">
+      <div
+        v-for="food in food"
+        :key="food.food_id"
+        class="column is-one-quarter mt-5"
+      >
+        <div class="card admin_card mx-6 my-6">
           <figure class="image">
-            <img :src="image" alt="Placeholder image" />
+            <img
+              v-bind:src="imagePath(food.food_image)"
+              style="height: 250px"
+              alt="Placeholder image"
+            />
           </figure>
           <div class="card-content">
-            <div style="font-size: 18px">Popcorn Salted Caramel Lemon</div>
-            <div style="font-size: 23px">200บาท</div>
+            <div style="font-size: 18px">{{ food.food_name }}</div>
+            <div style="font-size: 23px">{{ food.food_price }} บาท</div>
           </div>
           <footer class="card-footer" style="background-color: white">
             <div
               style="width: 50%; color: #fd7014"
-              @click="edit_isopen = true"
+              @click="edit(food.food_id)"
               class="card-footer-item"
             >
               Edit
             </div>
             <div
               style="width: 50%; color: #fd7014"
-              @click="delete_isopen = true"
+              @click="remove(food.food_id)"
               class="card-footer-item"
             >
               Delete
@@ -56,11 +64,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="add_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="addc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -75,11 +79,11 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Name :</p>
               <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
             </div>
 
             <div class="column pr-6 is-8">
               <v-file-input
+                v-model="pic"
                 truncate-length="15"
                 label="picture"
                 rounded
@@ -103,14 +107,6 @@
                 dense
                 solo
               ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
             </div>
           </div>
         </section>
@@ -127,6 +123,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="createFood"
             >
               ADD
             </button>
@@ -137,7 +134,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = flase"
+              @click="addc"
             >
               CANCEL
             </button>
@@ -158,11 +155,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="edit_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="editc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -177,11 +170,11 @@
               <p class="profile_modal_txt py-2">Picture :</p>
               <p class="profile_modal_txt py-4">Name :</p>
               <p class="profile_modal_txt py-4">Price :</p>
-              <p class="profile_modal_txt py-4">Stock :</p>
             </div>
 
             <div class="column pr-6 is-8">
               <v-file-input
+                v-model="pic"
                 truncate-length="15"
                 label="picture"
                 rounded
@@ -205,14 +198,6 @@
                 dense
                 solo
               ></v-text-field>
-
-              <v-text-field
-                v-model="stock"
-                label="stock"
-                rounded
-                dense
-                solo
-              ></v-text-field>
             </div>
           </div>
         </section>
@@ -229,6 +214,7 @@
                 color: white;
               "
               class="button mx-3"
+              @click="editFood"
             >
               EDIT
             </button>
@@ -239,7 +225,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="edit_isopen = flase"
+              @click="editc"
             >
               CANCEL
             </button>
@@ -260,11 +246,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="delete_isopen = flase"
-          ></button>
+          <button class="delete" aria-label="close" @click="deletec"></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
@@ -277,6 +259,7 @@
         >
           <div style="margin: auto">
             <button
+              @click="removefood"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -293,7 +276,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="delete_isopen = flase"
+              @click="deletec"
             >
               CANCEL
             </button>
@@ -306,7 +289,12 @@
 </template>
 
 <script>
+import FoodService from "../service/FoodService";
+import axios from "axios";
 export default {
+  mounted() {
+    this.getFood();
+  },
   data() {
     return {
       image:
@@ -314,21 +302,149 @@ export default {
       add_isopen: false,
       edit_isopen: false,
       delete_isopen: false,
+      food: [],
+      keep_index: 0,
+      name: "",
+      price: "",
+      pic: "",
     };
   },
-  methods: {},
+  methods: {
+    // async keepphoto(e){
+    //   console.log(e)
+    //    this.pic = e.target.files[0];
+    // },
+    // createfood(){
+    //   // null, req.body.food_name, req.file.path, req.body.food_price, true, req.body.staff_id)
+    //   axios.post("http://localhost:12000/food/create",
+    //   {food_name: this.name, food_image: this.pic, food_price:this.price, staff_id:1}).then(()=> this.add_isopen = false)
+    //   .catch((err)=> console.log(err))
+    // },
+    // editfood(){
+    //   // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id).
+    //   axios.put(`http://localhost:12000/food/edit/${this.keep_index}`,{food_name: this.name, food_image: this.pic, food_price:this.price, staff_id:1}).then(()=> this.edit_isopen = false)
+    //   .catch((err)=> console.log(err))
+    // },
+    removefood() {
+      axios
+        .delete(`http://localhost:12000/food/delete/${this.keep_index}`)
+        .then(() => {
+          this.getFood();
+          this.delete_isopen = false;
+        })
+        .catch((err) => console.log(err));
+    },
+    // async removefood(){
+    //   try{
+
+    //   } catch(err) {
+    //     console.log(err)
+    //   }
+    // },
+    editc() {
+      this.edit_isopen = false;
+      this.name = "";
+      this.price = "";
+      this.pic = "";
+    },
+    deletec() {
+      this.name = "";
+      this.price = "";
+      this.pic = "";
+      this.delete_isopen = false;
+    },
+    addc() {
+      this.add_isopen = false;
+      this.name = "";
+      this.price = "";
+      this.pic = "";
+    },
+    edit(index) {
+      this.edit_isopen = true;
+      this.keep_index = index;
+    },
+    remove(index) {
+      this.delete_isopen = true;
+      this.keep_index = index;
+    },
+    createEditForm: function () {
+      let form = new FormData();
+      form.append("food_name", this.name);
+      form.append("food_image", this.pic);
+      form.append("food_price", this.price);
+      return form;
+    },
+    createAddForm: function () {
+      let form = new FormData();
+      form.append("food_name", this.name);
+      form.append("food_image", this.pic);
+      form.append("food_price", this.price);
+      return form;
+    },
+    // async createFood(){
+    //     var result = await FoodService.createFood()
+    // },
+    async editFood() {
+      try {
+        // req.params.food_id, req.body.food_name, req.file.path, req.body.food_price, null,  req.body.staff_id
+        var result = await FoodService.editFood(
+          this.createEditForm(),
+          this.keep_index
+        );
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        this.name = "";
+        this.price = "";
+        this.pic = "";
+        this.getFood();
+        this.edit_isopen = false;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async createFood() {
+      try {
+        var result = await FoodService.createFood(this.createAddForm());
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
+        this.getFood();
+        this.name = "";
+        this.price = "";
+        this.pic = "";
+        this.add_isopen = false;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getFood() {
+      try {
+        let keep = await FoodService.getFood();
+        console.log(keep);
+        this.food = keep.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:12000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+  },
 };
 </script>
 
 <style>
 .admin_card {
-  width: 15%;
-  height: 375px;
   background-color: #fd7014 !important;
   color: #ffffff !important;
 }
 
-.modal-card_admin{
+.modal-card_admin {
   width: 50%;
 }
 </style>
