@@ -25,7 +25,7 @@
           <figure class="image">
             <img style="height: 250px" :src="imagePath(ad.ad_image)" alt="Placeholder image" />
           </figure>
-          <div class="card-content">
+          <div class="card-content" id="card_body_admin">
             <div style="font-size: 17px">{{ad.ad_name}}</div>
             <div style="font-size: 15px; color: #520c0c">
               {{ad.ad_detail}}
@@ -299,6 +299,12 @@
     <!-- delete modal -->
   </v-container>
 </template>
+
+<style scoped>
+#card_body_admin {
+  height: 150px;
+}
+</style>
 
 <script>
 import AdService from "../service/AdService";

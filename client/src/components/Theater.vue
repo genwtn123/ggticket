@@ -8,21 +8,24 @@
       <div class="container is-max-desktop">
         <div class="is-multiline columns is-variable is-2 mt-5">
           <div id="img_theater">
-            <img v-bind:src="imagePath(this.selectedmovie.movie_image)" alt="Placeholder image" />
+            <img
+              v-bind:src="imagePath(this.selectedmovie.movie_image)"
+              alt="Placeholder image"
+            />
           </div>
           <div id="border_movietable" class="column is-three-quarters">
             <div id="topic_head">
               <div class="is-multiline columns">
                 <p id="topic_movie_c">Title</p>
-                <p>{{this.selectedmovie.movie_name}}</p>
+                <p>{{ this.selectedmovie.movie_name }}</p>
               </div>
               <div class="is-multiline columns">
                 <p id="topic_movie_c">Category</p>
-                <p>{{this.selectedmovie.movie_type}}</p>
+                <p>{{ this.selectedmovie.movie_type }}</p>
               </div>
               <div class="is-multiline columns">
                 <p id="topic_movie_c">Movie length</p>
-                <p>{{this.selectedmovie.movie_length}}</p>
+                <p>{{ this.selectedmovie.movie_length }}</p>
               </div>
             </div>
           </div>
@@ -45,7 +48,7 @@
         </div>
 
         <div class="is-multiline columns is-variable is-2 mt-5">
-          <div id="topic" class="column is-one-quarter pt-4">
+          <div id="topic" class="column is-one-quarter">
             <p>Movie</p>
           </div>
           <div id="topic" class="column">
@@ -86,7 +89,17 @@
             <p>{{ movie.movie_language }}</p>
           </div>
           <div class="column mt-2">
-          <v-btn  x-large rounded elevation="24" color="#000000" dark @click="selectshow(movie)"> Choose </v-btn>
+            <v-btn
+              x-large
+              rounded
+              elevation="24"
+              color="#000000"
+              dark
+              @click="selectshow(movie)"
+              :disabled="movie.start_time < currentTime() && movie.date <= currentDate()"
+            >
+              Choose
+            </v-btn>
           </div>
         </div>
       </div>
@@ -106,7 +119,7 @@ export default {
       keep: "",
       date: [],
       selectdate: "",
-      selectedmovie:this.$store.getters.getmovie
+      selectedmovie: this.$store.getters.getmovie,
     };
   },
   mounted() {
@@ -114,6 +127,7 @@ export default {
   },
   methods: {
     async getTheater() {
+      console.log(this.currentTime())
       // if(this.$store.getters.getmovie == ""){
       //   this.$router.push({name:'Movie'})
       // }
@@ -156,17 +170,32 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
-    selectshow(movie){
+    selectshow(movie) {
       this.$store.commit("keepshow", movie);
-      this.$router.push({name:'Seat'})
-    }
+      this.$router.push({ name: "Seat" });
+    },
+    currentTime() {
+      let today = new Date();
+      let time = (today.getHours() > 9 ? today.getHours() : `0${today.getHours()}`) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : `0${today.getMinutes()}`)
+      return time;
+    },
+    currentDate() {
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        "-" +
+        ((today.getMonth() + 1) > 9 ? (today.getMonth() + 1) : "0"+(today.getMonth() + 1)) +
+        "-" +
+        (today.getDate() > 9 ? today.getDate() : "0"+today.getDate());
+        return date
+    },
   },
 
   computed: {},
 };
 </script>
 
-<style>
+<style >
 .movie_table_t {
   font-size: 30px;
   color: #6f717b;

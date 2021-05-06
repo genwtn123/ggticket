@@ -46,80 +46,85 @@ const routes = [
         path: '/buyticket',
         name: 'Buyticket',
         component: BuyTicket,
-        meta: { login: true, step: true, food:true },
+        meta: { login: true, step: true, food: true, customer: true },
     },
 
     {
         path: '/history',
         name: 'History',
         component: History,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/buyfood',
         name: 'Buyfood',
         component: Buyfood,
-        meta: { login: true, step: true, food:true },
+        meta: { login: true, step: true, food: true, customer: true },
     },
     {
         path: '/theaterselect',
         name: 'Theater',
         component: Theater,
-        meta: { login: true, step: true },
+        meta: { login: true, step: true, customer: true },
     },
     {
         path: '/promotion',
         name: 'Promotion',
         component: Promotion,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/seat',
         name: 'Seat',
         component: Seat,
-        meta: { login: true, step: true, seat:true },
+        meta: { login: true, step: true, seat: true, customer: true },
     },
     {
         path: '/movie',
         name: 'Movie',
         component: Movie,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/movieschedule',
         name: 'MovieSchedule',
         component: MovieSchedule,
-        meta: { login: true },
+        meta: { login: true, customer: true },
     },
     {
         path: '/afood',
         name: 'ABuyfood',
         component: ABuyfood,
+        meta: { login: true, admin: true }
 
 
     },
     {
         path: '/apromo',
         name: 'APromotion',
-        component: APromotion
+        component: APromotion,
+        meta: { login: true, admin: true }
 
     },
     {
         path: '/amovie',
         name: 'AMovie',
-        component: AMovie
+        component: AMovie,
+        meta: { login: true, admin: true }
 
     },
     {
         path: '/aschedule',
         name: 'Aschedule',
-        component: Aschedule
+        component: Aschedule,
+        meta: { login: true, admin: true }
 
     },
     {
         path: '/atheater',
         name: 'Atheater',
-        component: Atheater
+        component: Atheater,
+        meta: { login: true, admin: true }
 
     }
 ]
@@ -135,6 +140,18 @@ router.beforeEach(async (to, from, next) => {
         let isselectedmovie = !!store.getters.getmovie != ""
         let isseletedshow = !!store.getters.getshow != ""
         let isselectedseat = !!store.getters.getseat != ""
+        if (isLoggedIn) {
+            let keep = await AccountService.getSession()
+            console.log(keep.data.type)
+            console.log(isLoggedIn)
+            let isAdmin = !!(keep.data.type == "STAFF")
+            if (to.meta.admin && !isAdmin) {
+                next({ name: 'Home' })
+            }
+            if (to.meta.customer && isAdmin) {
+                next({ name: "Home" })
+            }
+        }
         if (to.meta.login && !isLoggedIn) {
             next({ name: 'Login' })
         }
@@ -143,11 +160,11 @@ router.beforeEach(async (to, from, next) => {
             next({ name: 'Home' })
         }
 
-        if(to.meta.step && !isselectedmovie){
+        if (to.meta.step && !isselectedmovie) {
             next({ name: 'Movie' })
         }
 
-        if(to.meta.step == undefined){
+        if (to.meta.step == undefined) {
             store.commit("keepmovie", "");
             store.commit("keepshow", "");
             store.commit("keepseat", "");
@@ -155,13 +172,14 @@ router.beforeEach(async (to, from, next) => {
             store.commit("keepseatprice", "");
         }
 
-        if(to.meta.seat && !isseletedshow){
+        if (to.meta.seat && !isseletedshow) {
             next({ name: 'Movie' })
         }
 
-        if(to.meta.food && !isselectedseat){
+        if (to.meta.food && !isselectedseat) {
             next({ name: 'Movie' })
         }
+
     } catch (err) {
         console.log(err)
     }

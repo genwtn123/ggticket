@@ -445,6 +445,7 @@ export default {
 .admin_card {
   background-color: #fd7014 !important;
   color: #ffffff !important;
+/* max-height: 400px; */
 }
 
 .modal-card_admin {

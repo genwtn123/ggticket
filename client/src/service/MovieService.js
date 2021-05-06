@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+
 const getMovie = 'http://localhost:12000/movie';
 const createMovie = 'http://localhost:12000/movie/add';
 const editMovie = 'http://localhost:12000/movie/edit';
 const delMovie = 'http://localhost:12000/movie/delete';
 
+
+
+
+const getrecommed = 'http://localhost:12000/ticket/getrecommend'
 
 class MovieService {
     static async getMovie() {
@@ -21,5 +26,11 @@ class MovieService {
     static async delMovie(id){
         return await axios.delete(delMovie+'/'+id)
     }
+
+
+    static async getRecommendMovie() {
+        return await axios.get(getrecommed)
+    }
+
 }
 export default MovieService
