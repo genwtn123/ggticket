@@ -91,6 +91,7 @@
                 rounded
                 dense
                 solo
+                :rules="[() => !!add_name || 'This field is required']"
               ></v-text-field>
 
               <v-select
@@ -102,6 +103,7 @@
                 dense
                 solo
                 class="pt-3"
+                :rules="[() => !!add_size || 'This field is required']"
               ></v-select>
             </div>
           </div>
@@ -182,6 +184,7 @@
                 rounded
                 dense
                 solo
+                :rules="[() => !!val.theater_name || 'This field is required']"
               ></v-text-field>
 
               <v-select

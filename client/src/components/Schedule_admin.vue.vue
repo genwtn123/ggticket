@@ -112,7 +112,9 @@
           <button
             class="delete"
             aria-label="close"
-            @click="add_isopen = false"
+            @click="
+              add_isopen = false;
+            "
           ></button>
         </header>
         <section class="modal-card-body profile_modal">
@@ -136,9 +138,9 @@
               class="column is-2"
               style="text-align: right; padding-top: 3.6%"
             >
-              <p class="profile_modal_txt py-2">Movie :</p>
-              <p class="profile_modal_txt py-4">Time Start :</p>
-              <p class="profile_modal_txt py-4">Time End :</p>
+              <p class="profile_modal_txt py-3">Movie :</p>
+              <p class="profile_modal_txt py-5">Time Start :</p>
+              <p class="profile_modal_txt py-6">Time End :</p>
               <p class="profile_modal_txt py-4">Theater :</p>
               <!-- <p class="profile_modal_txt py-4">Language :</p> -->
             </div>
@@ -148,34 +150,40 @@
                 v-model="add_movie"
                 :items="all_movie_name"
                 label="movie"
+                :rules="[() => !!add_movie || 'This field is required']"
                 required
                 rounded
                 dense
                 solo
-                class="pt-3"
+                class="pt-3 pb-2"
               ></v-select>
 
-              <v-banner
-                elevation="18"
-                class="input_box mb-6"
-                style="text-align: left"
-              >
-                <input type="time" min="" max="" v-model="add_timeStart" />
-              </v-banner>
 
-              <v-banner
-                elevation="18"
-                class="input_box mb-6"
-                style="text-align: left"
-              >
-                <input
-                  type="time"
-                  min=""
-                  max=""
-                  v-model="add_timeEnd"
-                  v-on:input="validatetime()"
-                />
-              </v-banner>
+              <v-text-field
+                label="Time start"
+                required
+                rounded
+                dense
+                solo
+                type="time"
+                suffix="PST"
+                v-model="add_timeStart"
+                :rules="[() => !!add_timeStart || 'This field is required']"
+              ></v-text-field>
+              <span style="color:red; font-size:13px" v-if="add_timeEnd < add_timeStart">Time end must be greater than time start</span>
+              <div v-else class="pb-3"></div>
+              <v-text-field
+                label="Time End"
+                required
+                rounded
+                dense
+                solo
+                type="time"
+                suffix="PST"
+                :rules="[() => !!add_timeEnd || 'This field is required']"
+                v-model="add_timeEnd"
+              ></v-text-field>
+             
 
               <v-select
                 v-model="add_theater"
@@ -186,6 +194,7 @@
                 dense
                 solo
                 class="pt-3"
+                :rules="[() => !!add_theater || 'This field is required']"
               ></v-select>
 
               <!-- <v-text-field
@@ -227,7 +236,7 @@
                 color: white;
               "
               class="button mx-3"
-              @click="add_isopen = false"
+              @click="add_isopen = false;"
             >
               CANCEL
             </button>
@@ -477,11 +486,26 @@ export default {
       edit_timeEnd: 0,
       edit_status: false,
       val: [],
-      save: [],
-      name: "",
-      start_rule: [(v) => !!(v > this.add_timeStart) || "Password is required"],
+
+      // save: [],
+      // name: "",
+      errorMessages: '',
+      formHasErrors: false,
+
     };
   },
+
+  // computed: {
+  //     form () {
+  //       return {
+  //         movie: this.add_movie,
+  //         time_start: this.add_timeStart,
+  //         time_end: this.add_timeEnd,
+  //         theater: this.add_theater,
+  //       }
+  //     }
+  //   },
+
   methods: {
     async getShowtime() {
       try {
@@ -624,7 +648,7 @@ export default {
         }
       } else {
         alert(
-          "Time End must be greater or equal with Time start \n Your time Strat: " +
+          "Time End must be greater with Time start \n Your time Strat: " +
             this.add_timeStart +
             "\n Your time end: " +
             this.add_timeEnd
@@ -666,9 +690,7 @@ export default {
       this.dates = [];
       this.getShowtime();
     },
-    validatetime(){
-    console.log('er')
-  }
+
   },
 
 };
