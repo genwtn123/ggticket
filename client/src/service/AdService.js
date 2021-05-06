@@ -22,4 +22,5 @@ class AdService {
         return await axios.delete(delad, index)
 
 }
+}
 export default AdService

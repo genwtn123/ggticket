@@ -31,7 +31,7 @@
               /></v-avatar>
             </v-btn>
 
-            <div class="profile_modal_txt pt-7">Username</div>
+            <div class="profile_modal_txt pt-7">{{this.username}}</div>
             <div style="color: white; font-size: 20px">{{ this.role }}</div>
             <input
               style="display: none"
@@ -190,6 +190,7 @@ export default {
     return {
       isopen: false,
       data: "",
+      username:"",
       name: "",
       email: "",
       tel: "",
@@ -219,6 +220,7 @@ export default {
       try {
         let keep = await AccountService.getUsserInfo();
         this.data = keep.data[0];
+        this.username = this.data.username
         this.name = `${this.data.user_fname} ${this.data.user_lname}`;
         this.email = this.data.user_email;
         this.tel = this.data.user_tel;
