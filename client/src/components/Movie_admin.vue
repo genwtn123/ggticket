@@ -386,7 +386,7 @@ export default {
       today: "",
       movierule: [
         (v) => !!v || "This field is required",
-        (v) => /[0-9]+/.test(v) || "Please input number",
+        (v) => /^[0-9]*$/.test(v) || "Please input number",
       ],
     };
   },
@@ -435,7 +435,7 @@ export default {
             "http://localhost:12000/" + movie.movie_image,
             config
           );
-          this.pic = new File([result.data], "Click to change picture");
+          this.pic = new File([result.data], "Old Picture.png");
         }
       }
     },
@@ -488,7 +488,10 @@ export default {
           this.pic = null;
           this.time = "";
           this.lang = "";
+          this.type = "";
+          this.length ="";
           this.add_isopen = false;
+
         } catch (err) {
           console.log(err);
         }
@@ -514,7 +517,7 @@ export default {
           this.lang = "";
           this.edit_isopen = false;
         } catch (err) {
-          console.log(err);
+          console.log(err.response);
         }
       }
     },

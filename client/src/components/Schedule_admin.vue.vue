@@ -10,7 +10,7 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="addopen"
         />
       </div>
     </div>
@@ -676,7 +676,10 @@ export default {
       this.dates = [];
       this.getShowtime();
     },
-
+    addopen(){
+      this.add_isopen = true
+      this.$refs.form.reset()
+    }
   },
 
 };
