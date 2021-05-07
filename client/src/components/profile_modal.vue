@@ -206,7 +206,7 @@ export default {
         (v) => v.length >= 8 || "Password must be more than 8",
         (v) =>
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v) ||
-          "password",
+          "Password must be  harder",
       ]
     };
   },

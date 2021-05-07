@@ -184,7 +184,7 @@ export default {
       ],
       telrule: [
         (v) => !!v || "Tel is required",
-        (v) => /^0[0-9]{9}$/.test(v) || "pass",
+        (v) => /^0[0-9]{9}$/.test(v) || "Invalid phonenumber",
       ],
       passwordrule: [
         (v) => !!v || "Password is required",

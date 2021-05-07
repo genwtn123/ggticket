@@ -309,7 +309,7 @@
 
 <script>
 import AdService from "../service/AdService";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   mounted() {
@@ -350,7 +350,7 @@ export default {
       return form;
     },
     editc() {
-      this.$refs.editform.resetValidation()
+      this.$refs.editform.resetValidation();
       this.edit_isopen = false;
       this.title = "";
       this.detail = "";
@@ -363,7 +363,7 @@ export default {
       this.delete_isopen = false;
     },
     addc() {
-      this.$refs.addform.resetValidation()
+      this.$refs.addform.resetValidation();
       this.add_isopen = false;
       this.title = "";
       this.detail = "";
@@ -377,9 +377,12 @@ export default {
         if (ad.ad_id == index) {
           this.title = ad.ad_name;
           this.detail = ad.ad_detail;
-                          let config = {responseType:'blob'}
-          let result = await axios.get('http://localhost:12000/'+ad.ad_image, config)
-          this.pic = new File([result.data], "Click to change picture")
+          let config = { responseType: "blob" };
+          let result = await axios.get(
+            "http://localhost:12000/" + ad.ad_image,
+            config
+          );
+          this.pic = new File([result.data], "Old Picture.png");
         }
       }
     },
@@ -394,8 +397,8 @@ export default {
           console.log("res", result.status);
           console.log("success by vuejs");
           alert("Success");
-          this.$refs.addform.resetValidation()
-          this.$refs.editform.resetValidation()
+          this.$refs.addform.resetValidation();
+          this.$refs.editform.resetValidation();
           this.getad();
           this.title = "";
           this.detail = "";
@@ -415,8 +418,8 @@ export default {
           );
           console.log("res", result.status);
           console.log("success by vuejs");
-          this.$refs.addform.resetValidation()
-          this.$refs.editform.resetValidation()
+          this.$refs.addform.resetValidation();
+          this.$refs.editform.resetValidation();
           alert("Success");
           this.title = "";
           this.detail = "";

@@ -320,7 +320,7 @@ export default {
       pic: null,
       foodrule: [
         (v) => !!v || "This field is required",
-        (v) => /[0-9]+/.test(v) || "Please input number",
+        (v) => /^[0-9]*$/.test(v) || "Please input number",
       ],
     };
   },
@@ -357,7 +357,7 @@ export default {
         if (food.food_id == index) {
           let config = {responseType:'blob'}
           let result = await axios.get('http://localhost:12000/'+food.food_image, config)
-          this.pic = new File([result.data], "Click to change picture")
+          this.pic = new File([result.data], "Old Picture.png");
           this.name = food.food_name;
           this.price = food.food_price;
         }

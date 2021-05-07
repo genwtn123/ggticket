@@ -2,7 +2,7 @@
   <v-app>
     <v-main fluid class="bg">
       <Mainbar v-show="!admin" />
-      <Adminbar v-show="admin" />>
+      <Adminbar v-show="admin" />
       <Carousel />
       <p class="py-3"></p>
       <Recommend />

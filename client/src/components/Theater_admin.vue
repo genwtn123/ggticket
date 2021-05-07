@@ -10,7 +10,7 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="addopen"
         />
       </div>
     </div>
@@ -592,6 +592,10 @@ export default {
       console.log(form);
       return form;
     },
+    addopen(){
+      this.add_isopen = true
+      this.$refs.addform.reset()
+    }
   },
 };
 </script>
