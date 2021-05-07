@@ -23,8 +23,8 @@ class MovieService {
         console.log(form);
         return await axios.put(editmovie+'/'+id, form)
     }
-    static async delmovie(index){
-        return await axios.delete(delmovie, index)
+    static async delMovie(id){
+        return await axios.delete(delmovie+'/'+id)
     }
 
 

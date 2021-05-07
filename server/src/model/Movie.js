@@ -24,8 +24,6 @@ class Movie {
             using(user_id) \
             where user_id = ?'
             let staff = await conn.query(stmt2, [this.user_id])
-            console.log(this.user_id)
-            console.log(staff)
             if(!staff[0].length){
                 return Promise.reject("You are not admin")
             }

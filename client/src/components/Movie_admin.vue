@@ -10,30 +10,36 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="addopen"
         />
       </div>
     </div>
     <hr />
 
     <div class="is-multiline columns">
-      <div v-for="movie in movie"
-        :key="movie.movie_id" class="column is-one-quarter mt-5">
-        <div
-          class="card admin_card mx-6 my-6"
-        >
+      <div
+        v-for="movie in movie"
+        :key="movie.movie_id"
+        class="column is-one-quarter mt-5"
+      >
+        <div class="card admin_card mx-6 my-6">
           <figure class="image">
-            <img v-bind:src="imagePath(movie.movie_image)" style="height: 250px" alt="Placeholder image" />
+            <img
+              v-bind:src="imagePath(movie.movie_image)"
+              style="height: 250px"
+              alt="Placeholder image"
+            />
           </figure>
           <div class="card-content">
             <div style="font-size: 15px">
-              <b style="color: #520c0c">Title : </b>{{movie.movie_name}}
+              <b style="color: #520c0c">Title : </b>{{ movie.movie_name }}
             </div>
             <div style="font-size: 15px">
-              <b style="color: #520c0c">Movie length : </b>{{movie.movie_length}} นาที
+              <b style="color: #520c0c">Movie length : </b
+              >{{ movie.movie_length }} นาที
             </div>
             <div style="font-size: 15px">
-              <b style="color: #520c0c">Category : </b> {{movie.movie_type}}
+              <b style="color: #520c0c">Category : </b> {{ movie.movie_type }}
             </div>
           </div>
           <footer class="card-footer" style="background-color: white">
@@ -67,11 +73,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="addc"
-          ></button>
+          <button class="delete" aria-label="close" @click="addc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -87,7 +89,6 @@
                 v-model="time"
                 header-color="#fd7014"
                 color="#fd7014"
-                :min="today"
               ></v-date-picker>
             </div>
             <div class="column is-3" style="text-align: right">
@@ -99,53 +100,56 @@
             </div>
 
             <div class="column pr-6 is-4">
-                
-              
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="addform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="15"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="title"
-                label="title"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="title"
+                  label="title"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!title || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="length"
-                label="movie length"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="length"
+                  label="movie length"
+                  rounded
+                  dense
+                  solo
+                  :rules="movierule"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="type"
-                label="Category"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-      
-              
+                <v-text-field
+                  v-model="type"
+                  label="Category"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!type || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="lang"
-                label="(TH,ENG,KR,ETC..)"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-              </div>
+                <v-text-field
+                  v-model="lang"
+                  label="(TH,ENG,KR,ETC..)"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!lang || 'This field is required']"
+                ></v-text-field>
+              </v-form>
             </div>
+          </div>
         </section>
 
         <footer
@@ -192,11 +196,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="editc"
-          ></button>
+          <button class="delete" aria-label="close" @click="editc"></button>
         </header>
 
         <section class="modal-card-body profile_modal">
@@ -212,7 +212,6 @@
                 v-model="time"
                 header-color="#fd7014"
                 color="#fd7014"
-                :min="today"
               ></v-date-picker>
             </div>
             <div class="column is-3" style="text-align: right">
@@ -224,53 +223,56 @@
             </div>
 
             <div class="column pr-6 is-4">
-                
-              
-              <v-file-input
-                v-model="pic"
-                truncate-length="15"
-                label="picture"
-                rounded
-                dense
-                solo
-              >
-              </v-file-input>
+              <v-form ref="editform">
+                <v-file-input
+                  v-model="pic"
+                  truncate-length="50"
+                  label="picture"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!pic || 'This field is required']"
+                >
+                </v-file-input>
 
-              <v-text-field
-                v-model="title"
-                label="title"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="title"
+                  label="title"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!title || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="length"
-                label="movie length"
-                rounded
-                dense
-                solo
-              ></v-text-field>
+                <v-text-field
+                  v-model="length"
+                  label="movie length"
+                  rounded
+                  dense
+                  solo
+                  :rules="movierule"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="type"
-                label="Category"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-      
-              
+                <v-text-field
+                  v-model="type"
+                  label="Category"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!type || 'This field is required']"
+                ></v-text-field>
 
-              <v-text-field
-                v-model="lang"
-                label="(TH,ENG,KR,ETC..)"
-                rounded
-                dense
-                solo
-              ></v-text-field>
-              </div>
+                <v-text-field
+                  v-model="lang"
+                  label="(TH,ENG,KR,ETC..)"
+                  rounded
+                  dense
+                  solo
+                  :rules="[() => !!lang || 'This field is required']"
+                ></v-text-field>
+              </v-form>
             </div>
+          </div>
         </section>
 
         <footer
@@ -279,7 +281,7 @@
         >
           <div style="margin: auto">
             <button
-              @click="editmovie"  
+              @click="editmovie"
               style="
                 background-color: #fd7014;
                 border-style: hidden;
@@ -317,11 +319,7 @@
           <span class="modal-card-title pl-3 py-1" style="text-align: left"
             ><img src="../assets/Logo.png" class="logo_card"
           /></span>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="deletec"
-          ></button>
+          <button class="delete" aria-label="close" @click="deletec"></button>
         </header>
         <section class="modal-card-body profile_modal">
           <div style="font-size: 20px; text-align: center; color: white">
@@ -367,7 +365,7 @@
 import MovieService from "../service/MovieService";
 import axios from "axios";
 export default {
-   mounted(){
+  mounted() {
     this.getMovie();
   },
   data() {
@@ -378,60 +376,81 @@ export default {
       edit_isopen: false,
       delete_isopen: false,
       movie: [],
-      keep_index:0,
-      title : "",
-      type : "",
-      length : "",
-      pic: "",
-      time : "",
-      lang : "",
+      keep_index: 0,
+      title: "",
+      type: "",
+      length: "",
+      pic: null,
+      time: "",
+      lang: "",
+      today: "",
+      movierule: [
+        (v) => !!v || "This field is required",
+        (v) => /^[0-9]*$/.test(v) || "Please input number",
+      ],
     };
   },
   methods: {
     editc() {
+      this.$refs.editform.resetValidation();
       this.title = "";
       this.type = "";
       this.length = "";
-      this.pic = "";
-      this.lang ="";
+      this.pic = null;
+      this.lang = "";
       this.edit_isopen = false;
     },
     deletec() {
       this.title = "";
       this.type = "";
       this.length = "";
-      this.pic = "";
-      this.lang ="";
+      this.pic = null;
+      this.lang = "";
       this.delete_isopen = false;
     },
     addc() {
+      this.$refs.addform.resetValidation();
       this.title = "";
       this.type = "";
       this.length = "";
-      this.pic = "";
-      this.lang ="";
+      this.pic = null;
+      this.lang = "";
       this.add_isopen = false;
     },
-    edit(index){
-      this.edit_isopen = true
-      this.keep_index = index
+    async edit(index) {
+      this.time = this.today;
+      this.edit_isopen = true;
+      this.keep_index = index;
+      this.getMovie();
+      for (var movie of this.movie) {
+        this.test = movie;
+        if (movie.movie_id == index) {
+          this.title = movie.movie_name;
+          this.type = movie.movie_type;
+          this.length = movie.movie_length;
+          this.lang = movie.movie_language;
+          this.time = movie.movie_releasetime.substring(0, 10);
+          let config = { responseType: "blob" };
+          let result = await axios.get(
+            "http://localhost:12000/" + movie.movie_image,
+            config
+          );
+          this.pic = new File([result.data], "Old Picture.png");
+        }
+      }
     },
-    remove(index){
-      this.delete_isopen = true
-      this.keep_index = index
+    remove(index) {
+      this.delete_isopen = true;
+      this.keep_index = index;
     },
-    removemovie() {
-      axios
-        .delete(`http://localhost:12000/movie/delete/${this.keep_index}`)
-        .then(() => {
-          this.getMovie();
-          this.delete_isopen = false;
-        })
-        .catch((err) => console.log(err));
+    async removemovie() {
+      await MovieService.delMovie(this.keep_index);
+      this.delete_isopen = false;
+      this.getMovie();
     },
     createAddForm: function () {
-      // new Movie(null, req.body.movie_name, req.body.movie_type, 0, 
-      // req.body.movie_length, req.file.path, req.body.movie_status, 
+      // new Movie(null, req.body.movie_name, req.body.movie_type, 0,
+      // req.body.movie_length, req.file.path, req.body.movie_status,
       // req.body.staff_id, req.body.movie_releasetime, req.body.movie_language)
       let form = new FormData();
       form.append("movie_name", this.title);
@@ -455,50 +474,67 @@ export default {
       return form;
     },
     async createmovie() {
-      try {
-        var result = await MovieService.createmovie(this.createAddForm());
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.getMovie();
-        this.title = "";
-        this.detail = "";
-        this.pic = "";
-        this.time = "";
-        this.lang = "";
-        this.add_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.addform.validate()) {
+        try {
+          var result = await MovieService.createmovie(this.createAddForm());
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.$refs.addform.resetValidation();
+          this.$refs.editform.resetValidation();
+          this.getMovie();
+          this.title = "";
+          this.detail = "";
+          this.pic = null;
+          this.time = "";
+          this.lang = "";
+          this.type = "";
+          this.length ="";
+          this.add_isopen = false;
+
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async editmovie() {
-      try {
-        var result = await MovieService.editmovie(
-          this.createEditForm(),
-          this.keep_index
-        );
-        console.log("res", result.status);
-        console.log("success by vuejs");
-        alert("Success");
-        this.getMovie();
-        this.title = "";
-        this.detail = "";
-        this.pic = "";
-        this.time = "";
-        this.lang = "";
-        this.edit_isopen = false;
-      } catch (err) {
-        console.log(err);
+      if (this.$refs.editform.validate()) {
+        try {
+          var result = await MovieService.editmovie(
+            this.createEditForm(),
+            this.keep_index
+          );
+          console.log("res", result.status);
+          console.log("success by vuejs");
+          alert("Success");
+          this.$refs.addform.resetValidation();
+          this.$refs.editform.resetValidation();
+          this.getMovie();
+          this.title = "";
+          this.detail = "";
+          this.pic = null;
+          this.time = "";
+          this.lang = "";
+          this.edit_isopen = false;
+        } catch (err) {
+          console.log(err.response);
+        }
       }
     },
-     async getMovie(){
-      try{
+    async getMovie() {
+      try {
         let keep = await MovieService.getMovie();
         console.log(keep);
-        this.movie = keep.data
-      }
-      catch(err){
-        console.log(err)
+        this.movie = keep.data;
+        var today = new Date();
+        this.today =
+          today.getFullYear() +
+          "-" +
+          String(today.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(today.getDate()).padStart(2, "0");
+      } catch (err) {
+        console.log(err);
       }
     },
     imagePath(file_path) {
@@ -507,6 +543,11 @@ export default {
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
+    },
+    addopen() {
+      this.$refs.addform.resetValidation();
+      this.time = this.today;
+      this.add_isopen = true;
     },
   },
 };

@@ -10,7 +10,7 @@
           style="width: 40px; height: 40px"
           src="../assets/plus.png"
           alt=""
-          @click="add_isopen = true"
+          @click="addopen"
         />
       </div>
     </div>
@@ -85,6 +85,7 @@
             </div>
 
             <div class="column pt-6 is-7">
+              <v-form ref="addform">
               <v-text-field
                 v-model="add_name"
                 label="name"
@@ -105,6 +106,7 @@
                 class="pt-3"
                 :rules="[() => !!add_size || 'This field is required']"
               ></v-select>
+              </v-form>
             </div>
           </div>
         </section>
@@ -156,7 +158,11 @@
           <button
             class="delete"
             aria-label="close"
-            @click="edit_isopen = false; want_seat=[]; getTheater()"
+            @click="
+              edit_isopen = false;
+              want_seat = [];
+              getTheater();
+            "
           ></button>
         </header>
 
@@ -178,14 +184,18 @@
             </div>
 
             <div class="column is-6 pt-6">
-              <v-text-field
-                v-model="val.theater_name"
-                label="name"
-                rounded
-                dense
-                solo
-                :rules="[() => !!val.theater_name || 'This field is required']"
-              ></v-text-field>
+              <v-form ref="valid">
+                <v-text-field
+                  v-model="val.theater_name"
+                  label="name"
+                  rounded
+                  dense
+                  solo
+                  :rules="[
+                    () => !!val.theater_name || 'This field is required',
+                  ]"
+                ></v-text-field>
+              </v-form>
 
               <v-select
                 :disabled="true"
@@ -206,20 +216,28 @@
               class="columns is-centered"
               style="font-size: 25px; color: white"
               v-for="index in seat_w"
-              :key="'s'+index"
+              :key="'s' + index"
             >
-              <span class="pt-3 pr-6">{{rows[(honey_w + seat_w) - index ]}}</span>
+              <span class="pt-3 pr-6">{{
+                rows[honey_w + seat_w - index]
+              }}</span>
               <span
-                style="color: white; font-size: 12px;"
+                style="color: white; font-size: 12px"
                 v-for="seat in want_seat"
                 :key="seat.seat_no"
               >
-                <span v-if="seat.seat_name.substring(0, 1) == rows[(honey_w + seat_w) - index]" style="width:100%" @click="editSeat(seat)">
+                <span
+                  v-if="
+                    seat.seat_name.substring(0, 1) ==
+                    rows[honey_w + seat_w - index]
+                  "
+                  style="width: 100%"
+                  @click="editSeat(seat)"
+                >
                   <img
                     v-if="seat.seat_status"
                     class="seat_image"
                     v-bind:src="image_seat"
-                    
                   />
                   <img
                     v-if="!seat.seat_status"
@@ -227,7 +245,6 @@
                     v-bind:src="seat_mark"
                   />
                 </span>
-                
               </span>
             </div>
 
@@ -235,20 +252,23 @@
               class="columns is-centered"
               style="font-size: 25px; color: white"
               v-for="index in honey_w"
-              :key="'h'+index"
+              :key="'h' + index"
             >
-              <span class="pt-3 pr-6" >{{rows[honey_w  - index]}}</span>
+              <span class="pt-3 pr-6">{{ rows[honey_w - index] }}</span>
               <span
-                style="color: white; font-size: 12px;"
+                style="color: white; font-size: 12px"
                 v-for="seat in want_seat"
                 :key="seat.seat_no"
               >
-                <span v-if="seat.seat_name.substring(0, 1) == rows[honey_w  - index]" style="width:100%" @click="editSeat(seat)">
+                <span
+                  v-if="seat.seat_name.substring(0, 1) == rows[honey_w - index]"
+                  style="width: 100%"
+                  @click="editSeat(seat)"
+                >
                   <img
                     v-if="seat.seat_status"
                     class="seat_image"
                     v-bind:src="image_honeymoon"
-                    
                   />
                   <img
                     v-if="!seat.seat_status"
@@ -258,7 +278,7 @@
                 </span>
               </span>
             </div>
-          <p></p>
+            <p></p>
           </div>
         </section>
 
@@ -385,7 +405,7 @@ export default {
       seat_l: 0,
       honey_w: 0,
       honey_l: 0,
-      rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+      rows: ["A", "B", "C", "D", "E", "F", "G", "H"],
       save_seat: {},
       showtime: [],
       all_seat: [],
@@ -441,7 +461,6 @@ export default {
         this.honey_w = 2;
         this.honey_l = 16;
       }
-
     },
 
     createEditForm: function () {
@@ -465,20 +484,22 @@ export default {
     },
 
     async edit() {
-      var result = await TheaterAdmin.editTheater2(
-        this.createEditForm(),
-        this.val.theater_id
-      );
-      console.log("res", result.status);
-      console.log("success by vuejs");
-      alert("Success");
+      if (this.$refs.valid.validate()) {
+        var result = await TheaterAdmin.editTheater2(
+          this.createEditForm(),
+          this.val.theater_id
+        );
+        console.log("res", result.status);
+        console.log("success by vuejs");
+        alert("Success");
 
-      this.theaters.forEach((theater, index) => {
-        if (this.val.theater_id == theater.theater_id)
-          this.theaters.splice(index, 1, this.val);
-      });
-      this.want_seat = [];
-      this.edit_isopen = false;
+        this.theaters.forEach((theater, index) => {
+          if (this.val.theater_id == theater.theater_id)
+            this.theaters.splice(index, 1, this.val);
+        });
+        this.want_seat = [];
+        this.edit_isopen = false;
+      }
     },
 
     async edit_status(theater) {
@@ -508,6 +529,7 @@ export default {
     },
 
     async addTheater() {
+      if(this.$refs.addform.validate()){
       if (this.add_name != "" && this.add_size != "") {
         var result = await TheaterAdmin.addTheater(this.createForm());
         console.log("res", result.status);
@@ -524,6 +546,7 @@ export default {
         this.getTheater();
       } else {
         alert("Pls fill all");
+      }
       }
     },
 
@@ -544,11 +567,11 @@ export default {
       // }
       await TheaterAdmin.delTheater(this.val.theater_id);
       this.delete_isopen = false;
-        this.edit_isopen = false;
-      this.getTheater ();
+      this.edit_isopen = false;
+      this.getTheater();
     },
 
-    async editSeat(seat){
+    async editSeat(seat) {
       seat.seat_status = !seat.seat_status;
       var result = await TheaterAdmin.editSeat(
         this.createSeatForm(seat),
@@ -561,13 +584,17 @@ export default {
     createSeatForm: function (seat) {
       let form = new FormData();
       form.append("seat_no", seat.seat_no);
-      form.append("seat_status", seat.seat_status ? 1:0);
+      form.append("seat_status", seat.seat_status ? 1 : 0);
       form.append("theater_id", seat.theater_id);
       form.append("seat_name", seat.seat_name);
       form.append("type_of_seat", seat.type_of_seat);
       form.append("seat_price", seat.seat_price);
       console.log(form);
       return form;
+    },
+    addopen(){
+      this.add_isopen = true
+      this.$refs.addform.reset()
     }
   },
 };

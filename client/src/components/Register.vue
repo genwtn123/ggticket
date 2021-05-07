@@ -184,7 +184,7 @@ export default {
       ],
       telrule: [
         (v) => !!v || "Tel is required",
-        (v) => /^0[0-9]{9}$/.test(v) || "pass",
+        (v) => /^0[0-9]{9}$/.test(v) || "Invalid phonenumber",
       ],
       passwordrule: [
         (v) => !!v || "Password is required",
@@ -199,7 +199,7 @@ export default {
       ],
       emailrule: [
         (v) => !!v || "Email is required",
-        (v) => /^\w+@\w+\.\w+$/.test(v) || "kwaii",
+        (v) => /^\w+@\w+\.\w+$/.test(v) || "invalid email",
       ],
     };
   },
@@ -218,7 +218,9 @@ export default {
     },
     async createAccount(e) {
       e.preventDefault();
-            this.$refs.form.validate();
+      if(this.$refs.form.validate()){
+
+
       try{
       var result = await AccountService.createAccount(this.createForm());
       if (result.status == 200) {
@@ -230,6 +232,7 @@ export default {
       }
       }catch(err){
         console.log(err)
+      }
       }
     },
     clearForm: function () {
